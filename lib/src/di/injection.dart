@@ -19,9 +19,9 @@ abstract class Injection {
     Interceptor: null,
     DefaultHttpClientAdapter: null
   })
-  @Register.singleton(MovieService, from: MovieServiceImpl)
+  @Register.singleton(MovieRemoteSource, from: MovieRemoteSourceImpl)
   @Register.singleton(MovieRepository,
-      from: MovieRepositoryImpl, resolvers: {MovieService: null})
+      from: MovieRepositoryImpl, resolvers: {MovieRemoteSource: null})
   @Register.factory(DiscoverMovieBloc, resolvers: {MovieRepository: null})
   @Register.factory(DetailMovieBloc, resolvers: {MovieRepository: null})
   void configure();

@@ -13,24 +13,12 @@ class DiscoverMovieBloc
   @override
   Stream<DiscoverMovieState> mapEventToState(DiscoverMovieEvent event) async* {
     if (event is GetDiscoverMovieEvent) {
-      var movies = await _getDiscoverMovie();
-      if (movies.item1 != null) {
-        yield SuccessGetDiscoverMovieState(movies.item1);
-      } else
-        yield ErrorGetDiscoverMovieState(movies.item2);
-    }
-  }
-
-  Future<Tuple2<Movies, String>> _getDiscoverMovie() async {
-    var result = await _repository.getDiscoverMovie(1);
-
-    switch (result.status) {
-      case Status.SUCCESS:
-        return Tuple2(result.body, null);
-      case Status.ERROR:
-        return Tuple2(null, 'Error : ${result.code}');
-      default:
-        return null;
+      var result = await _repository.getDiscoverMovie(1);
+      yield* result.fold((l) async* {
+        yield ErrorGetDiscoverMovieState('Error : ${l.code}');
+      }, (r) async* {
+        yield SuccessGetDiscoverMovieState(r);
+      });
     }
   }
 }
