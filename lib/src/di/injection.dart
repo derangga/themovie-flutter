@@ -24,9 +24,11 @@ abstract class Injection {
       from: MovieLocalSourceImpl, resolvers: {MovieDao: null})
   @Register.singleton(MovieRemoteSource,
       from: MovieRemoteSourceImpl, resolvers: {Logger: null})
-  @Register.singleton(MovieRepository,
-      from: MovieRepositoryImpl,
-      resolvers: {MovieRemoteSource: null, MovieLocalSource: null})
+  @Register.singleton(MovieRepository, from: MovieRepositoryImpl, resolvers: {
+    MovieRemoteSource: null,
+    MovieLocalSource: null,
+    Logger: null
+  })
   @Register.factory(DiscoverMovieBloc,
       resolvers: {MovieRepository: null, Logger: null})
   @Register.factory(DetailMovieBloc,

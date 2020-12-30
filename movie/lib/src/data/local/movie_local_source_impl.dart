@@ -16,7 +16,8 @@ class MovieLocalSourceImpl extends MovieLocalSource {
 
   @override
   Future<List<Movie>> getAllMovie() async {
-    return (await _movieDao.getAllMovie()).map((e) => e.toModel());
+    var data = await _movieDao.getAllMovie();
+    return data.map((e) => e.toModel()).toList();
   }
 
   @override

@@ -11,33 +11,34 @@ class MovieRepositoryImpl extends MovieRepository {
   final MovieRemoteSource _remoteSource;
   final MovieLocalSource _localSource;
 
-  MovieRepositoryImpl(this._remoteSource, this._localSource);
+  MovieRepositoryImpl(Logger logger, this._remoteSource, this._localSource)
+      : super(null);
 
   @override
-  Future<Either<Failure, DetailMovie>> getDetailMovie(int movieId) async {
+  Future<Either<Failure, DetailMovie>> getDetailMovieRemote(int movieId) async {
     return await _remoteSource.getDetailMovie(movieId);
   }
 
   @override
-  Future<Either<Failure, Movies>> getDiscoverMovie(int page) async {
+  Future<Either<Failure, Movies>> getDiscoverMovieRemote(int page) async {
     return await _remoteSource.getDiscoverMovie(page);
   }
 
   @override
-  Future insertMovie(List<Movie> movies) async {
+  Future insertDiscoverMoviesLocal(List<Movie> movies) async {
     for (Movie movie in movies) {
       await _localSource.insertMovie(movie.toEntity());
     }
   }
 
   @override
-  Future<List<Movie>> getMoveLocalSource() async {
+  Future<List<Movie>> getDiscoverMoveLocal() async {
     return await _localSource.getAllMovie();
   }
 
   @override
-  Future replaceAllMovieData(List<Movie> movies) async {
+  Future replaceAllDiscoverMovieLocal(List<Movie> movies) async {
     _localSource.deleteAllMovie();
-    await insertMovie(movies);
+    await insertDiscoverMoviesLocal(movies);
   }
 }

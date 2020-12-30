@@ -28,8 +28,8 @@ class _$Injection extends Injection {
         (c) => MovieLocalSourceImpl(c<Logger>(), c<MovieDao>()));
     container.registerSingleton<MovieRemoteSource>(
         (c) => MovieRemoteSourceImpl(c<Dio>(), c<Logger>()));
-    container.registerSingleton<MovieRepository>((c) =>
-        MovieRepositoryImpl(c<MovieRemoteSource>(), c<MovieLocalSource>()));
+    container.registerSingleton<MovieRepository>((c) => MovieRepositoryImpl(
+        c<Logger>(), c<MovieRemoteSource>(), c<MovieLocalSource>()));
     container.registerFactory(
         (c) => DiscoverMovieBloc(c<Logger>(), c<MovieRepository>()));
     container.registerFactory(

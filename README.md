@@ -2,7 +2,7 @@
 
 ## App Module Structure 🧬
 
-This app use modularization to isolates data transmission for each feature. See this [video](https://youtu.be/PZBg5DIzNww?t=1454) how Yigit explain about data isolate on each module.
+This app use modularization to isolates data transmission for each feature. See this [video](https://youtu.be/PZBg5DIzNww?t=281) how Florina explain about modlarization.
 <br></br>
 <p align="center">
   <img src="screenshots/modular.png" />

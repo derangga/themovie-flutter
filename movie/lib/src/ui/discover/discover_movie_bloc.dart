@@ -13,13 +13,13 @@ class DiscoverMovieBloc
   @override
   Stream<DiscoverMovieState> mapEventToState(DiscoverMovieEvent event) async* {
     if (event is GetDiscoverMovieEvent) {
-      var result = await _repository.getDiscoverMovie(1);
+      var result = await _repository.getDiscoverMovieRemote(1);
       yield* result.fold((failure) async* {
-        var localData = await _repository.getMoveLocalSource();
+        var localData = await _repository.getDiscoverMoveLocal();
         yield ErrorGetDiscoverMovieState(SingleSourceFailure(
             data: localData, message: 'Error : ${failure.code}'));
       }, (success) async* {
-        await _repository.replaceAllMovieData(success.results);
+        await _repository.replaceAllDiscoverMovieLocal(success.results);
         yield SuccessGetDiscoverMovieState(success.results);
       });
     }
