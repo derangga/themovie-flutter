@@ -23,10 +23,12 @@ class _$Injection extends Injection {
     container.registerSingleton<Dio>((c) => DioModule(
         c<BaseOptions>(), c<Interceptor>(), c<DefaultHttpClientAdapter>()));
     container.registerSingleton<MovieRemoteSource>(
-        (c) => MovieRemoteSourceImpl(c<Dio>()));
+        (c) => MovieRemoteSourceImpl(c<Dio>(), c<Logger>()));
     container.registerSingleton<MovieRepository>(
         (c) => MovieRepositoryImpl(c<MovieRemoteSource>()));
-    container.registerFactory((c) => DiscoverMovieBloc(c<MovieRepository>()));
-    container.registerFactory((c) => DetailMovieBloc(c<MovieRepository>()));
+    container.registerFactory(
+        (c) => DiscoverMovieBloc(c<Logger>(), c<MovieRepository>()));
+    container.registerFactory(
+        (c) => DetailMovieBloc(c<Logger>(), c<MovieRepository>()));
   }
 }

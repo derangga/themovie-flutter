@@ -8,16 +8,16 @@ class DiscoverMovieBloc
     extends BaseBloc<DiscoverMovieEvent, DiscoverMovieState> {
   final MovieRepository _repository;
 
-  DiscoverMovieBloc(this._repository) : super(null);
+  DiscoverMovieBloc(Logger logger, this._repository) : super(logger);
 
   @override
   Stream<DiscoverMovieState> mapEventToState(DiscoverMovieEvent event) async* {
     if (event is GetDiscoverMovieEvent) {
       var result = await _repository.getDiscoverMovie(1);
-      yield* result.fold((l) async* {
-        yield ErrorGetDiscoverMovieState('Error : ${l.code}');
-      }, (r) async* {
-        yield SuccessGetDiscoverMovieState(r);
+      yield* result.fold((failure) async* {
+        yield ErrorGetDiscoverMovieState('Error : ${failure.code}');
+      }, (success) async* {
+        yield SuccessGetDiscoverMovieState(success);
       });
     }
   }

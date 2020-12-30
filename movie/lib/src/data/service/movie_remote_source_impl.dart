@@ -8,7 +8,7 @@ import '../model/detail_movie.dart';
 import '../mapper/movie_mapper.dart';
 
 class MovieRemoteSourceImpl extends MovieRemoteSource {
-  MovieRemoteSourceImpl(Dio dio) : super(dio);
+  MovieRemoteSourceImpl(Dio dio, Logger logger) : super(dio, logger);
 
   @override
   Future<Either<Failure, DetailMovie>> getDetailMovie(int movieId) async {

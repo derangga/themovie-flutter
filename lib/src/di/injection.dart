@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:logger/logger.dart';
 import 'package:movie/movie.dart';
 
 part 'injection.g.dart';
@@ -19,11 +18,14 @@ abstract class Injection {
     Interceptor: null,
     DefaultHttpClientAdapter: null
   })
-  @Register.singleton(MovieRemoteSource, from: MovieRemoteSourceImpl)
+  @Register.singleton(MovieRemoteSource,
+      from: MovieRemoteSourceImpl, resolvers: {Logger: null})
   @Register.singleton(MovieRepository,
       from: MovieRepositoryImpl, resolvers: {MovieRemoteSource: null})
-  @Register.factory(DiscoverMovieBloc, resolvers: {MovieRepository: null})
-  @Register.factory(DetailMovieBloc, resolvers: {MovieRepository: null})
+  @Register.factory(DiscoverMovieBloc,
+      resolvers: {MovieRepository: null, Logger: null})
+  @Register.factory(DetailMovieBloc,
+      resolvers: {MovieRepository: null, Logger: null})
   void configure();
 }
 

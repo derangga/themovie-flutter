@@ -6,7 +6,7 @@ part 'detail_movie_event_state.dart';
 class DetailMovieBloc extends BaseBloc<DetailMovieEvent, DetailMovieState> {
   final MovieRepository _repository;
 
-  DetailMovieBloc(this._repository) : super(null);
+  DetailMovieBloc(Logger logger, this._repository) : super(logger);
 
   @override
   Stream<DetailMovieState> mapEventToState(DetailMovieEvent event) async* {}

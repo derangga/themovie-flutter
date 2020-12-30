@@ -10,11 +10,6 @@ class DiscoverMovieScreen extends StatefulWidget {
 class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
     DiscoverMovieState, DiscoverMovieScreen> {
   @override
-  DiscoverMovieBloc provideBloc() {
-    return BlocProvider.of<DiscoverMovieBloc>(context);
-  }
-
-  @override
   void setupOnInitState() {
     bloc.add(GetDiscoverMovieEvent());
   }

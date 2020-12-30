@@ -15,11 +15,6 @@ class _DetailMovieScreenState
   }
 
   @override
-  DetailMovieBloc provideBloc() {
-    return BlocProvider.of<DetailMovieBloc>(context);
-  }
-
-  @override
   void setupOnInitState() {}
 
   @override
