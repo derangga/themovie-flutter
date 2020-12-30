@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'genre_mapper.dart';
+import '../local/db/movie_db.dart';
 import '../model/detail_movie.dart';
 import '../model/movie.dart';
 
@@ -18,7 +19,42 @@ extension MovieDTOExtension on MovieDTO {
     return Movie(
         adult: this.adult ?? false,
         backdropPath: this.backdropPath.orEmpty(),
-        genreIds: this.genreIds.orEmpty(),
+        id: this.id.orZero(),
+        originalLanguage: this.originalLanguage.orEmpty(),
+        originalTitle: this.originalTitle.orEmpty(),
+        overview: this.overview.orEmpty(),
+        popularity: this.popularity.orZero(),
+        posterPath: this.posterPath.orEmpty(),
+        releaseDate: this.releaseDate.orEmpty(),
+        title: this.title.orEmpty(),
+        video: this.video ?? false,
+        voteAverage: this.voteAverage.orEmpty(),
+        voteCount: this.voteCount.orZero());
+  }
+
+  MovieEntityData toEntity() {
+    return MovieEntityData(
+        adult: this.adult,
+        backdropPath: this.backdropPath,
+        id: this.id,
+        originalLanguage: this.originalLanguage,
+        originalTitle: this.originalTitle,
+        overview: this.overview,
+        popularity: this.popularity,
+        posterPath: this.posterPath,
+        releaseDate: this.releaseDate,
+        title: this.title,
+        video: this.video,
+        voteAverage: this.voteAverage,
+        voteCount: this.voteCount);
+  }
+}
+
+extension MovieEntityExtension on MovieEntityData {
+  Movie toModel() {
+    return Movie(
+        adult: this.adult ?? false,
+        backdropPath: this.backdropPath.orEmpty(),
         id: this.id.orZero(),
         originalLanguage: this.originalLanguage.orEmpty(),
         originalTitle: this.originalTitle.orEmpty(),
@@ -40,7 +76,6 @@ extension MovieExtension on Movie {
         : Movie(
             adult: false,
             backdropPath: '',
-            genreIds: [],
             id: 0,
             originalLanguage: '',
             originalTitle: '',
@@ -52,6 +87,23 @@ extension MovieExtension on Movie {
             video: false,
             voteAverage: '',
             voteCount: 0);
+  }
+
+  MovieEntityData toEntity() {
+    return MovieEntityData(
+        adult: this.adult,
+        backdropPath: this.backdropPath,
+        id: this.id,
+        originalLanguage: this.originalLanguage,
+        originalTitle: this.originalTitle,
+        overview: this.overview,
+        popularity: this.popularity,
+        posterPath: this.posterPath,
+        releaseDate: this.releaseDate,
+        title: this.title,
+        video: this.video,
+        voteAverage: this.voteAverage,
+        voteCount: this.voteCount);
   }
 }
 

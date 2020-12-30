@@ -7,3 +7,10 @@ class Failure {
 
   Failure({this.errorBody, this.code, this.dioError});
 }
+
+class SingleSourceFailure<T> {
+  final T data;
+  final String message;
+
+  SingleSourceFailure({this.data, this.message});
+}

@@ -17,7 +17,10 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
   @override
   Widget mapStateToWidget(DiscoverMovieState state) {
     if (state is SuccessGetDiscoverMovieState) {
-      logInfo("movie list ${state.movies.results}");
+      logInfo("movie list ${state.movies}");
+    } else if (state is ErrorGetDiscoverMovieState) {
+      logError(
+          "Error : ${state.errorData.message} | local : ${state.errorData.data}");
     }
     return null;
   }

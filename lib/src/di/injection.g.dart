@@ -17,15 +17,19 @@ class _$Injection extends Injection {
         filter: c<LogFilter>(),
         printer: c<LogPrinter>(),
         output: c<LogOutput>()));
+    container.registerSingleton((c) => MovieDb());
+    container.registerSingleton((c) => MovieDao(c<MovieDb>()));
     container.registerSingleton<BaseOptions>((c) => DioOptions());
     container.registerSingleton<Interceptor>((c) => LoggingInterceptor());
     container.registerSingleton((c) => DefaultHttpClientAdapter());
     container.registerSingleton<Dio>((c) => DioModule(
         c<BaseOptions>(), c<Interceptor>(), c<DefaultHttpClientAdapter>()));
+    container.registerSingleton<MovieLocalSource>(
+        (c) => MovieLocalSourceImpl(c<Logger>(), c<MovieDao>()));
     container.registerSingleton<MovieRemoteSource>(
         (c) => MovieRemoteSourceImpl(c<Dio>(), c<Logger>()));
-    container.registerSingleton<MovieRepository>(
-        (c) => MovieRepositoryImpl(c<MovieRemoteSource>()));
+    container.registerSingleton<MovieRepository>((c) =>
+        MovieRepositoryImpl(c<MovieRemoteSource>(), c<MovieLocalSource>()));
     container.registerFactory(
         (c) => DiscoverMovieBloc(c<Logger>(), c<MovieRepository>()));
     container.registerFactory(

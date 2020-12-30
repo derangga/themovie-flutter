@@ -15,9 +15,12 @@ class DiscoverMovieBloc
     if (event is GetDiscoverMovieEvent) {
       var result = await _repository.getDiscoverMovie(1);
       yield* result.fold((failure) async* {
-        yield ErrorGetDiscoverMovieState('Error : ${failure.code}');
+        var localData = await _repository.getMoveLocalSource();
+        yield ErrorGetDiscoverMovieState(SingleSourceFailure(
+            data: localData, message: 'Error : ${failure.code}'));
       }, (success) async* {
-        yield SuccessGetDiscoverMovieState(success);
+        await _repository.replaceAllMovieData(success.results);
+        yield SuccessGetDiscoverMovieState(success.results);
       });
     }
   }

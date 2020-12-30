@@ -1,3 +1,5 @@
+import 'package:core/core.dart';
+
 class MoviesDTO {
   int page;
   List<MovieDTO> results;
@@ -31,7 +33,6 @@ class Movies {
 class MovieDTO {
   bool adult;
   String backdropPath;
-  List<int> genreIds;
   int id;
   String originalLanguage;
   String originalTitle;
@@ -47,7 +48,6 @@ class MovieDTO {
   MovieDTO(
       {this.adult,
       this.backdropPath,
-      this.genreIds,
       this.id,
       this.originalLanguage,
       this.originalTitle,
@@ -63,7 +63,6 @@ class MovieDTO {
   MovieDTO.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
-    genreIds = json['genre_ids'].cast<int>();
     id = json['id'];
     originalLanguage = json['original_language'];
     originalTitle = json['original_title'];
@@ -81,7 +80,6 @@ class MovieDTO {
 class Movie {
   bool adult;
   String backdropPath;
-  List<int> genreIds;
   int id;
   String originalLanguage;
   String originalTitle;
@@ -97,7 +95,6 @@ class Movie {
   Movie(
       {this.adult,
       this.backdropPath,
-      this.genreIds,
       this.id,
       this.originalLanguage,
       this.originalTitle,
@@ -109,4 +106,20 @@ class Movie {
       this.video,
       this.voteAverage,
       this.voteCount});
+}
+
+class MovieEntity extends Table {
+  BoolColumn get adult => boolean()();
+  TextColumn get backdropPath => text()();
+  IntColumn get id => integer()();
+  TextColumn get originalLanguage => text()();
+  TextColumn get originalTitle => text()();
+  TextColumn get overview => text()();
+  RealColumn get popularity => real()();
+  TextColumn get posterPath => text()();
+  TextColumn get releaseDate => text()();
+  TextColumn get title => text()();
+  BoolColumn get video => boolean()();
+  TextColumn get voteAverage => text()();
+  IntColumn get voteCount => integer()();
 }

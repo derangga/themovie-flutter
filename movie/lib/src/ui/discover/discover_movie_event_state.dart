@@ -3,13 +3,13 @@ part of 'discover_movie_bloc.dart';
 abstract class DiscoverMovieState implements BlocState {}
 
 class SuccessGetDiscoverMovieState implements DiscoverMovieState {
-  final Movies movies;
+  final List<Movie> movies;
   SuccessGetDiscoverMovieState(this.movies);
 }
 
 class ErrorGetDiscoverMovieState implements DiscoverMovieState {
-  final String errorMessage;
-  ErrorGetDiscoverMovieState(this.errorMessage);
+  final SingleSourceFailure<List<Movie>> errorData;
+  ErrorGetDiscoverMovieState(this.errorData);
 }
 
 abstract class DiscoverMovieEvent implements BlocEvent {}

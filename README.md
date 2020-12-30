@@ -1,16 +1,43 @@
-# themovie_flutter
+# Movie App Flutter
 
-A new Flutter project.
+## App Module Structure 🧬
 
-## Getting Started
+This app use modularization to isolates data transmission for each feature. See this [video](https://youtu.be/PZBg5DIzNww?t=1454) how Yigit explain about data isolate on each module.
+<br></br>
+<p align="center">
+  <img src="screenshots/modular.png" />
+</p>
 
-This project is a starting point for a Flutter application.
+Each feature module is implement clean architecture that contains three layers : **Data Layer**, **Domain Layer**, **Presentation Layer**
 
-A few resources to get you started if this is your first Flutter project:
+<p align="center">
+  <img src="screenshots/diagrams.png" />
+</p>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<br></br>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Library used 🛠
+
+- [Dio](https://pub.dev/packages/dio) - A type-safe HTTP client.
+- [Moor](https://pub.dev/packages/moor_flutter) - Moor is a reactive persistence library for Flutter and Dart, built ontop of sqlite.
+- [Kiwi](https://pub.dev/packages/kiwi) - A Dependency Injection
+- [BLoC](https://pub.dev/packages/flutter_bloc) -  Business logic component to separate the business logic with UI.
+- [Dartz](https://pub.dev/packages/dartz) - Functional programming in Dart
+- [Flutter Config](https://pub.dev/packages/flutter_config) - Plugin that exposes environment variables to your Dart code in Flutter as well as to your native code in iOS and Android.
+- [Logger](https://pub.dev/packages/logger) - Small, easy to use and extensible logger
+
+
+## Quick Start 💻
+
+1. Before run this project makesure you have `.env` in root project directory. If not you can create `.env` then write this setup enviroment :
+
+```
+API_GATWAY=https://api.themoviedb.org/3/
+TMDB_SECRET_KEY=SECRET TOKEN FROM TMDB
+```
+
+2. Sync all dependencies with `./syncdeps.sh`
+```
+$ sudo chmod 774 syncdeps.sh 
+$ ./syncdeps.sh
+```

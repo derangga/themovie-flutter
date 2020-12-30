@@ -10,6 +10,8 @@ abstract class Injection {
   @Register.singleton(LogOutput, from: ConsoleOutput)
   @Register.singleton(Logger,
       resolvers: {LogFilter: null, LogPrinter: null, LogOutput: null})
+  @Register.singleton(MovieDb)
+  @Register.singleton(MovieDao, resolvers: {MovieDb: null})
   @Register.singleton(BaseOptions, from: DioOptions)
   @Register.singleton(Interceptor, from: LoggingInterceptor)
   @Register.singleton(DefaultHttpClientAdapter)
@@ -18,10 +20,13 @@ abstract class Injection {
     Interceptor: null,
     DefaultHttpClientAdapter: null
   })
+  @Register.singleton(MovieLocalSource,
+      from: MovieLocalSourceImpl, resolvers: {MovieDao: null})
   @Register.singleton(MovieRemoteSource,
       from: MovieRemoteSourceImpl, resolvers: {Logger: null})
   @Register.singleton(MovieRepository,
-      from: MovieRepositoryImpl, resolvers: {MovieRemoteSource: null})
+      from: MovieRepositoryImpl,
+      resolvers: {MovieRemoteSource: null, MovieLocalSource: null})
   @Register.factory(DiscoverMovieBloc,
       resolvers: {MovieRepository: null, Logger: null})
   @Register.factory(DetailMovieBloc,
