@@ -38,7 +38,7 @@ class MovieRepositoryImpl extends MovieRepository {
 
   @override
   Future replaceAllDiscoverMovieLocal(List<Movie> movies) async {
-    _localSource.deleteAllMovie();
+    await _localSource.deleteAllMovie();
     await insertDiscoverMoviesLocal(movies);
   }
 }

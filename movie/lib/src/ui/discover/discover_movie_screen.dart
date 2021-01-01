@@ -19,8 +19,7 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
     if (state is SuccessGetDiscoverMovieState) {
       logInfo("movie list ${state.movies}");
     } else if (state is ErrorGetDiscoverMovieState) {
-      logError(
-          "Error : ${state.errorData.message} | local : ${state.errorData.data}");
+      logError("Error : ${state.message}");
     }
     return null;
   }

@@ -8,8 +8,8 @@ class SuccessGetDiscoverMovieState implements DiscoverMovieState {
 }
 
 class ErrorGetDiscoverMovieState implements DiscoverMovieState {
-  final SingleSourceFailure<List<Movie>> errorData;
-  ErrorGetDiscoverMovieState(this.errorData);
+  final String message;
+  ErrorGetDiscoverMovieState(this.message);
 }
 
 abstract class DiscoverMovieEvent implements BlocEvent {}

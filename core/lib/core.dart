@@ -9,3 +9,4 @@ export 'src/utils/utils.dart';
 export 'src/log/default_prety_printer.dart';
 export 'package:logger/logger.dart';
 export 'package:moor_flutter/moor_flutter.dart';
+export 'package:equatable/equatable.dart';

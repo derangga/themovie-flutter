@@ -80,7 +80,6 @@ abstract class BaseRemote {
       var transform = converter(response.data);
       return Right(transform);
     } on DioError catch (e) {
-      logError('Error ${e.type} : ${e.message}');
       return Left(Failure(
           dioError: e.type,
           code: e.response?.statusCode,

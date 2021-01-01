@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:core/core.dart';
 
 class MoviesDTO {
@@ -8,7 +10,8 @@ class MoviesDTO {
 
   MoviesDTO({this.page, this.results, this.totalPages, this.totalResults});
 
-  MoviesDTO.fromJson(Map<String, dynamic> json) {
+  MoviesDTO.fromJson(dynamic data) {
+    var json = jsonDecode(data);
     page = json['page'];
     if (json['results'] != null) {
       results = List<MovieDTO>();
@@ -77,20 +80,20 @@ class MovieDTO {
   }
 }
 
-class Movie {
-  bool adult;
-  String backdropPath;
-  int id;
-  String originalLanguage;
-  String originalTitle;
-  String overview;
-  double popularity;
-  String posterPath;
-  String releaseDate;
-  String title;
-  bool video;
-  String voteAverage;
-  int voteCount;
+class Movie extends Equatable {
+  final bool adult;
+  final String backdropPath;
+  final int id;
+  final String originalLanguage;
+  final String originalTitle;
+  final String overview;
+  final double popularity;
+  final String posterPath;
+  final String releaseDate;
+  final String title;
+  final bool video;
+  final String voteAverage;
+  final int voteCount;
 
   Movie(
       {this.adult,
@@ -106,6 +109,23 @@ class Movie {
       this.video,
       this.voteAverage,
       this.voteCount});
+
+  @override
+  List<Object> get props => [
+        adult,
+        backdropPath,
+        id,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        title,
+        video,
+        voteAverage,
+        voteCount
+      ];
 }
 
 class MovieEntity extends Table {
