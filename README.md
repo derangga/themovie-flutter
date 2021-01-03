@@ -62,8 +62,29 @@ $ ./clean-generate-code.sh
     - [Kinema Mobile App](https://www.behance.net/gallery/105169187/Kinema-Online-Movies-App-Concept-for-IOS)
     - [Netflix](https://www.behance.net/gallery/109813137/NETFLIX-APP?tracking_source=search_projects_recommended%7Cnetflix%20mobile%20app)
 
+
 2. Color Palette
 <br></br>
 <p align="center">
   <img src="screenshots/palette.png" />
 </p>
+
+## Todo 📃
+
+- [ ] Authentication
+    - [ ] Signin with apple
+    - [ ] Signin with google
+- [ ] Homepage
+- [ ] Discover tv show
+    - [ ] List of tv show
+    - [ ] Detail tv show
+- [ ] Discover movie
+    - [ ] List of discover movie
+    - [ ] Detail movie
+- [ ] Genre
+    - [ ] List of genre
+    - [ ] Movie by genre selected
+    - [ ] Tv show by genre selected
+- [ ] Upcoming movie
+- [ ] Favorite movie or tv show
+- [ ] Search movie or tv show
