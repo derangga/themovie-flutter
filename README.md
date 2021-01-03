@@ -1,9 +1,9 @@
 # Movie App Flutter
+[![Build Status](https://app.bitrise.io/app/7397ae0265733cea/status.svg?token=sKNumaLIwncD5Csa52j97w&branch=development)](https://app.bitrise.io/app/7397ae0265733cea)
 
 ## App Module Structure 🧬
 
 This app use modularization to isolates data transmission for each feature. See this [video](https://youtu.be/PZBg5DIzNww?t=281) how Florina explain about modlarization.
-<br></br>
 <p align="center">
   <img src="screenshots/modular.png" />
 </p>
@@ -13,7 +13,6 @@ Each feature module contains three layers : **Data Layer**, **Domain Layer**, **
 <p align="center">
   <img src="screenshots/diagrams.png" />
 </p>
-
 <br></br>
 
 ## Library used 🛠
@@ -61,13 +60,12 @@ $ ./clean-generate-code.sh
 1. UI/UX References
     - [Kinema Mobile App](https://www.behance.net/gallery/105169187/Kinema-Online-Movies-App-Concept-for-IOS)
     - [Netflix](https://www.behance.net/gallery/109813137/NETFLIX-APP?tracking_source=search_projects_recommended%7Cnetflix%20mobile%20app)
-
-
-2. Color Palette
 <br></br>
+2. Color Palette
 <p align="center">
   <img src="screenshots/palette.png" />
 </p>
+<br></br>
 
 ## Todo 📃
 
@@ -88,3 +86,4 @@ $ ./clean-generate-code.sh
 - [ ] Upcoming movie
 - [ ] Favorite movie or tv show
 - [ ] Search movie or tv show
+- [ ] User profile
