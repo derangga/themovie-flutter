@@ -39,22 +39,7 @@ void main() {
       'test get discover movie from bloc and emit success state',
       build: () {
         // given
-        final movieResponse = Movies(results: [
-          Movie(
-              adult: false,
-              backdropPath: '',
-              id: 0,
-              originalLanguage: '',
-              originalTitle: '',
-              overview: '',
-              popularity: 0.0,
-              posterPath: '',
-              releaseDate: '',
-              title: '',
-              video: false,
-              voteAverage: '',
-              voteCount: 0)
-        ]);
+        final movieResponse = Movies(results: [Movie()]);
         when(movieRepository.getDiscoverMovieRemote(any))
             .thenAnswer((realInvocation) async => Right(movieResponse));
 

@@ -12,7 +12,7 @@ class MovieRepositoryImpl extends MovieRepository {
   final MovieLocalSource _localSource;
 
   MovieRepositoryImpl(Logger logger, this._remoteSource, this._localSource)
-      : super(null);
+      : super(logger);
 
   @override
   Future<Either<Failure, DetailMovie>> getDetailMovieRemote(int movieId) async {

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:core/core.dart';
 
 class MoviesDTO {
@@ -10,8 +8,7 @@ class MoviesDTO {
 
   MoviesDTO({this.page, this.results, this.totalPages, this.totalResults});
 
-  MoviesDTO.fromJson(dynamic data) {
-    var json = jsonDecode(data);
+  MoviesDTO.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     if (json['results'] != null) {
       results = List<MovieDTO>();

@@ -15,7 +15,7 @@ class DioOptions extends BaseOptions {
   DioOptions()
       : super(
             baseUrl: "${FlutterConfig.get('API_GATWAY')}",
-            contentType: 'application/json',
+            contentType: Headers.jsonContentType,
             connectTimeout: 30000,
             sendTimeout: 30000,
             receiveTimeout: 30000);

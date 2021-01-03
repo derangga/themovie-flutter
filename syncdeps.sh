@@ -20,4 +20,4 @@ flutter pub get
 cd ..
 flutter pub get
 
-echo "All dependencies sync done"
+echo "[INFO] All dependencies sync done"

@@ -1,10 +1,11 @@
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mockito/mockito.dart';
 import 'package:movie/movie.dart';
 import 'package:movie/src/data/model/movie.dart';
+
+import '../../utils/dio_adapter_mock.dart';
 
 class MockMovieRemoteSource extends Mock implements MovieRemoteSource {}
 
@@ -12,19 +13,20 @@ class MockMovieLocalSource extends Mock implements MovieLocalSource {}
 
 void main() {
   final Dio dio = Dio(DioOptions());
-  final dioAdapterMock = DioAdapter();
   final MockMovieRemoteSource mockRemoteSource = MockMovieRemoteSource();
   final MockMovieLocalSource mockLocalSource = MockMovieLocalSource();
   final Logger logger = Logger();
+  DioAdapterMock dioAdapterMock;
   MovieRepository movieRepository;
 
   setUp(() {
+    dioAdapterMock = DioAdapterMock();
     dio.httpClientAdapter = dioAdapterMock;
     movieRepository =
         MovieRepositoryImpl(logger, mockRemoteSource, mockLocalSource);
   });
 
-  group('Test Movie Repository', () {
+  group('test get discover movie from repository', () {
     test('test get discover movie from repository result success', () async {
       final movieResponse = Movies();
 

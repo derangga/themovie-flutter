@@ -1,10 +1,12 @@
 import 'package:core/core.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:movie/movie.dart';
 
 part 'injection.g.dart';
 
 abstract class Injection {
+  @Register.singleton(Preferences, resolvers: {FlutterSecureStorage:null})
   @Register.singleton(LogFilter, from: DebugFilter)
   @Register.singleton(LogPrinter, from: DefaultLogPrinter)
   @Register.singleton(LogOutput, from: ConsoleOutput)
@@ -26,8 +28,7 @@ abstract class Injection {
       from: MovieRemoteSourceImpl, resolvers: {Logger: null})
   @Register.singleton(MovieRepository, from: MovieRepositoryImpl, resolvers: {
     MovieRemoteSource: null,
-    MovieLocalSource: null,
-    Logger: null
+    MovieLocalSource: null
   })
   @Register.factory(DiscoverMovieBloc,
       resolvers: {MovieRepository: null, Logger: null})

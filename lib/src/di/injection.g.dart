@@ -10,6 +10,7 @@ class _$Injection extends Injection {
   @override
   void configure() {
     final KiwiContainer container = KiwiContainer();
+    container.registerSingleton((c) => Preferences(c<FlutterSecureStorage>()));
     container.registerSingleton<LogFilter>((c) => DebugFilter());
     container.registerSingleton<LogPrinter>((c) => DefaultLogPrinter());
     container.registerSingleton<LogOutput>((c) => ConsoleOutput());
