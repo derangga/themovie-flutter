@@ -55,6 +55,9 @@ $ sudo chmod 774 clean-generate-code.sh
 $ ./clean-generate-code.sh
 ```
 
+## Attention ⚠️
+File `key.properties` on `/android` should be ignore from git. Because this project is private, so it doesn't matter. Please remember to never publicly share your keystore. See [flutter docs](https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app) about keystore.
+
 ## App Design 🎨
 
 1. UI/UX References
