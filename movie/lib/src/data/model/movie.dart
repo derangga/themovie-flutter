@@ -1,35 +1,5 @@
 import 'package:core/core.dart';
 
-class MoviesDTO {
-  int page;
-  List<MovieDTO> results;
-  int totalPages;
-  int totalResults;
-
-  MoviesDTO({this.page, this.results, this.totalPages, this.totalResults});
-
-  MoviesDTO.fromJson(Map<String, dynamic> json) {
-    page = json['page'];
-    if (json['results'] != null) {
-      results = List<MovieDTO>();
-      json['results'].forEach((v) {
-        results.add(MovieDTO.fromJson(v));
-      });
-    }
-    totalPages = json['total_pages'];
-    totalResults = json['total_results'];
-  }
-}
-
-class Movies {
-  int page;
-  List<Movie> results;
-  int totalPages;
-  int totalResults;
-
-  Movies({this.page, this.results, this.totalPages, this.totalResults});
-}
-
 class MovieDTO {
   bool adult;
   String backdropPath;
@@ -105,7 +75,20 @@ class Movie extends Equatable {
       this.title,
       this.video,
       this.voteAverage,
-      this.voteCount});
+      this.voteCount})
+      : assert(adult != null),
+        assert(backdropPath != null),
+        assert(id != null),
+        assert(originalLanguage != null),
+        assert(originalTitle != null),
+        assert(overview != null),
+        assert(popularity != null),
+        assert(posterPath != null),
+        assert(releaseDate != null),
+        assert(title != null),
+        assert(video != null),
+        assert(voteAverage != null),
+        assert(voteCount != null);
 
   @override
   List<Object> get props => [

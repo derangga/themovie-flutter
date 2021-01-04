@@ -17,7 +17,7 @@ class DiscoverMovieBloc
       yield* result.fold((failure) async* {
         yield ErrorGetDiscoverMovieState('Error : ${failure.code}');
       }, (success) async* {
-        yield SuccessGetDiscoverMovieState(success.results);
+        yield SuccessGetDiscoverMovieState(success.data);
       });
     }
   }

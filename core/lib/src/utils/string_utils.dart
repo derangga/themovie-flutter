@@ -3,7 +3,15 @@ extension StringExtension on String {
     return this ?? '';
   }
 
-  bool parseBool() {
+  bool toBool() {
     return this.toLowerCase() == 'true';
+  }
+
+  int toIntorNull() {
+    return int.tryParse(this);
+  }
+
+  double toDoubleOrNull() {
+    return double.tryParse(this);
   }
 }

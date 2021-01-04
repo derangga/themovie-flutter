@@ -13,7 +13,9 @@ abstract class BaseRemote {
   final Logger _logger;
   final String token = FlutterConfig.get('TMDB_SECRET_KEY');
 
-  BaseRemote(this._dio, this._logger);
+  BaseRemote(this._dio, this._logger)
+      : assert(_dio != null),
+        assert(_logger != null);
 
   void logDebug(String message) {
     _logger.d("$runtimeType : $message");
@@ -42,7 +44,7 @@ abstract class BaseRemote {
   Future<Either<Failure, T>> post<T>(String endpoint,
       {Map<String, dynamic> headers,
       Map<String, dynamic> body,
-      ResponseConverter<T> converter}) async {
+      @required ResponseConverter<T> converter}) async {
     Options opsi = Options(headers: headers);
     var response = await _callApi<T>(
         _dio.post(endpoint, data: body, options: opsi), converter);
@@ -53,7 +55,7 @@ abstract class BaseRemote {
     String endpoint, {
     Map<String, dynamic> headers,
     Map<String, dynamic> body,
-    ResponseConverter<T> converter,
+    @required ResponseConverter<T> converter,
   }) async {
     Options opsi = Options(headers: headers);
     var response = await _callApi(
@@ -65,7 +67,7 @@ abstract class BaseRemote {
     String endpoint, {
     Map<String, String> headers,
     Map<String, dynamic> body,
-    ResponseConverter<T> converter,
+    @required ResponseConverter<T> converter,
   }) async {
     Options opsi = Options(headers: headers);
     var response = await _callApi(

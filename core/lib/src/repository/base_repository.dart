@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 abstract class BaseRepository {
   final Logger _logger;
 
-  BaseRepository(this._logger);
+  BaseRepository(this._logger) : assert(_logger != null);
 
   void logDebug(String message) {
     _logger.d("$runtimeType : $message");

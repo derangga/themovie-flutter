@@ -1,10 +1,9 @@
 typedef Predicate<E> = bool Function(E element);
 
 extension ListExtension<E> on List<E> {
-
   /// Returns this List if it's not `null` and the empty list otherwise.
   List<E> orEmpty() {
-    return this != null ? this : [];
+    return this ?? [];
   }
 
   /// Returns the last element matching the given [predicate], or `null` if no such element was found.

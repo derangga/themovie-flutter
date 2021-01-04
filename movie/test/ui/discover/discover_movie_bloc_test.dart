@@ -22,7 +22,8 @@ void main() {
         'test get discover movie from bloc should called movieRepository.getDiscoverMovieRemote',
         () async {
       // given
-      final movieResponse = Movies();
+      final movieResponse =
+          PagingModel(data: [Movie()], page: 1, totalPage: 1, totalResults: 1);
 
       // when
       when(movieRepository.getDiscoverMovieRemote(any))
@@ -39,7 +40,8 @@ void main() {
       'test get discover movie from bloc and emit success state',
       build: () {
         // given
-        final movieResponse = Movies(results: [Movie()]);
+        final movieResponse = PagingModel(
+            data: [Movie()], page: 1, totalPage: 1, totalResults: 1);
         when(movieRepository.getDiscoverMovieRemote(any))
             .thenAnswer((realInvocation) async => Right(movieResponse));
 

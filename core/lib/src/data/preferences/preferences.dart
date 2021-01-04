@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import '../../utils/string_utils.dart';
+import '../../utils/number_utils.dart';
 
 class Preferences {
   final FlutterSecureStorage _secureStorage;
@@ -12,15 +13,30 @@ class Preferences {
     await _secureStorage.write(key: key, value: value);
   }
 
-  Future<String> getDataPreferences(String key) async {
+  Future<String> getStringPreferences(String key) async {
     return await _secureStorage.read(key: key);
   }
 
+  Future<int> getIntPreferences(String key) async {
+    var data = await _secureStorage.read(key: key);
+    return data.toIntorNull().orZero();
+  }
+
+  Future<bool> getBoolPreferences(String key) async {
+    var data = await _secureStorage.read(key: key);
+    return data.toBool();
+  }
+
+  Future<double> getDoublePreferences(String key) async {
+    var data = await _secureStorage.read(key: key);
+    return data.toDoubleOrNull().orZero();
+  }
+
   Future<void> deleteDataInPreferences(String key) async {
-    _secureStorage.delete(key: key);
+    await _secureStorage.delete(key: key);
   }
 
   Future<void> clearAllData() async {
-    _secureStorage.deleteAll();
+    await _secureStorage.deleteAll();
   }
 }

@@ -20,7 +20,8 @@ class MovieRepositoryImpl extends MovieRepository {
   }
 
   @override
-  Future<Either<Failure, Movies>> getDiscoverMovieRemote(int page) async {
+  Future<Either<Failure, PagingModel<List<Movie>>>> getDiscoverMovieRemote(
+      int page) async {
     return await _remoteSource.getDiscoverMovie(page);
   }
 

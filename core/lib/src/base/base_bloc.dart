@@ -5,7 +5,9 @@ import 'package:logger/logger.dart';
 abstract class BaseBloc<Event extends BlocEvent, State extends BlocState>
     extends Bloc<Event, State> {
   final Logger _logger;
-  BaseBloc(this._logger, [State initialState]) : super(initialState);
+  BaseBloc(this._logger, [State initialState])
+      : assert(_logger != null),
+        super(initialState);
 
   void logDebug(String message) {
     _logger.d("$runtimeType : $message");

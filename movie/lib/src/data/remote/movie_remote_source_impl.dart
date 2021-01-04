@@ -20,11 +20,18 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   }
 
   @override
-  Future<Either<Failure, Movies>> getDiscoverMovie(int page) async {
+  Future<Either<Failure, PagingModel<List<Movie>>>> getDiscoverMovie(
+      int page) async {
     String url =
         '${Endpoint.DISCOVER_MOVIE}?api_key=$token&sort_by=popularity.desc&page=$page';
-    var result = await get<Movies>(url,
-        converter: (json) => MoviesDTO.fromJson(json).toModel());
+    var result = await get<PagingModel<List<Movie>>>(
+      url,
+      converter: (response) => PagingDTO.fromJsonArray(
+              response,
+              (jsonArray) =>
+                  jsonArray.map((e) => MovieDTO.fromJson(e)).toList())
+          .toModelPaging(),
+    );
     return result;
   }
 }

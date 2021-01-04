@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 abstract class BaseLocal {
   final Logger _logger;
 
-  BaseLocal(this._logger);
+  BaseLocal(this._logger) : assert(_logger != null);
 
   void logDebug(String message) {
     _logger.d("$runtimeType : $message");

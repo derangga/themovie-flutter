@@ -4,12 +4,12 @@ import '../local/db/movie_db.dart';
 import '../model/detail_movie.dart';
 import '../model/movie.dart';
 
-extension MoviesDTOExtension on MoviesDTO {
-  Movies toModel() {
-    return Movies(
+extension PagingMovieDTOExtension on PagingDTO<List<MovieDTO>> {
+  PagingModel<List<Movie>> toModelPaging() {
+    return PagingModel(
+        data: this.data.orEmpty().map((e) => e.toModel()).toList(),
         page: this.page.orZero(),
-        results: this.results.orEmpty().map((e) => e.toModel()).toList(),
-        totalPages: this.totalPages.orZero(),
+        totalPage: this.totalPage.orZero(),
         totalResults: this.totalResults.orZero());
   }
 }

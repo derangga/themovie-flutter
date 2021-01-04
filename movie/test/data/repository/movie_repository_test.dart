@@ -28,7 +28,8 @@ void main() {
 
   group('test get discover movie from repository', () {
     test('test get discover movie from repository result success', () async {
-      final movieResponse = Movies();
+      final movieResponse =
+          PagingModel(data: [Movie()], page: 1, totalPage: 1, totalResults: 1);
 
       when(mockRemoteSource.getDiscoverMovie(any))
           .thenAnswer((realInvocation) async => Right(movieResponse));
