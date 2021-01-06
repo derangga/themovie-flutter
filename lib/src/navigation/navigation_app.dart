@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:movie/movie.dart';
 import 'package:themovie_flutter/src/ui/home_screen.dart';
+import 'package:tv/tv.dart';
 
 class NavigationApp {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -12,6 +13,9 @@ class NavigationApp {
 
       case RouteApp.DISCOVER_MOVIE_SCREEN:
         return MaterialPageRoute(builder: (_) => DiscoverMovieScreen());
+
+      case RouteApp.DISCOVER_TV_SCREEN:
+        return MaterialPageRoute(builder: (_) => DiscoverTvShowScreen());
 
       default:
         return MaterialPageRoute(

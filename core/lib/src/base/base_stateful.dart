@@ -10,12 +10,11 @@ import 'base_event_state.dart';
 
 abstract class BaseState<BlocApp extends BaseBloc, StateApp extends BlocState,
     S extends StatefulWidget> extends State<S> {
+  void setupOnInitState();
   Widget mapStateToWidget(StateApp state);
 
   BlocApp bloc;
   Logger _logger = KiwiContainer().resolve<Logger>();
-
-  void setupOnInitState();
 
   @override
   void initState() {

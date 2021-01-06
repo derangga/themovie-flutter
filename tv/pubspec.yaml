@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   dartz: ^0.9.2
+  moor_flutter: ^3.1.0
+  rxdart: ^0.25.0
 
   core:
     path: ../core
