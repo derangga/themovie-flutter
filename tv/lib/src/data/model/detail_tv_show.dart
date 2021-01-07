@@ -20,7 +20,7 @@ class DetailTvShowDTO {
   String status;
   String tagline;
   String type;
-  int voteAverage;
+  String voteAverage;
   int voteCount;
 
   DetailTvShowDTO(
@@ -76,7 +76,7 @@ class DetailTvShowDTO {
     status = json['status'];
     tagline = json['tagline'];
     type = json['type'];
-    voteAverage = json['vote_average'];
+    voteAverage = '${json['vote_average']}';
     voteCount = json['vote_count'];
   }
 }
@@ -142,7 +142,7 @@ class DetailTvShow extends Equatable {
   final String status;
   final String tagline;
   final String type;
-  final int voteAverage;
+  final String voteAverage;
   final int voteCount;
 
   DetailTvShow(

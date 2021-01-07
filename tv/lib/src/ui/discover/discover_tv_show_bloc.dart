@@ -10,7 +10,8 @@ class DiscoverTvShowBloc
   final TvShowRepository _repository;
   int _page = 1;
 
-  DiscoverTvShowBloc(Logger logger, this._repository) : super(logger, LoadingFirstPageState());
+  DiscoverTvShowBloc(Logger logger, this._repository)
+      : super(logger, LoadingFirstPageState());
 
   @override
   Stream<Transition<DiscoverTvShowEvent, DiscoverTvShowState>> transformEvents(
@@ -40,7 +41,7 @@ class DiscoverTvShowBloc
         yield ErrorGetFirstPageTvShowState(message);
       }, (success) async* {
         _page++;
-        yield SuccessGetDiscoverTvShowState(success.data, false);
+        yield SuccessGetDiscoverTvShowState(success, false);
       });
     } else if (event is GetNextPageTvShowEvent &&
         currentState is SuccessGetDiscoverTvShowState &&
@@ -55,10 +56,10 @@ class DiscoverTvShowBloc
         yield ErrorGetNextPageTvShowState(currentState.tvShows, message);
       }, (success) async* {
         _page++;
-        yield success.data.isEmpty
+        yield success.isEmpty
             ? currentState.copyWith(hasReachedMax: true)
             : SuccessGetDiscoverTvShowState(
-                currentState.tvShows + success.data,
+                currentState.tvShows + success,
                 false,
               );
       });
@@ -74,10 +75,10 @@ class DiscoverTvShowBloc
         yield ErrorGetNextPageTvShowState(currentState.tvShows, message);
       }, (success) async* {
         _page++;
-        yield success.data.isEmpty
+        yield success.isEmpty
             ? currentState.copyWith(hasReachedMax: true)
             : SuccessGetDiscoverTvShowState(
-                currentState.tvShows + success.data,
+                currentState.tvShows + success,
                 false,
               );
       });

@@ -74,30 +74,28 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorTheme.PRIMARY,
-        appBar: AppBar(
-          backgroundColor: ColorTheme.PRIMARY_DARK,
-          title: Text('Tv Show'),
-          leading: Container(
-            margin: EdgeInsets.symmetric(vertical: 8),
-            decoration: ShapeDecoration(
-                shape: CircleBorder(), color: ColorTheme.PRIMARY_DARK),
-            child: IconButton(
-                //70 72 94
-                icon: Icon(Icons.arrow_back_ios_rounded),
-                onPressed: () => Navigator.pop(context)),
-          ),
+    return Scaffold(
+      backgroundColor: ColorTheme.PRIMARY,
+      appBar: AppBar(
+        backgroundColor: ColorTheme.PRIMARY_DARK,
+        title: Text('Tv Show'),
+        leading: Container(
+          margin: EdgeInsets.symmetric(vertical: 8),
+          decoration: ShapeDecoration(
+              shape: CircleBorder(), color: ColorTheme.PRIMARY_DARK),
+          child: IconButton(
+              //70 72 94
+              icon: Icon(Icons.arrow_back_ios_rounded),
+              onPressed: () => Navigator.pop(context)),
         ),
-        body: Container(
-          child: BlocBuilder<DiscoverTvShowBloc, DiscoverTvShowState>(
-              builder: (blocCtx, state) {
-            return Container(
-              child: mapStateToWidget(state),
-            );
-          }),
-        ),
+      ),
+      body: Container(
+        child: BlocBuilder<DiscoverTvShowBloc, DiscoverTvShowState>(
+            builder: (blocCtx, state) {
+          return Container(
+            child: mapStateToWidget(state),
+          );
+        }),
       ),
     );
   }
@@ -126,37 +124,43 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
   }
 
   Widget _tvShowItem(TvShow tvShow) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: double.infinity,
-          height: 220,
-          child: FadeInImage.assetNetwork(
-            image: '${UrlConstant.IMAGE_URL}${tvShow.backdropPath}',
-            fit: BoxFit.cover,
-            placeholder: Drawable.NO_IMAGE,
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, RouteApp.DETAIL_TV_SCREEN);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            height: 220,
+            child: FadeInImage.assetNetwork(
+              image: '${UrlConstant.IMAGE_URL}${tvShow.backdropPath}',
+              fit: BoxFit.cover,
+              placeholder: Drawable.NO_IMAGE,
+            ),
           ),
-        ),
-        Padding(
-            padding: EdgeInsets.fromLTRB(8, 12, 8, 8),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              TextView('${tvShow.originalName}',
-                  textSize: 24.0, textColor: Colors.white),
-              SizedBox(height: 8),
-              Row(children: [
-                TextView('Release Date : ', textColor: ColorTheme.ACCENT),
-                SizedBox(width: 12.0),
-                TextView('Jan 19, 2021', textColor: ColorTheme.ACCENT)
-              ]),
-              SizedBox(height: 8),
-              TextView('${tvShow.overview}',
-                  overflow: TextOverflow.ellipsis,
-                  textColor: Colors.grey,
-                  maxLines: 3),
-            ])),
-      ],
+          Padding(
+              padding: EdgeInsets.fromLTRB(8, 12, 8, 8),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextView('${tvShow.originalName}',
+                        textSize: 24.0, textColor: Colors.white),
+                    SizedBox(height: 8),
+                    Row(children: [
+                      TextView('Release Date : ', textColor: ColorTheme.ACCENT),
+                      SizedBox(width: 12.0),
+                      TextView('Jan 19, 2021', textColor: ColorTheme.ACCENT)
+                    ]),
+                    SizedBox(height: 8),
+                    TextView('${tvShow.overview}',
+                        overflow: TextOverflow.ellipsis,
+                        textColor: Colors.grey,
+                        maxLines: 3),
+                  ])),
+        ],
+      ),
     );
   }
 }

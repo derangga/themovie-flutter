@@ -1,15 +1,13 @@
 import 'package:core/core.dart';
 import 'package:dio/dio.dart';
 
-class Failure extends Equatable {
+class Failure {
   final dynamic errorBody;
   final int code;
   final DioErrorType dioError;
+  String message;
 
   Failure({this.errorBody, this.code, this.dioError});
-
-  @override
-  List<Object> get props => [errorBody, code, dioError];
 }
 
 class SingleSourceFailure<T> {

@@ -36,15 +36,15 @@ extension TvShowExtension on TvShow {
     return this ??
         TvShow(
             id: 0,
-            name: '',
-            originalName: '',
-            originalLanguage: '',
-            backdropPath: '',
-            posterPath: '',
-            firstAirDate: '',
-            overview: '',
+            name: "",
+            originalName: "",
+            originalLanguage: "",
+            backdropPath: "",
+            posterPath: "",
+            firstAirDate: "",
+            overview: "",
             popularity: 0,
-            voteAverage: '',
+            voteAverage: "",
             voteCount: 0);
   }
 }
@@ -71,7 +71,35 @@ extension DetailTvShowDTOExtension on DetailTvShowDTO {
         status: this.status.orEmpty(),
         tagline: this.tagline.orEmpty(),
         type: this.type.orEmpty(),
-        voteAverage: this.voteAverage.orZero(),
+        voteAverage: this.voteAverage.orEmpty(),
         voteCount: this.voteCount.orZero());
+  }
+}
+
+extension DetailTvShowExtension on DetailTvShow {
+  DetailTvShow orEmpty() {
+    return this ??
+        DetailTvShow(
+            backdropPath: "",
+            firstAirDate: "",
+            genres: [],
+            homepage: "",
+            id: 0,
+            inProduction: false,
+            lastAirDate: "",
+            name: "",
+            numberOfEpisodes: 0,
+            numberOfSeasons: 0,
+            originalLanguage: "",
+            originalName: "",
+            overview: "",
+            popularity: 0,
+            posterPath: "",
+            seasons: [],
+            status: "",
+            tagline: "",
+            type: "",
+            voteAverage: "",
+            voteCount: 0);
   }
 }

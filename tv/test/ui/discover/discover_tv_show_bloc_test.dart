@@ -13,7 +13,7 @@ void main() {
   MockTvShowRepository tvShowRepository;
   final Logger logger = Logger();
   DiscoverTvShowBloc tvBloc;
-  final tvShowResponse = PagingModel(data: [
+  final tvShowResponse = [
     TvShow(
         id: 0,
         name: '',
@@ -26,7 +26,7 @@ void main() {
         popularity: 0,
         voteAverage: '',
         voteCount: 0)
-  ], page: 1, totalPage: 0, totalResults: 0);
+  ];
 
   setUp(() {
     tvShowRepository = MockTvShowRepository();

@@ -8,6 +8,7 @@ class TextView extends StatelessWidget {
   final FontWeight textStyle;
   final String fontFamily;
   final TextOverflow overflow;
+  final TextAlign textAlign;
 
   TextView(this.text,
       {this.maxLines,
@@ -15,7 +16,8 @@ class TextView extends StatelessWidget {
       this.textSize,
       this.textStyle,
       this.fontFamily,
-      this.overflow});
+      this.overflow,
+      this.textAlign});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class TextView extends StatelessWidget {
             fontSize: textSize,
             fontWeight: textStyle,
             fontFamily: fontFamily),
-        overflow: overflow);
+        overflow: overflow,
+        textAlign: textAlign);
   }
 }

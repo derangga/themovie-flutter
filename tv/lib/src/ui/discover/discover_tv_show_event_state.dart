@@ -1,22 +1,22 @@
 part of 'discover_tv_show_bloc.dart';
 
-abstract class DiscoverTvShowEvent implements BlocEvent {}
+abstract class DiscoverTvShowEvent extends BlocEvent {}
 
-class GetFirstPageTvShowEvent implements DiscoverTvShowEvent {
+class GetFirstPageTvShowEvent extends DiscoverTvShowEvent {
   final int page = 1;
 }
 
-class GetNextPageTvShowEvent implements DiscoverTvShowEvent {}
+class GetNextPageTvShowEvent extends DiscoverTvShowEvent {}
 
-class RetryNextPageEvent implements DiscoverTvShowEvent {}
+class RetryNextPageEvent extends DiscoverTvShowEvent {}
 
 /// State
 
-abstract class DiscoverTvShowState implements BlocState {}
+abstract class DiscoverTvShowState extends BlocState {}
 
-class LoadingFirstPageState implements DiscoverTvShowState {}
+class LoadingFirstPageState extends DiscoverTvShowState {}
 
-class LoadingRetryNextPageState implements DiscoverTvShowState {
+class LoadingRetryNextPageState extends DiscoverTvShowState {
   final List<TvShow> tvShows;
   LoadingRetryNextPageState(this.tvShows);
 
@@ -25,21 +25,22 @@ class LoadingRetryNextPageState implements DiscoverTvShowState {
   }
 }
 
-class ErrorGetFirstPageTvShowState implements DiscoverTvShowState {
+class ErrorGetFirstPageTvShowState extends DiscoverTvShowState {
   final String message;
   ErrorGetFirstPageTvShowState(this.message);
 }
 
-class ErrorGetNextPageTvShowState implements DiscoverTvShowState {
+class ErrorGetNextPageTvShowState extends DiscoverTvShowState {
   final String message;
   final List<TvShow> tvShows;
   ErrorGetNextPageTvShowState(this.tvShows, this.message);
   copyWith({List<TvShow> nextTvShows, bool hasReachedMax}) {
-    return ErrorGetNextPageTvShowState(nextTvShows ?? this.tvShows, message ?? this.message);
+    return ErrorGetNextPageTvShowState(
+        nextTvShows ?? this.tvShows, message ?? this.message);
   }
 }
 
-class SuccessGetDiscoverTvShowState implements DiscoverTvShowState {
+class SuccessGetDiscoverTvShowState extends DiscoverTvShowState {
   final List<TvShow> tvShows;
   final bool hasReachedMax;
   SuccessGetDiscoverTvShowState(this.tvShows, this.hasReachedMax);

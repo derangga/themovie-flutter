@@ -1,0 +1,49 @@
+{
+    "page": 1,
+    "results": [
+      {
+        "poster_path": "/tZ0jXOeYBWPZ0OWzUhTlYvMF7YR.jpg",
+        "vote_average": 8,
+        "original_name": "ドラゴンボール",
+        "origin_country": [
+          "JP"
+        ],
+        "vote_count": 1495,
+        "id": 12609,
+        "backdrop_path": "/yXggMemopUDHwPgmi6X9Wh2BQra.jpg",
+        "first_air_date": "1986-02-26",
+        "genre_ids": [
+          35,
+          10765,
+          16,
+          10759
+        ],
+        "overview": "Long ago in the mountains, a fighting master known as Gohan discovered a strange boy whom he named Goku. Gohan raised him and trained Goku in martial arts until he died. The young and very strong boy was on his own, but easily managed. Then one day, Goku met a teenage girl named Bulma, whose search for the mystical Dragon Balls brought her to Goku's home. Together, they set off to find all seven and to grant her wish.",
+        "original_language": "ja",
+        "name": "Dragon Ball",
+        "popularity": 9.563
+      },
+      {
+        "original_language": "en",
+        "poster_path": "/rVMdobVcVKlsqjHvVbx4UNYEXoW.jpg",
+        "vote_average": 8.3,
+        "original_name": "Kickin' It",
+        "origin_country": [
+          "US"
+        ],
+        "id": 32716,
+        "vote_count": 53,
+        "overview": "Kickin' It is an American martial arts inspired comedy television series, which debuted on June 13, 2011 on Disney XD. Created and executive produced by Jim O'Doherty, the series is rated TV-Y7 and follows the karate instructor at an under-performing martial arts academy, played by Jason Earles, and his five misfit students, played by Leo Howard, Dylan Riley Snyder, Mateo Arias, Olivia Holt and Alex Christian Jones.\n\nOn September 20, 2011, Disney XD announced the series had been renewed for a second season. The show's second season premiered on April 2, 2012. Disney XD announced on November 5, 2012 that the series had been renewed for a third season and would go into production in January 2013. The third season premiered on April 1, 2013. Alex Christian Jones is not a main cast member for the third season. In August 2013, Disney XD ordered a fourth season of the series, which is scheduled to air in 2014. Olivia Holt is leaving the fourth season cast to star in the Disney Channel series I Didn't Do It.",
+        "name": "Kickin' It",
+        "backdrop_path": "/oOCTtjGsLw9kZqvtJEWHpAxuCMJ.jpg",
+        "first_air_date": "2011-06-13",
+        "genre_ids": [
+          10759,
+          35
+        ],
+        "popularity": 14.935
+      }
+    ],
+    "total_pages": 4,
+    "total_results": 70
+  }
