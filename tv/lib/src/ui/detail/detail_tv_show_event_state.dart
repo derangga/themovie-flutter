@@ -9,6 +9,14 @@ class GetDetailTvShowEvent extends DetailTvShowEvent {
 
 abstract class DetailTvShowState extends BlocState {}
 
-class SuccessGetDetailTvShowState extends DetailTvShowState {}
+class LoadingState extends DetailTvShowState {}
 
-class ErrorGetDetailTvShowState extends DetailTvShowState {}
+class SuccessGetDetailTvShowState extends DetailTvShowState {
+  final DetailTvShowContent detailTvShowContent;
+  SuccessGetDetailTvShowState(this.detailTvShowContent);
+}
+
+class ErrorGetDetailTvShowState extends DetailTvShowState {
+  final String message;
+  ErrorGetDetailTvShowState(this.message);
+}

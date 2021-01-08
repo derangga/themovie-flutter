@@ -17,6 +17,10 @@ class NavigationApp {
       case RouteApp.DISCOVER_TV_SCREEN:
         return MaterialPageRoute(builder: (_) => DiscoverTvShowScreen());
 
+      case RouteApp.DETAIL_TV_SCREEN:
+        final int tvShowId = settings.arguments as int;
+        return MaterialPageRoute(builder: (_) => DetailTvShowScreen(tvShowId));
+
       default:
         return MaterialPageRoute(
             builder: (_) => UndefinedView(

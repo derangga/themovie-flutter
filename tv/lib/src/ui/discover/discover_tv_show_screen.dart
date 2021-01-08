@@ -126,7 +126,8 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
   Widget _tvShowItem(TvShow tvShow) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, RouteApp.DETAIL_TV_SCREEN);
+        Navigator.pushNamed(context, RouteApp.DETAIL_TV_SCREEN,
+            arguments: tvShow.id);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

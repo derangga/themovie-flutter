@@ -32,7 +32,7 @@ class TvShowRemoteSourceImpl extends TvShowRemoteSource {
   @override
   Future<Either<Failure, DetailTvShow>> getDetailTvShow(int tvShowId) async {
     String url =
-        '${Endpoint.DETAIL_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}';
+        '${Endpoint.DETAIL_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}?api_key=$token';
     final result = await get<DetailTvShow>(url,
         converter: (response) => DetailTvShowDTO.fromJson(response).toModel());
     return result;
@@ -41,7 +41,7 @@ class TvShowRemoteSourceImpl extends TvShowRemoteSource {
   @override
   Future<Either<Failure, List<Cast>>> getCastAndCrew(int tvShowId) async {
     String url =
-        '${Endpoint.CREDITS_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}';
+        '${Endpoint.CREDITS_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}?api_key=$token';
     final result = await get<List<Cast>>(url, converter: (response) {
       final casts = List<Cast>();
       if (response['cast'] != null) {
@@ -58,7 +58,7 @@ class TvShowRemoteSourceImpl extends TvShowRemoteSource {
   Future<Either<Failure, List<TvShow>>> getSimilarTvShow(
       int tvShowId, int page) async {
     String url =
-        '${Endpoint.SIMILAR_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}';
+        '${Endpoint.SIMILAR_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}?api_key=$token';
     final result = await get<List<TvShow>>(url, converter: (response) {
       final tvShows = List<TvShow>();
       if (response['results'] != null) {

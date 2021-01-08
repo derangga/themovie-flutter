@@ -14,7 +14,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<DiscoverMovieBloc>(
               create: (ctx) => KiwiContainer().resolve<DiscoverMovieBloc>()),
           BlocProvider<DiscoverTvShowBloc>(
-              create: (ctx) => KiwiContainer().resolve<DiscoverTvShowBloc>())
+              create: (ctx) => KiwiContainer().resolve<DiscoverTvShowBloc>()),
+          BlocProvider<DetailTvShowBloc>(
+              create: (ctx) => KiwiContainer().resolve<DetailTvShowBloc>())
         ],
         child: MaterialApp(
           title: 'Flutter Clean Arch Demo',

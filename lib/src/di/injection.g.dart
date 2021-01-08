@@ -41,5 +41,7 @@ class _$Injection extends Injection {
         (c) => DetailMovieBloc(c<Logger>(), c<MovieRepository>()));
     container.registerFactory(
         (c) => DiscoverTvShowBloc(c<Logger>(), c<TvShowRepository>()));
+    container.registerFactory(
+        (c) => DetailTvShowBloc(c<Logger>(), c<TvShowRepository>()));
   }
 }

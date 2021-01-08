@@ -23,23 +23,15 @@ abstract class Injection {
     Interceptor: null,
     DefaultHttpClientAdapter: null
   })
-  @Register.singleton(MovieLocalSource,
-      from: MovieLocalSourceImpl, resolvers: {MovieDao: null})
-  @Register.singleton(MovieRemoteSource,
-      from: MovieRemoteSourceImpl, resolvers: {Dio: null, Logger: null})
-  @Register.singleton(TvShowRemoteSource,
-      from: TvShowRemoteSourceImpl, resolvers: {Dio: null, Logger: null})
-  @Register.singleton(TvShowRepository,
-      from: TvShowRepositoryImpl,
-      resolvers: {Logger: null, TvShowRemoteSource: null})
-  @Register.singleton(MovieRepository,
-      from: MovieRepositoryImpl,
-      resolvers: {MovieRemoteSource: null, MovieLocalSource: null})
-  @Register.factory(DiscoverMovieBloc,
-      resolvers: {MovieRepository: null, Logger: null})
-  @Register.factory(DetailMovieBloc,
-      resolvers: {MovieRepository: null, Logger: null})
-  @Register.factory(DiscoverTvShowBloc, resolvers: {TvShowRepository: null})
+  @Register.singleton(MovieLocalSource, from: MovieLocalSourceImpl)
+  @Register.singleton(MovieRemoteSource, from: MovieRemoteSourceImpl)
+  @Register.singleton(TvShowRemoteSource, from: TvShowRemoteSourceImpl)
+  @Register.singleton(TvShowRepository, from: TvShowRepositoryImpl)
+  @Register.singleton(MovieRepository, from: MovieRepositoryImpl)
+  @Register.factory(DiscoverMovieBloc)
+  @Register.factory(DetailMovieBloc)
+  @Register.factory(DiscoverTvShowBloc)
+  @Register.factory(DetailTvShowBloc)
   void configure();
 }
 
