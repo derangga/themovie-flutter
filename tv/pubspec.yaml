@@ -26,6 +26,8 @@ dev_dependencies:
   build_runner: ^1.10.0
   mockito: ^4.1.0
   bloc_test: ^7.1.0
+  test: ^1.15.7
+  test_coverage: ^0.4.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
