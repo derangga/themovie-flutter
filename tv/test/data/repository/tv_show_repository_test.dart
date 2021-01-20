@@ -5,13 +5,11 @@ import 'package:mockito/mockito.dart';
 import 'package:tv/src/data/model/cast_and_crew.dart';
 import 'package:tv/src/data/model/detail_tv_show.dart';
 import 'package:tv/src/data/model/tv_show.dart';
-import 'package:tv/src/data/remote/tv_show_remote_source.dart';
 import 'package:tv/src/data/repository/tv_show_repository.dart';
 import 'package:tv/src/data/repository/tv_show_repository_impl.dart';
 
 import '../../utils/dio_adapter_mock.dart';
-
-class MockTvShowRemoteSource extends Mock implements TvShowRemoteSource {}
+import 'mock_tv_show_remote_source.dart';
 
 void main() {
   final Dio dio = Dio(DioOptions());

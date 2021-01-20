@@ -29,7 +29,7 @@ class PortraitContent extends StatelessWidget {
       margin: margin,
       padding: EdgeInsets.only(bottom: 12.0),
       decoration: BoxDecoration(
-          color: ColorTheme.PRIMARY_DARK,
+          color: ColorTheme.primaryDark,
           borderRadius: BorderRadius.circular(8.0)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

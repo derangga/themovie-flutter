@@ -29,8 +29,10 @@ class _DetailTvShowScreenState
   Widget mapStateToWidget(DetailTvShowState state) {
     if (state is SuccessGetDetailTvShowState) {
       return _detailTvView(state.detailTvShowContent);
-    } else if (state is ErrorGetDetailTvShowState) {}
-    return DetailShimmer();
+    } else if (state is ErrorGetDetailTvShowState) {
+      return Container();
+    } else
+      return DetailShimmer();
   }
 
   @override
@@ -38,7 +40,7 @@ class _DetailTvShowScreenState
     _size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        color: Colors.black,
+        color: ColorTheme.primaryDark,
         child: BlocBuilder<DetailTvShowBloc, DetailTvShowState>(
             builder: (ctx, state) => mapStateToWidget(state)),
       ),
@@ -82,7 +84,7 @@ class _DetailTvShowScreenState
             builder: (context, scrollController) {
               return Container(
                   decoration: BoxDecoration(
-                      color: ColorTheme.PRIMARY_DARK.withOpacity(0.9),
+                      color: ColorTheme.primaryDark.withOpacity(0.9),
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(16.0),
                           topLeft: Radius.circular(16.0))),
@@ -183,7 +185,7 @@ class _DetailTvShowScreenState
                                             )
                                           ],
                                         ),
-                                        color: ColorTheme.ACCENT,
+                                        color: ColorTheme.accent,
                                         onPressed: () {},
                                       ),
                                     ),
@@ -198,11 +200,11 @@ class _DetailTvShowScreenState
                                           children: [
                                             TextView('Favorite',
                                                 textSize: 16.0,
-                                                textColor: ColorTheme.ACCENT),
+                                                textColor: ColorTheme.accent),
                                             SizedBox(width: 8.0),
                                             Icon(
                                               Icons.favorite_border_outlined,
-                                              color: ColorTheme.ACCENT,
+                                              color: ColorTheme.accent,
                                             )
                                           ],
                                         ),
@@ -213,7 +215,7 @@ class _DetailTvShowScreenState
                               ),
                               SizedBox(height: 32.0),
                               Container(
-                                color: ColorTheme.PRIMARY,
+                                color: ColorTheme.primary,
                                 padding: EdgeInsets.symmetric(vertical: 16.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,7 +244,7 @@ class _DetailTvShowScreenState
                               ),
                               SizedBox(height: 24.0),
                               Container(
-                                color: ColorTheme.PRIMARY,
+                                color: ColorTheme.primary,
                                 padding: EdgeInsets.symmetric(vertical: 16.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,7 +286,7 @@ class _DetailTvShowScreenState
     return ListView.separated(
       separatorBuilder: (ctx, position) => Container(
         width: 12.0,
-        color: ColorTheme.PRIMARY,
+        color: ColorTheme.primary,
       ),
       scrollDirection: Axis.horizontal,
       itemCount: castAndCrew.length,
@@ -314,7 +316,7 @@ class _DetailTvShowScreenState
     return ListView.separated(
       separatorBuilder: (ctx, position) => Container(
         width: 12.0,
-        color: ColorTheme.PRIMARY,
+        color: ColorTheme.primary,
       ),
       scrollDirection: Axis.horizontal,
       itemCount: tvShows.length,

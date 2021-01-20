@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:logger/logger.dart';
 import 'package:dartz/dartz.dart';
+import 'package:tv/src/data/model/videos.dart';
 import '../model/cast_and_crew.dart';
 import '../model/detail_tv_show.dart';
 import '../model/detail_tv_show_content.dart';
@@ -71,5 +72,10 @@ class TvShowRepositoryImpl extends TvShowRepository {
       return Right(detailContent);
     } else
       return Left(failedGetContent);
+  }
+
+  @override
+  Future<Either<Failure, List<Video>>> getTvShowTrailer(int tvShowId) async {
+    return await _remoteSource.getTvShowTrailer(tvShowId);
   }
 }

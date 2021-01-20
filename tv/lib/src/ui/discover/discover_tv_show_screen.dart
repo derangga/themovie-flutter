@@ -11,7 +11,7 @@ class DiscoverTvShowScreen extends StatefulWidget {
 class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
     DiscoverTvShowState, DiscoverTvShowScreen> {
   Color gradientStart = Colors.transparent;
-  Color gradientEnd = ColorTheme.PRIMARY_DARK;
+  Color gradientEnd = ColorTheme.primaryDark;
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
 
@@ -60,7 +60,7 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0)),
                 child: TextView('Retry', textColor: Colors.white),
-                color: ColorTheme.ACCENT,
+                color: ColorTheme.accent,
                 onPressed: () {})
           ],
         ),
@@ -75,14 +75,14 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorTheme.PRIMARY,
+      backgroundColor: ColorTheme.primary,
       appBar: AppBar(
-        backgroundColor: ColorTheme.PRIMARY_DARK,
+        backgroundColor: ColorTheme.primaryDark,
         title: Text('Tv Show'),
         leading: Container(
           margin: EdgeInsets.symmetric(vertical: 8),
           decoration: ShapeDecoration(
-              shape: CircleBorder(), color: ColorTheme.PRIMARY_DARK),
+              shape: CircleBorder(), color: ColorTheme.primaryDark),
           child: IconButton(
               //70 72 94
               icon: Icon(Icons.arrow_back_ios_rounded),
@@ -105,7 +105,7 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
       String error}) {
     return ListView.separated(
         separatorBuilder: (ctx, position) =>
-            Container(height: 12.0, color: ColorTheme.PRIMARY),
+            Container(height: 12.0, color: ColorTheme.primary),
         controller: _scrollController,
         itemCount: hasReachBottom ? tvShows.length : tvShows.length + 1,
         itemBuilder: (ctx, position) {
@@ -150,9 +150,9 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
                         textSize: 24.0, textColor: Colors.white),
                     SizedBox(height: 8),
                     Row(children: [
-                      TextView('Release Date : ', textColor: ColorTheme.ACCENT),
+                      TextView('Release Date : ', textColor: ColorTheme.accent),
                       SizedBox(width: 12.0),
-                      TextView('Jan 19, 2021', textColor: ColorTheme.ACCENT)
+                      TextView('Jan 19, 2021', textColor: ColorTheme.accent)
                     ]),
                     SizedBox(height: 8),
                     TextView('${tvShow.overview}',
