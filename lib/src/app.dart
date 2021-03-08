@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:core/core.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:movie/movie.dart';
+import 'package:tv/tv.dart';
 
 import 'navigation/navigation_app.dart';
 
@@ -11,7 +12,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider<DiscoverMovieBloc>(
-              create: (ctx) => KiwiContainer().resolve<DiscoverMovieBloc>())
+              create: (ctx) => KiwiContainer().resolve<DiscoverMovieBloc>()),
+          BlocProvider<DiscoverTvShowBloc>(
+              create: (ctx) => KiwiContainer().resolve<DiscoverTvShowBloc>()),
+          BlocProvider<DetailTvShowBloc>(
+              create: (ctx) => KiwiContainer().resolve<DetailTvShowBloc>())
         ],
         child: MaterialApp(
           title: 'Flutter Clean Arch Demo',

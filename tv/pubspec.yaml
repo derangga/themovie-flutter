@@ -12,6 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
   dartz: ^0.9.2
+  moor_flutter: ^3.1.0
+  rxdart: ^0.25.0
+  shimmer: ^1.1.2
 
   core:
     path: ../core
@@ -21,6 +24,10 @@ dev_dependencies:
     sdk: flutter
   moor_generator: ^3.3.1
   build_runner: ^1.10.0
+  mockito: ^4.1.0
+  bloc_test: ^7.1.0
+  test: ^1.15.7
+  test_coverage: ^0.4.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
