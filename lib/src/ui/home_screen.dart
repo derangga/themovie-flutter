@@ -1,5 +1,5 @@
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:themovie_flutter/src/navigation/route_app.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
