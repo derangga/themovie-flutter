@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:core/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:movie/movie.dart';
-import 'package:tv/tv.dart';
-
+import 'feature/movie/detail/detail_movie_bloc.dart';
+import 'feature/movie/discover/discover_movie_bloc.dart';
+import 'feature/tv_show/detail/detail_tv_show_bloc.dart';
+import 'feature/tv_show/discover/discover_tv_show_bloc.dart';
+import 'interaction/theme_utils.dart';
 import 'navigation/navigation_app.dart';
+import 'navigation/route_app.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -16,14 +19,13 @@ class MyApp extends StatelessWidget {
           BlocProvider<DiscoverTvShowBloc>(
               create: (ctx) => KiwiContainer().resolve<DiscoverTvShowBloc>()),
           BlocProvider<DetailTvShowBloc>(
-              create: (ctx) => KiwiContainer().resolve<DetailTvShowBloc>())
+              create: (ctx) => KiwiContainer().resolve<DetailTvShowBloc>()),
+          BlocProvider<DetailMovieBloc>(
+              create: (ctx) => KiwiContainer().resolve<DetailMovieBloc>())
         ],
         child: MaterialApp(
-          title: 'Flutter Clean Arch Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
+          debugShowCheckedModeBanner: false,
+          theme: MyThemes.darkTheme,
           onGenerateRoute: NavigationApp.generateRoute,
           initialRoute: RouteApp.HOME_SCREEN,
         ));
