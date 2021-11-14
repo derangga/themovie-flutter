@@ -2,11 +2,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 
-typedef ArrayParser<T> = T Function(List<dynamic> jsonArray);
+typedef ArrayParser<T> = T Function(List<dynamic>? jsonArray);
 typedef Parser<T> = T Function(dynamic json);
 
 class ListGenreDTO<T> {
-  T data;
+  late T data;
 
   ListGenreDTO.fromJsonArray(
       Map<String, dynamic> json, ArrayParser<T> parserArray) {
@@ -21,12 +21,12 @@ class ListGenreDTO<T> {
 class ListGenre<T> {
   T data;
 
-  ListGenre({@required this.data}) : assert(data != null);
+  ListGenre({required this.data}) : assert(data != null);
 }
 
 class GenreDTO {
-  int id;
-  String name;
+  int? id;
+  String? name;
 
   GenreDTO({this.id, this.name});
 
@@ -37,16 +37,16 @@ class GenreDTO {
 }
 
 class Genre extends Equatable {
-  final int id;
-  final String name;
+  final int? id;
+  final String? name;
 
   Genre({this.id, this.name});
 
   @override
-  List<Object> get props => [id, name];
+  List<Object?> get props => [id, name];
 }
 
 class GenreMovieEntity extends Table {
-  IntColumn get id => integer()();
-  TextColumn get name => text()();
+  IntColumn? get id => integer()();
+  TextColumn? get name => text()();
 }

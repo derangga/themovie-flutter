@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:logger/logger.dart';
+import '../../logger/app_logger.dart';
 import '../model/cast_and_crew.dart';
 import '../model/genre.dart';
 import '../config/failure.dart';
@@ -13,10 +13,10 @@ import 'endpoint.dart';
 import 'movie_remote_source.dart';
 
 class MovieRemoteSourceImpl extends MovieRemoteSource {
-  MovieRemoteSourceImpl(Dio dio, Logger logger) : super(dio, logger);
+  MovieRemoteSourceImpl(Dio dio, AppLogger logger) : super(dio, logger);
 
   @override
-  Future<Either<Failure, DetailMovie>> getDetailMovie(int movieId) async {
+  Future<Either<Failure, DetailMovie>> getDetailMovie(int? movieId) async {
     String url =
         "${Endpoint.DETAIL_MOVIE.replaceAll(Endpoint.MOVIE_ID, '$movieId')}?api_key=$token";
     final result = await get<DetailMovie>(url,
@@ -49,14 +49,14 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
       converter: (response) => ListGenreDTO.fromJsonArray(
               response,
               (jsonArray) =>
-                  jsonArray.map((e) => GenreDTO.fromJson(e)).toList())
+                  jsonArray!.map((e) => GenreDTO.fromJson(e)).toList())
           .toGenreModelPaging(),
     );
     return result;
   }
 
   @override
-  Future<Either<Failure, List<Cast>>> getCastAndCrew(int movieId) async {
+  Future<Either<Failure, List<Cast>>> getCastAndCrew(int? movieId) async {
     String url =
         '${Endpoint.CREDITS_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=$token';
     final result = await get<List<Cast>>(url, converter: (response) {
@@ -72,7 +72,7 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getSimilarMovie(int movieId) async {
+  Future<Either<Failure, List<Movie>>> getSimilarMovie(int? movieId) async {
     String url =
         '${Endpoint.SIMILIAR_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=$token&sort_by=popularity.desc';
     final result = await get<List<Movie>>(url, converter: (response) {

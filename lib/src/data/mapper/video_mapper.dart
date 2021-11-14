@@ -1,22 +1,28 @@
 import '../model/videos.dart';
-import '../../utils/extension/string_utils.dart';
-import '../../utils/extension/number_utils.dart';
 
-extension VideoDTOExtension on VideoDTO {
+extension VideoDTOExtension on VideoDTO? {
   Video toModel() {
     return Video(
-        id: this.id.orEmpty(),
-        key: this.key.orEmpty(),
-        name: this.name.orEmpty(),
-        site: this.site.orEmpty(),
-        size: this.size.orZero(),
-        type: this.type.orEmpty());
+      id: this?.id ?? '',
+      key: this?.key ?? '',
+      name: this?.name ?? '',
+      site: this?.site ?? '',
+      size: this?.size ?? 0,
+      type: this?.type ?? '',
+    );
   }
 }
 
-extension VideoExtension on Video {
+extension VideoExtension on Video? {
   Video orEmpty() {
     return this ??
-        Video(id: "", key: "", name: "", site: "", size: 0, type: "");
+        Video(
+          id: "",
+          key: "",
+          name: "",
+          site: "",
+          size: 0,
+          type: "",
+        );
   }
 }

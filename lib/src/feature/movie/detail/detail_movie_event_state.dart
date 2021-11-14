@@ -10,13 +10,13 @@ class SuccessGetDetailMovie extends DetailMovieState {
 }
 
 class ErrorGetDetailMovie extends DetailMovieState {
-  final String message;
+  final String? message;
   ErrorGetDetailMovie(this.message);
 }
 
 abstract class DetailMovieEvent implements BlocEvent {}
 
 class GetDetailMovieEvent extends DetailMovieEvent {
-  final int movieId;
+  final int? movieId;
   GetDetailMovieEvent(this.movieId);
 }

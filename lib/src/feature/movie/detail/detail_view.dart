@@ -6,7 +6,7 @@ class DetailView extends StatefulWidget {
 }
 
 class _DetailViewState extends State<DetailView> {
-  Size _size;
+  late Size _size;
   Color gradientStart = Colors.transparent;
   Color gradientEnd = Colors.black;
 
@@ -253,7 +253,7 @@ class _DetailViewState extends State<DetailView> {
   }
 
   Widget TextView(String title,
-      {Color textColor, double textSize, TextAlign textAlign}) {
+      {Color? textColor, double? textSize, TextAlign? textAlign}) {
     return Text(
       title,
       style: TextStyle(color: textColor, fontSize: textSize),

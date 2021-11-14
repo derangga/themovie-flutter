@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 
 class CastAndCrewDTO {
-  List<CastDTO> castDto;
-  int id;
+  List<CastDTO>? castDto;
+  int? id;
 
   CastAndCrewDTO({this.castDto, this.id});
 
   CastAndCrewDTO.fromJson(Map<String, dynamic> json) {
     if (json['cast'] != null) {
-      castDto = List<CastDTO>();
+      castDto = List.empty(growable: true);
       json['cast'].forEach((v) {
-        castDto.add(CastDTO.fromJson(v));
+        castDto!.add(CastDTO.fromJson(v));
       });
     }
     id = json['id'];
@@ -18,13 +18,13 @@ class CastAndCrewDTO {
 }
 
 class CastDTO {
-  int id;
-  String name;
-  String originalName;
-  double popularity;
-  String profilePath;
-  String character;
-  String creditId;
+  int? id;
+  String? name;
+  String? originalName;
+  double? popularity;
+  String? profilePath;
+  String? character;
+  String? creditId;
 
   CastDTO(
       {this.id,
@@ -56,22 +56,22 @@ class Cast extends Equatable {
   final String creditId;
 
   Cast(
-      {this.id,
-      this.name,
-      this.originalName,
-      this.popularity,
-      this.profilePath,
-      this.character,
-      this.creditId})
-      : assert(id != null),
-        assert(name != null),
-        assert(originalName != null),
-        assert(popularity != null),
-        assert(profilePath != null),
-        assert(character != null),
-        assert(creditId != null);
+      {required this.id,
+      required this.name,
+      required this.originalName,
+      required this.popularity,
+      required this.profilePath,
+      required this.character,
+      required this.creditId});
 
   @override
-  List<Object> get props =>
-      [id, name, originalName, popularity, profilePath, character, creditId];
+  List<Object> get props => [
+        id,
+        name,
+        originalName,
+        popularity,
+        profilePath,
+        character,
+        creditId,
+      ];
 }

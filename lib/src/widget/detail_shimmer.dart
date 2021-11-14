@@ -13,8 +13,8 @@ class DetailShimmer extends StatelessWidget {
       height: size.height,
       padding: EdgeInsets.only(top: 12, left: 12, right: 12),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[600],
-        highlightColor: Colors.grey[700],
+        baseColor: Colors.grey[600]!,
+        highlightColor: Colors.grey[700]!,
         enabled: true,
         child: ListView.builder(
             itemCount: item,

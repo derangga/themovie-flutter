@@ -13,9 +13,17 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(title: Text('Home')),
       body: Container(
         child: Center(
-          child: RaisedButton(onPressed: () {
-            Navigator.pushNamed(context, RouteApp.DISCOVER_MOVIE_SCREEN);
-          }),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              RaisedButton(onPressed: () {
+                Navigator.pushNamed(context, RouteApp.DISCOVER_MOVIE_SCREEN);
+              }),
+              RaisedButton(onPressed: () {
+                Navigator.pushNamed(context, RouteApp.DISCOVER_TV_SCREEN);
+              })
+            ],
+          ),
         ),
       ),
     );

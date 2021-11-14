@@ -11,39 +11,35 @@ class GenreMovieEntityData extends DataClass
     implements Insertable<GenreMovieEntityData> {
   final int id;
   final String name;
-  GenreMovieEntityData({@required this.id, @required this.name});
+  GenreMovieEntityData({required this.id, required this.name});
   factory GenreMovieEntityData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
+      {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
     return GenreMovieEntityData(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      name: stringType.mapFromDatabaseResponse(data['${effectivePrefix}name']),
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      name: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['id'] = Variable<int>(id);
-    }
-    if (!nullToAbsent || name != null) {
-      map['name'] = Variable<String>(name);
-    }
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
     return map;
   }
 
   GenreMovieEntityCompanion toCompanion(bool nullToAbsent) {
     return GenreMovieEntityCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      id: Value(id),
+      name: Value(name),
     );
   }
 
   factory GenreMovieEntityData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
+      {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return GenreMovieEntityData(
       id: serializer.fromJson<int>(json['id']),
@@ -51,7 +47,7 @@ class GenreMovieEntityData extends DataClass
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
@@ -59,7 +55,8 @@ class GenreMovieEntityData extends DataClass
     };
   }
 
-  GenreMovieEntityData copyWith({int id, String name}) => GenreMovieEntityData(
+  GenreMovieEntityData copyWith({int? id, String? name}) =>
+      GenreMovieEntityData(
         id: id ?? this.id,
         name: name ?? this.name,
       );
@@ -73,9 +70,9 @@ class GenreMovieEntityData extends DataClass
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode, name.hashCode));
+  int get hashCode => Object.hash(id, name);
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is GenreMovieEntityData &&
           other.id == this.id &&
@@ -90,13 +87,13 @@ class GenreMovieEntityCompanion extends UpdateCompanion<GenreMovieEntityData> {
     this.name = const Value.absent(),
   });
   GenreMovieEntityCompanion.insert({
-    @required int id,
-    @required String name,
+    required int id,
+    required String name,
   })  : id = Value(id),
         name = Value(name);
   static Insertable<GenreMovieEntityData> custom({
-    Expression<int> id,
-    Expression<String> name,
+    Expression<int>? id,
+    Expression<String>? name,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -104,7 +101,7 @@ class GenreMovieEntityCompanion extends UpdateCompanion<GenreMovieEntityData> {
     });
   }
 
-  GenreMovieEntityCompanion copyWith({Value<int> id, Value<String> name}) {
+  GenreMovieEntityCompanion copyWith({Value<int>? id, Value<String>? name}) {
     return GenreMovieEntityCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -136,40 +133,22 @@ class GenreMovieEntityCompanion extends UpdateCompanion<GenreMovieEntityData> {
 class $GenreMovieEntityTable extends GenreMovieEntity
     with TableInfo<$GenreMovieEntityTable, GenreMovieEntityData> {
   final GeneratedDatabase _db;
-  final String _alias;
+  final String? _alias;
   $GenreMovieEntityTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
-  @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn(
-      'id',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   final VerificationMeta _nameMeta = const VerificationMeta('name');
-  GeneratedTextColumn _name;
-  @override
-  GeneratedTextColumn get name => _name ??= _constructName();
-  GeneratedTextColumn _constructName() {
-    return GeneratedTextColumn(
-      'name',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
+      'name', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, name];
   @override
-  $GenreMovieEntityTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'genre_movie_entity';
   @override
-  String get $tableName => _alias ?? 'genre_movie_entity';
-  @override
-  final String actualTableName = 'genre_movie_entity';
+  String get actualTableName => 'genre_movie_entity';
   @override
   VerificationContext validateIntegrity(
       Insertable<GenreMovieEntityData> instance,
@@ -177,13 +156,13 @@ class $GenreMovieEntityTable extends GenreMovieEntity
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     } else if (isInserting) {
       context.missing(_idMeta);
     }
     if (data.containsKey('name')) {
       context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name'], _nameMeta));
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
@@ -193,9 +172,9 @@ class $GenreMovieEntityTable extends GenreMovieEntity
   @override
   Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
   @override
-  GenreMovieEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return GenreMovieEntityData.fromData(data, _db, prefix: effectivePrefix);
+  GenreMovieEntityData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return GenreMovieEntityData.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
@@ -206,11 +185,9 @@ class $GenreMovieEntityTable extends GenreMovieEntity
 
 abstract class _$GenreDb extends GeneratedDatabase {
   _$GenreDb(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $GenreMovieEntityTable _genreMovieEntity;
-  $GenreMovieEntityTable get genreMovieEntity =>
-      _genreMovieEntity ??= $GenreMovieEntityTable(this);
-  GenreDao _genreDao;
-  GenreDao get genreDao => _genreDao ??= GenreDao(this as GenreDb);
+  late final $GenreMovieEntityTable genreMovieEntity =
+      $GenreMovieEntityTable(this);
+  late final GenreDao genreDao = GenreDao(this as GenreDb);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override

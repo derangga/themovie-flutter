@@ -1,7 +1,7 @@
-import 'package:logger/logger.dart';
+import '../../logger/app_logger.dart';
 
 abstract class BaseRepository {
-  final Logger _logger;
+  final AppLogger _logger;
 
   BaseRepository(this._logger) : assert(_logger != null);
 

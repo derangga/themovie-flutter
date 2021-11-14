@@ -1,25 +1,25 @@
 import '../../data/model/genre.dart';
 
 class DetailMovieDTO {
-  bool adult;
-  String backdropPath;
-  int budget;
-  List<GenreDTO> genres;
-  String homepage;
-  int id;
-  String imdbId;
-  String originalLanguage;
-  String originalTitle;
-  String overview;
-  double popularity;
-  String posterPath;
-  String status;
-  String tagline;
-  String title;
-  String releaseDate;
-  bool video;
-  double voteAverage;
-  int voteCount;
+  bool? adult;
+  String? backdropPath;
+  int? budget;
+  List<GenreDTO>? genres;
+  String? homepage;
+  int? id;
+  String? imdbId;
+  String? originalLanguage;
+  String? originalTitle;
+  String? overview;
+  double? popularity;
+  String? posterPath;
+  String? status;
+  String? tagline;
+  String? title;
+  String? releaseDate;
+  bool? video;
+  double? voteAverage;
+  int? voteCount;
 
   DetailMovieDTO(
       {this.adult,
@@ -47,9 +47,9 @@ class DetailMovieDTO {
     backdropPath = json['backdrop_path'];
     budget = json['budget'];
     if (json['genres'] != null) {
-      genres = new List<GenreDTO>();
+      genres = List.empty(growable: true);
       json['genres'].forEach((v) {
-        genres.add(new GenreDTO.fromJson(v));
+        genres!.add(new GenreDTO.fromJson(v));
       });
     }
     homepage = json['homepage'];
@@ -71,25 +71,25 @@ class DetailMovieDTO {
 }
 
 class DetailMovie {
-  bool adult;
-  String backdropPath;
-  int budget;
-  List<Genre> genres;
-  String homepage;
-  int id;
-  String imdbId;
-  String originalLanguage;
-  String originalTitle;
-  String overview;
-  double popularity;
-  String posterPath;
-  String status;
-  String tagline;
-  String title;
-  String releaseDate;
-  bool video;
-  double voteAverage;
-  int voteCount;
+  bool? adult;
+  String? backdropPath;
+  int? budget;
+  List<Genre>? genres;
+  String? homepage;
+  int? id;
+  String? imdbId;
+  String? originalLanguage;
+  String? originalTitle;
+  String? overview;
+  double? popularity;
+  String? posterPath;
+  String? status;
+  String? tagline;
+  String? title;
+  String? releaseDate;
+  bool? video;
+  double? voteAverage;
+  int? voteCount;
 
   DetailMovie(
       {this.adult,

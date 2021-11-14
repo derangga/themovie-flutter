@@ -14,41 +14,32 @@ class RetryNextPageEvent extends DiscoverMovieEvent {}
 
 /// State
 
-abstract class DiscoverMovieState extends BlocState {}
+enum DiscoverMoviesStatus { INITIAL, LOADING, SUCCESS, FAILED }
 
-class LoadingFirstPageState extends DiscoverMovieState {}
-
-class LoadingRetryNextPageState extends DiscoverMovieState {
-  final List<Movie> movies;
-  LoadingRetryNextPageState(this.movies);
-
-  copyWith({List<Movie> nextMovies, bool hasReachedMax}) {
-    return LoadingRetryNextPageState(nextMovies ?? this.movies);
-  }
-}
-
-class ErrorGetFirstPageMovieState extends DiscoverMovieState {
-  final String message;
-  ErrorGetFirstPageMovieState(this.message);
-}
-
-class ErrorGetNextPageMovieState extends DiscoverMovieState {
-  final String message;
-  final List<Movie> movies;
-  ErrorGetNextPageMovieState(this.movies, this.message);
-  copyWith({List<Movie> nextMovies, bool hasReachedMax}) {
-    return ErrorGetNextPageMovieState(
-        nextMovies ?? this.movies, message ?? this.message);
-  }
-}
-
-class SuccessGetDiscoverMovieState extends DiscoverMovieState {
+class DiscoverMovieState extends BlocState {
+  final DiscoverMoviesStatus status;
   final List<Movie> movies;
   final bool hasReachedMax;
-  SuccessGetDiscoverMovieState(this.movies, this.hasReachedMax);
+  final String? errorMessage;
 
-  copyWith({List<Movie> nextMovies, bool hasReachedMax}) {
-    return SuccessGetDiscoverMovieState(
-        nextMovies ?? this.movies, hasReachedMax ?? this.hasReachedMax);
+  DiscoverMovieState({
+    this.status = DiscoverMoviesStatus.INITIAL,
+    this.movies = const [],
+    this.hasReachedMax = false,
+    this.errorMessage,
+  });
+
+  DiscoverMovieState copyWith({
+    DiscoverMoviesStatus? status,
+    List<Movie>? movies,
+    bool? hasReachedMax,
+    String? errorMessage,
+  }) {
+    return DiscoverMovieState(
+      status: status ?? this.status,
+      movies: movies ?? this.movies,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      errorMessage: errorMessage,
+    );
   }
 }

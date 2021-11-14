@@ -1,7 +1,8 @@
-import 'package:dio/dio.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
-import 'package:rxdart/rxdart.dart';
+import '../../../data/config/failure.dart';
+import '../../../logger/app_logger.dart';
+import '../../../utils/bloc_throttle.dart';
 import '../../../core/base/base_event_state.dart';
 import '../../../data/model/movie.dart';
 import '../../../domain/movie_repository.dart';
@@ -14,80 +15,80 @@ class DiscoverMovieBloc
   final MovieRepository _repository;
   int _page = 1;
 
-  DiscoverMovieBloc(Logger logger, this._repository)
-      : super(logger, LoadingFirstPageState());
-
-  @override
-  Stream<Transition<DiscoverMovieEvent, DiscoverMovieState>> transformEvents(
-      Stream<DiscoverMovieEvent> events, transitionFn) {
-    return super.transformEvents(
-      events.debounceTime(
-        Duration(milliseconds: 500),
-      ),
-      transitionFn,
+  DiscoverMovieBloc(AppLogger logger, this._repository)
+      : super(logger, DiscoverMovieState()) {
+    on<DiscoverMovieEvent>(
+      _fetchDiscoverMovie,
+      transformer: throttleDroppable(Duration(milliseconds: 500)),
     );
   }
 
-  @override
-  Stream<DiscoverMovieState> mapEventToState(DiscoverMovieEvent event) async* {
-    final currentState = state;
+  Future<void> _fetchDiscoverMovie(
+    DiscoverMovieEvent event,
+    Emitter<DiscoverMovieState> emit,
+  ) async {
+    if (state.hasReachedMax) return;
+
     if (event is GetFirstPageMovieEvent) {
       _page = event.page;
-      yield LoadingFirstPageState();
+      emit(DiscoverMovieState());
       final result = await _repository.getDiscoverMovieRemote(_page);
-      yield* result.fold((failure) async* {
-        String message;
-        if (failure.dioError == DioErrorType.RESPONSE) {
-          message = 'Error : ${failure.code}\nCause ${failure.errorBody}';
-        } else
-          message = 'Network failure';
-        yield ErrorGetFirstPageMovieState(message);
-      }, (success) async* {
-        _page++;
-        yield SuccessGetDiscoverMovieState(success, false);
-      });
-    } else if (event is GetNextPageMovieEvent &&
-        currentState is SuccessGetDiscoverMovieState &&
-        !_hasReachedMax(currentState)) {
+      _onGetFirstPage(emit, result);
+    } else if (event is GetNextPageMovieEvent) {
+      emit(state.copyWith(status: DiscoverMoviesStatus.LOADING));
       final result = await _repository.getDiscoverMovieRemote(_page);
-      yield* result.fold((failure) async* {
-        String message;
-        if (failure.dioError == DioErrorType.RESPONSE) {
-          message = 'Error : ${failure.code}\nCause ${failure.errorBody}';
-        } else
-          message = 'Network failure';
-        yield ErrorGetNextPageMovieState(currentState.movies, message);
-      }, (success) async* {
-        _page++;
-        yield success.isEmpty
-            ? currentState.copyWith(hasReachedMax: true)
-            : SuccessGetDiscoverMovieState(
-                currentState.movies + success,
-                false,
-              );
-      });
-    } else if (event is GetNextPageMovieEvent &&
-        currentState is ErrorGetNextPageMovieState) {
-      final result = await _repository.getDiscoverMovieRemote(_page);
-      yield* result.fold((failure) async* {
-        String message;
-        if (failure.dioError == DioErrorType.RESPONSE) {
-          message = 'Error : ${failure.code}\nCause ${failure.errorBody}';
-        } else
-          message = 'Network failure';
-        yield ErrorGetNextPageMovieState(currentState.movies, message);
-      }, (success) async* {
-        _page++;
-        yield success.isEmpty
-            ? currentState.copyWith(hasReachedMax: true)
-            : SuccessGetDiscoverMovieState(
-                currentState.movies + success,
-                false,
-              );
-      });
+      _onGetNextPage(emit, result);
     }
   }
 
-  bool _hasReachedMax(DiscoverMovieState state) =>
-      state is SuccessGetDiscoverMovieState && state.hasReachedMax;
+  void _onGetFirstPage(
+    Emitter<DiscoverMovieState> emit,
+    Either<Failure, List<Movie>> result,
+  ) {
+    result.fold((error) {
+      emit(state.copyWith(
+        status: DiscoverMoviesStatus.FAILED,
+        errorMessage: '${error.code}: ${error.errorBody}',
+      ));
+    }, (response) {
+      _page++;
+      emit(state.copyWith(
+        status: DiscoverMoviesStatus.SUCCESS,
+        movies: response,
+        hasReachedMax: false,
+      ));
+    });
+  }
+
+  void _onGetNextPage(
+    Emitter<DiscoverMovieState> emit,
+    Either<Failure, List<Movie>> result,
+  ) {
+    result.fold((error) {
+      emit(state.copyWith(
+        status: DiscoverMoviesStatus.FAILED,
+        errorMessage: '${error.code}: ${error.errorBody}',
+        hasReachedMax: false,
+      ));
+    }, (response) {
+      if (response.isNotEmpty) {
+        _page++;
+        emit(state.copyWith(
+          status: DiscoverMoviesStatus.SUCCESS,
+          movies: List.of(state.movies)..addAll(response),
+          hasReachedMax: false,
+        ));
+      } else {
+        emit(state.copyWith(
+          status: DiscoverMoviesStatus.SUCCESS,
+          hasReachedMax: true,
+        ));
+      }
+    });
+  }
+
+  bool isOnLoadingOrFailed() {
+    return state.status == DiscoverMoviesStatus.LOADING ||
+        state.status == DiscoverMoviesStatus.FAILED;
+  }
 }

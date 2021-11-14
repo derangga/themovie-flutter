@@ -5,15 +5,15 @@ import '../resources/color_theme.dart';
 class PortraitContent extends StatelessWidget {
   final double height;
   final double width;
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? margin;
   final String imageUrl;
-  final Widget content;
-  final Widget subContent;
+  final Widget? content;
+  final Widget? subContent;
 
   PortraitContent(
-      {@required this.height,
-      @required this.width,
-      @required this.imageUrl,
+      {required this.height,
+      required this.width,
+      required this.imageUrl,
       this.margin,
       this.content,
       this.subContent})

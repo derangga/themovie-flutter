@@ -16,7 +16,7 @@ import '../../../utils/extension/string_utils.dart';
 import 'detail_movie_bloc.dart';
 
 class DetailMovieScreen extends StatefulWidget {
-  final int movieId;
+  final int? movieId;
   DetailMovieScreen(this.movieId);
   @override
   _DetailMovieScreenState createState() => _DetailMovieScreenState();
@@ -24,7 +24,7 @@ class DetailMovieScreen extends StatefulWidget {
 
 class _DetailMovieScreenState
     extends BaseState<DetailMovieBloc, DetailMovieState, DetailMovieScreen> {
-  Size _size;
+  late Size _size;
   Color gradientStart = Colors.transparent;
   Color gradientEnd = Colors.black;
 
@@ -90,11 +90,11 @@ class _DetailMovieScreenState
             )),
         DraggableDetail(
           title: detailMovie.originalTitle,
-          releaseDate: detailMovie.releaseDate.convertDateFormat(
+          releaseDate: detailMovie.releaseDate!.convertDateFormat(
               DateFormat.FORMAT_YYYY_MM_DD,
               DateFormat.FORMAT_DD_MMM_COMMA_YYYY),
           voteAverage: '${detailMovie.voteAverage}',
-          genre: '${detailMovie.genres.first.name}',
+          genre: '${detailMovie.genres!.first.name}',
           overview: detailMovie.overview,
           castAndCrew: Container(
             width: _size.width,
@@ -120,7 +120,7 @@ class _DetailMovieScreenState
     );
   }
 
-  Widget _castAndCrew(List<Cast> castAndCrew, {double height, double width}) {
+  Widget _castAndCrew(List<Cast> castAndCrew, {double? height, double? width}) {
     return ListView.separated(
       separatorBuilder: (ctx, position) => Container(
         width: 12.0,
@@ -129,8 +129,8 @@ class _DetailMovieScreenState
       scrollDirection: Axis.horizontal,
       itemCount: castAndCrew.length,
       itemBuilder: (ctx, position) => PortraitContent(
-        height: height,
-        width: width,
+        height: height!,
+        width: width!,
         imageUrl:
             '${UrlConstant.IMAGE_URL}${castAndCrew[position].profilePath}',
         margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
@@ -150,7 +150,7 @@ class _DetailMovieScreenState
     );
   }
 
-  Widget _similarMovie(List<Movie> movies, {double height, double width}) {
+  Widget _similarMovie(List<Movie> movies, {double? height, double? width}) {
     return ListView.separated(
       separatorBuilder: (ctx, position) => Container(
         width: 12.0,
@@ -159,8 +159,8 @@ class _DetailMovieScreenState
       scrollDirection: Axis.horizontal,
       itemCount: movies.length,
       itemBuilder: (ctx, position) => PortraitContent(
-        height: height,
-        width: width,
+        height: height!,
+        width: width!,
         imageUrl: '${UrlConstant.IMAGE_URL}${movies[position].posterPath}',
         margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
         content: TextView(

@@ -1,14 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
+import '../../logger/app_logger.dart';
 
 import 'base_event_state.dart';
 
 abstract class BaseBloc<Event extends BlocEvent, State extends BlocState>
     extends Bloc<Event, State> {
-  final Logger _logger;
-  BaseBloc(this._logger, [State initialState])
-      : assert(_logger != null),
-        super(initialState);
+  late AppLogger _logger;
+
+  BaseBloc(this._logger, State initialState) : super(initialState);
 
   void logDebug(String message) {
     _logger.d("$runtimeType : $message");
