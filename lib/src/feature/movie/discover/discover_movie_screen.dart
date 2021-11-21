@@ -8,7 +8,7 @@ import '../../../data/model/movie.dart';
 import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
 import '../../../widget/footer_progress.dart';
-import '../../../widget/text_view.dart';
+import '../../../widget/text/text_view.dart';
 import '../../../utils/extension/context_utils.dart';
 import '../../../utils/extension/string_utils.dart';
 import 'discover_movie_bloc.dart';
@@ -162,21 +162,28 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
             ),
           ),
           Padding(
-              padding: EdgeInsets.all(8),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(movie.title,
-                        style: Theme.of(context).textTheme.headline2),
-                    Text(
-                        DateFormat("MMM dd, yyyy").format(
-                            DateTime.parse(movie.releaseDate).toLocal()),
-                        style: Theme.of(context).textTheme.bodyText2),
-                    Text(movie.overview,
-                        style: Theme.of(context).textTheme.bodyText1,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3),
-                  ])),
+            padding: EdgeInsets.fromLTRB(8, 12, 8, 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextView(
+                  movie.title,
+                  textSize: 24,
+                  bold: true,
+                ),
+                SizedBox(height: 8),
+                TextView(
+                  DateFormat("MMM dd, yyyy")
+                      .format(DateTime.parse(movie.releaseDate).toLocal()),
+                  textSize: 14,
+                ),
+                TextView(
+                  movie.overview,
+                  maxLines: 3,
+                )
+              ],
+            ),
+          ),
           SizedBox(height: 8),
         ],
       ),

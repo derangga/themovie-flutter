@@ -5,7 +5,7 @@ import '../../../resources/drawable.dart';
 import '../../../utils/date_format.dart';
 import '../../../widget/portrait_content.dart';
 import '../../../widget/rounded_button.dart';
-import '../../../widget/text_view.dart';
+import '../../../widget/text/text_view.dart';
 import '../../../core/base/base_stateful.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/cast_and_crew.dart';

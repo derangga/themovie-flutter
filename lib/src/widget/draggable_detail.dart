@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
 
 import 'rounded_button.dart';
-import 'text_view.dart';
+import 'text/text_view.dart';
 
 class DraggableDetail extends StatelessWidget {
   final String? title, releaseDate, voteAverage, genre, overview, similarTitle;
