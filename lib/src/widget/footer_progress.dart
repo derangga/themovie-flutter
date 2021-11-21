@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
-import 'package:themovie_flutter/src/widget/text_view.dart';
+import 'package:themovie_flutter/src/widget/text/text_view.dart';
 
 enum FooterLoadingState { LOADING, ERROR }
 

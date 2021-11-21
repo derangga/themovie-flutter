@@ -5,7 +5,6 @@ import 'feature/movie/detail/detail_movie_bloc.dart';
 import 'feature/movie/discover/discover_movie_bloc.dart';
 import 'feature/tv_show/detail/detail_tv_show_bloc.dart';
 import 'feature/tv_show/discover/discover_tv_show_bloc.dart';
-import 'interaction/theme_utils.dart';
 import 'navigation/navigation_app.dart';
 import 'navigation/route_app.dart';
 
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: MyThemes.darkTheme,
+          theme: ThemeData.dark(),
           onGenerateRoute: NavigationApp.generateRoute,
           initialRoute: RouteApp.HOME_SCREEN,
         ));

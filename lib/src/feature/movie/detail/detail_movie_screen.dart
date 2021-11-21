@@ -11,7 +11,7 @@ import 'package:themovie_flutter/src/utils/date_format.dart';
 import 'package:themovie_flutter/src/widget/detail_shimmer.dart';
 import 'package:themovie_flutter/src/widget/draggable_detail.dart';
 import 'package:themovie_flutter/src/widget/portrait_content.dart';
-import 'package:themovie_flutter/src/widget/text_view.dart';
+import 'package:themovie_flutter/src/widget/text/text_view.dart';
 import '../../../utils/extension/string_utils.dart';
 import 'detail_movie_bloc.dart';
 
@@ -136,7 +136,6 @@ class _DetailMovieScreenState
         margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
         content: TextView(
           '${castAndCrew[position].name}',
-          textColor: Colors.white,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
@@ -165,7 +164,6 @@ class _DetailMovieScreenState
         margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
         content: TextView(
           '${movies[position].title}',
-          textColor: Colors.white,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
