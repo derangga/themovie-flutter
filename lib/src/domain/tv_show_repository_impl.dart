@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import '../logger/app_logger.dart';
 import '../data/config/failure.dart';
 import '../data/model/videos.dart';
 import '../data/model/cast_and_crew.dart';
@@ -12,7 +11,7 @@ import 'tv_show_repository.dart';
 class TvShowRepositoryImpl extends TvShowRepository {
   final TvShowRemoteSource? _remoteSource;
 
-  TvShowRepositoryImpl(AppLogger logger, this._remoteSource) : super(logger);
+  TvShowRepositoryImpl(this._remoteSource);
 
   @override
   Future<Either<Failure, List<TvShow>>> getDiscoverTvShow(int page) async {

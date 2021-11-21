@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
-import '../../logger/app_logger.dart';
 import '../config/failure.dart';
 import '../remote/tv_show_remote_source.dart';
 import '../mapper/tv_show_mapper.dart';
@@ -13,7 +12,7 @@ import '../model/videos.dart';
 import 'endpoint.dart';
 
 class TvShowRemoteSourceImpl extends TvShowRemoteSource {
-  TvShowRemoteSourceImpl(Dio dio, AppLogger logger) : super(dio, logger);
+  TvShowRemoteSourceImpl(Dio dio) : super(dio);
 
   @override
   Future<Either<Failure, List<TvShow>>> getDiscoverTvShow(int page) async {

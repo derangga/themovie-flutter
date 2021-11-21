@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/config/failure.dart';
-import '../../../logger/app_logger.dart';
 import '../../../utils/bloc_throttle.dart';
 import '../../../core/base/base_bloc.dart';
 import '../../../core/base/base_event_state.dart';
@@ -15,8 +14,7 @@ class DiscoverTvShowBloc
   final TvShowRepository _repository;
   int _page = 1;
 
-  DiscoverTvShowBloc(AppLogger logger, this._repository)
-      : super(logger, DiscoverTvShowState()) {
+  DiscoverTvShowBloc(this._repository) : super(DiscoverTvShowState()) {
     on<DiscoverTvShowEvent>(
       _fetchDiscoverTvShow,
       transformer: throttleDroppable(Duration(milliseconds: 500)),

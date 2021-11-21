@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import '../logger/app_logger.dart';
 import '../data/model/detail_movie_content.dart';
 import '../data/config/failure.dart';
 import '../data/remote/movie_remote_source.dart';
@@ -9,7 +8,7 @@ import 'movie_repository.dart';
 class MovieRepositoryImpl extends MovieRepository {
   final MovieRemoteSource? _remoteSource;
 
-  MovieRepositoryImpl(AppLogger logger, this._remoteSource) : super(logger);
+  MovieRepositoryImpl(this._remoteSource);
 
   @override
   Future<Either<Failure?, DetailMovieContent>> getDetailMovieRemote(

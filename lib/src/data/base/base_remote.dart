@@ -1,33 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_config/flutter_config.dart';
-import '../../logger/app_logger.dart';
 import '../config/failure.dart';
 
 typedef ResponseConverter<T> = T Function(dynamic response);
 
 abstract class BaseRemote {
   final Dio _dio;
-  final AppLogger _logger;
   final String? token = FlutterConfig.get('TMDB_SECRET_KEY');
 
-  BaseRemote(this._dio, this._logger);
-
-  void logDebug(String message) {
-    _logger.d("$runtimeType : $message");
-  }
-
-  void logInfo(String message) {
-    _logger.i("$runtimeType : $message");
-  }
-
-  void logError(String message) {
-    _logger.e("$runtimeType : $message");
-  }
-
-  void logWarning(String message) {
-    _logger.w("$runtimeType : $message");
-  }
+  BaseRemote(this._dio);
 
   Future<Either<Failure, T>> get<T>(String endpoint,
       {Map<String, String>? headers,

@@ -1,4 +1,3 @@
-import 'package:logger/logger.dart';
 import '../local/db/genre_dao.dart';
 import '../local/db/genre_db.dart';
 import '../local/genre_local_source.dart';
@@ -7,7 +6,7 @@ import '../mapper/genre_mapper.dart';
 
 class GenreMovieLocalSourceImpl extends GenreMovieLocalSource {
   final GenreDao _genreDao;
-  GenreMovieLocalSourceImpl(Logger logger, this._genreDao) : super(logger);
+  GenreMovieLocalSourceImpl(this._genreDao) : super();
 
   @override
   Future deleteGenreMovie(GenreMovieEntityData genre) async {

@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import '../../logger/app_logger.dart';
 import '../model/cast_and_crew.dart';
 import '../model/genre.dart';
 import '../config/failure.dart';
@@ -13,7 +12,7 @@ import 'endpoint.dart';
 import 'movie_remote_source.dart';
 
 class MovieRemoteSourceImpl extends MovieRemoteSource {
-  MovieRemoteSourceImpl(Dio dio, AppLogger logger) : super(dio, logger);
+  MovieRemoteSourceImpl(Dio dio) : super(dio);
 
   @override
   Future<Either<Failure, DetailMovie>> getDetailMovie(int? movieId) async {
@@ -43,7 +42,6 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   @override
   Future<Either<Failure, ListGenre<List<Genre>>>> getGenreMovie() async {
     String url = '${Endpoint.GENRE_MOVIE}?api_key=$token&language=en-US';
-    logInfo('url: $url');
     final result = await get<ListGenre<List<Genre>>>(
       url,
       converter: (response) => ListGenreDTO.fromJsonArray(

@@ -29,7 +29,6 @@ extension TvShowDTOExtension on TvShowDTO? {
       posterPath: this?.posterPath ?? '',
       firstAirDate: this?.firstAirDate ?? '',
       overview: this?.overview ?? '',
-      popularity: this?.popularity ?? 0,
       voteAverage: this?.voteAverage ?? '',
       voteCount: this?.voteCount ?? 0,
     );
@@ -48,7 +47,6 @@ extension TvShowExtension on TvShow? {
           posterPath: "",
           firstAirDate: "",
           overview: "",
-          popularity: 0,
           voteAverage: "",
           voteCount: 0,
         );
