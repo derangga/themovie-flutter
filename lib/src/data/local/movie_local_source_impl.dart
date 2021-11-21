@@ -1,4 +1,3 @@
-import 'package:logger/logger.dart';
 import '../local/db/movie_dao.dart';
 import '../local/db/movie_db.dart';
 import '../local/movie_local_source.dart';
@@ -8,7 +7,7 @@ import '../mapper/movie_mapper.dart';
 class MovieLocalSourceImpl extends MovieLocalSource {
   final MovieDao _movieDao;
 
-  MovieLocalSourceImpl(Logger logger, this._movieDao) : super(logger);
+  MovieLocalSourceImpl(this._movieDao);
 
   @override
   Future deleteMovie(MovieEntityData movie) async {

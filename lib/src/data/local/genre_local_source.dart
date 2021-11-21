@@ -1,11 +1,7 @@
-import 'package:logger/logger.dart';
-import '../base/base_local.dart';
 import '../local/db/genre_db.dart';
 import '../model/genre.dart';
 
-abstract class GenreMovieLocalSource extends BaseLocal{
-  GenreMovieLocalSource(Logger logger) : super(logger);
-
+abstract class GenreMovieLocalSource {
   Future insertGenreMovie(GenreMovieEntityData genre);
 
   Future deleteGenreMovie(GenreMovieEntityData genre);

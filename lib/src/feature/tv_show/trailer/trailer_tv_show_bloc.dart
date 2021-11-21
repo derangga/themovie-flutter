@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import '../../../logger/app_logger.dart';
 import '../../../core/base/base_event_state.dart';
 import '../../../core/base/base_bloc.dart';
 import '../../../domain/tv_show_repository.dart';
@@ -11,8 +10,7 @@ class TrailerTvShowBloc
     extends BaseBloc<TrailerTvShowEvent, TrailerTvShowState> {
   final TvShowRepository _repository;
 
-  TrailerTvShowBloc(AppLogger logger, this._repository)
-      : super(logger, LoadingState());
+  TrailerTvShowBloc(this._repository) : super(LoadingState());
 
   @override
   Stream<TrailerTvShowState> mapEventToState(TrailerTvShowEvent event) async* {

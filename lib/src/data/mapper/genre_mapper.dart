@@ -24,7 +24,7 @@ extension GenreDTOExtension on GenreDTO {
 
 extension GenreEntityExtension on GenreMovieEntityData {
   Genre toModel() {
-    return Genre(id: this.id.orZero(), name: this.name!.orEmpty());
+    return Genre(id: this.id.orZero(), name: this.name.orEmpty());
   }
 }
 

@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/config/failure.dart';
-import '../../../logger/app_logger.dart';
 import '../../../utils/bloc_throttle.dart';
 import '../../../core/base/base_event_state.dart';
 import '../../../data/model/movie.dart';
@@ -15,8 +14,7 @@ class DiscoverMovieBloc
   final MovieRepository _repository;
   int _page = 1;
 
-  DiscoverMovieBloc(AppLogger logger, this._repository)
-      : super(logger, DiscoverMovieState()) {
+  DiscoverMovieBloc(this._repository) : super(DiscoverMovieState()) {
     on<DiscoverMovieEvent>(
       _fetchDiscoverMovie,
       transformer: throttleDroppable(Duration(milliseconds: 500)),

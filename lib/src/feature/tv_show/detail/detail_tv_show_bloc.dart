@@ -1,4 +1,3 @@
-import '../../../logger/app_logger.dart';
 import '../../../core/base/base_bloc.dart';
 import '../../../core/base/base_event_state.dart';
 import '../../../domain/tv_show_repository.dart';
@@ -8,8 +7,7 @@ part 'detail_tv_show_event_state.dart';
 
 class DetailTvShowBloc extends BaseBloc<DetailTvShowEvent, DetailTvShowState> {
   final TvShowRepository? _repository;
-  DetailTvShowBloc(AppLogger logger, this._repository)
-      : super(logger, LoadingState());
+  DetailTvShowBloc(this._repository) : super(LoadingState());
 
   @override
   Stream<DetailTvShowState> mapEventToState(DetailTvShowEvent event) async* {

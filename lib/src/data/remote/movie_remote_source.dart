@@ -9,7 +9,7 @@ import '../config/failure.dart';
 import '../model/movie.dart';
 
 abstract class MovieRemoteSource extends BaseRemote {
-  MovieRemoteSource(Dio dio, AppLogger logger) : super(dio, logger);
+  MovieRemoteSource(Dio dio) : super(dio);
 
   Future<Either<Failure, List<Movie>>> getDiscoverMovie(int page);
 
