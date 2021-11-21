@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
+import 'package:themovie_flutter/src/widget/loading/circular_loading_view.dart';
 import 'package:themovie_flutter/src/widget/text/text_view.dart';
 
 enum FooterLoadingState { LOADING, ERROR }
@@ -43,10 +44,9 @@ class FooterCircularProgressIndicator extends StatelessWidget {
                   )),
             ),
             Visibility(
-                visible: loadingState == FooterLoadingState.LOADING,
-                child: CircularProgressIndicator(
-                  backgroundColor: loadingColor,
-                ))
+              visible: loadingState == FooterLoadingState.LOADING,
+              child: CircularLoadingView(),
+            )
           ],
         ),
       ),

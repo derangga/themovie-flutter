@@ -4,7 +4,7 @@ import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
 import '../../../utils/date_format.dart';
 import '../../../widget/portrait_content.dart';
-import '../../../widget/rounded_button.dart';
+import '../../../widget/button/button_view.dart';
 import '../../../widget/text/text_view.dart';
 import '../../../core/base/base_stateful.dart';
 import '../../../data/config/url_constant.dart';
@@ -173,7 +173,7 @@ class _DetailTvShowScreenState
                                 child: Row(
                                   children: [
                                     Expanded(
-                                      child: RoundedButton(
+                                      child: ButtonView(
                                         radius: 8.0,
                                         height: 46.0,
                                         width: _size.width,
