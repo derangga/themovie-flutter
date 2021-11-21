@@ -12,41 +12,31 @@ class RetryNextPageEvent extends DiscoverTvShowEvent {}
 
 /// State
 
-abstract class DiscoverTvShowState extends BlocState {}
+enum DiscoverTvShowStatus { INITIAL, LOADING, SUCCESS, FAILED }
 
-class LoadingFirstPageState extends DiscoverTvShowState {}
-
-class LoadingRetryNextPageState extends DiscoverTvShowState {
-  final List<TvShow> tvShows;
-  LoadingRetryNextPageState(this.tvShows);
-
-  copyWith({List<TvShow> nextTvShows, bool hasReachedMax}) {
-    return LoadingRetryNextPageState(nextTvShows ?? this.tvShows);
-  }
-}
-
-class ErrorGetFirstPageTvShowState extends DiscoverTvShowState {
-  final String message;
-  ErrorGetFirstPageTvShowState(this.message);
-}
-
-class ErrorGetNextPageTvShowState extends DiscoverTvShowState {
-  final String message;
-  final List<TvShow> tvShows;
-  ErrorGetNextPageTvShowState(this.tvShows, this.message);
-  copyWith({List<TvShow> nextTvShows, bool hasReachedMax}) {
-    return ErrorGetNextPageTvShowState(
-        nextTvShows ?? this.tvShows, message ?? this.message);
-  }
-}
-
-class SuccessGetDiscoverTvShowState extends DiscoverTvShowState {
+class DiscoverTvShowState extends BlocState {
+  final DiscoverTvShowStatus status;
   final List<TvShow> tvShows;
   final bool hasReachedMax;
-  SuccessGetDiscoverTvShowState(this.tvShows, this.hasReachedMax);
+  final String? errorMessage;
 
-  copyWith({List<TvShow> nextTvShows, bool hasReachedMax}) {
-    return SuccessGetDiscoverTvShowState(
-        nextTvShows ?? this.tvShows, hasReachedMax ?? this.hasReachedMax);
+  DiscoverTvShowState({
+    this.status = DiscoverTvShowStatus.INITIAL,
+    this.tvShows = const [],
+    this.hasReachedMax = false,
+    this.errorMessage,
+  });
+
+  DiscoverTvShowState copyWith(
+      {DiscoverTvShowStatus? status,
+      List<TvShow>? tvShows,
+      bool? hasReachedMax,
+      String? errorMessage}) {
+    return DiscoverTvShowState(
+      status: status ?? this.status,
+      tvShows: tvShows ?? this.tvShows,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      errorMessage: errorMessage,
+    );
   }
 }

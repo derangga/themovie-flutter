@@ -1,22 +1,20 @@
 import '../model/cast_and_crew.dart';
-import '../../utils/extension/string_utils.dart';
-import '../../utils/extension/number_utils.dart';
 
-extension CastDTOExtension on CastDTO {
+extension CastDTOExtension on CastDTO? {
   Cast toModel() {
     return Cast(
-      character: this.character.orEmpty(),
-      creditId: this.creditId.orEmpty(),
-      id: this.id.orZero(),
-      name: this.name.orEmpty(),
-      originalName: this.originalName.orEmpty(),
-      popularity: this.popularity.orZero(),
-      profilePath: this.profilePath.orEmpty(),
+      character: this?.character ?? '',
+      creditId: this?.creditId ?? '',
+      id: this?.id ?? 0,
+      name: this?.name ?? '',
+      originalName: this?.originalName ?? '',
+      popularity: this?.popularity ?? 0,
+      profilePath: this?.profilePath ?? '',
     );
   }
 }
 
-extension CastExtension on Cast {
+extension CastExtension on Cast? {
   Cast orEmpty() {
     return this ??
         Cast(

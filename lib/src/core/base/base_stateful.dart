@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:logger/logger.dart';
+import 'package:themovie_flutter/src/logger/app_logger.dart';
 
 import 'base_bloc.dart';
 import 'base_event_state.dart';
@@ -11,10 +11,10 @@ import 'base_event_state.dart';
 abstract class BaseState<BlocApp extends BaseBloc, StateApp extends BlocState,
     S extends StatefulWidget> extends State<S> {
   void setupOnInitState();
-  Widget mapStateToWidget(StateApp state);
+  Widget? mapStateToWidget(StateApp state);
 
-  BlocApp bloc;
-  Logger _logger = KiwiContainer().resolve<Logger>();
+  late BlocApp bloc;
+  AppLogger _logger = KiwiContainer().resolve<AppLogger>('AppLogger');
 
   @override
   void initState() {
@@ -40,6 +40,6 @@ abstract class BaseState<BlocApp extends BaseBloc, StateApp extends BlocState,
   }
 
   void executeUiAfterBuild(FrameCallback frameCallback) {
-    WidgetsBinding.instance.addPostFrameCallback(frameCallback);
+    WidgetsBinding.instance!.addPostFrameCallback(frameCallback);
   }
 }

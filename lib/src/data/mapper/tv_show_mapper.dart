@@ -1,85 +1,91 @@
+import 'package:themovie_flutter/src/data/model/genre.dart';
+
 import '../wrapper/paging_dto.dart';
 import 'genre_mapper.dart';
 import 'season_mapper.dart';
 import '../model/detail_tv_show.dart';
 import '../model/tv_show.dart';
-import '../../utils/extension/list_utils.dart';
-import '../../utils/extension/number_utils.dart';
-import '../../utils/extension/string_utils.dart';
 
-extension PagingTvShowDTOExtension on PagingDTO<List<TvShowDTO>> {
+extension PagingTvShowDTOExtension on PagingDTO<List<TvShowDTO?>?>? {
   PagingModel<List<TvShow>> toModelPaging() {
+    List<TvShowDTO?> tempTvShow = this?.data ?? [];
     return PagingModel(
-        data: this.data.map((e) => e.toModel()).toList(),
-        page: this.page.orZero(),
-        totalPage: this.totalPage.orZero(),
-        totalResults: this.totalResults.orZero());
+      data: tempTvShow.map((e) => e.toModel()).toList(),
+      page: this?.page ?? 0,
+      totalPage: this?.totalPage ?? 0,
+      totalResults: this?.totalResults ?? 0,
+    );
   }
 }
 
-extension TvShowDTOExtension on TvShowDTO {
+extension TvShowDTOExtension on TvShowDTO? {
   TvShow toModel() {
     return TvShow(
-        id: this.id.orZero(),
-        name: this.name.orEmpty(),
-        originalName: this.originalName.orEmpty(),
-        originalLanguage: this.originalLanguage.orEmpty(),
-        backdropPath: this.backdropPath.orEmpty(),
-        posterPath: this.posterPath.orEmpty(),
-        firstAirDate: this.firstAirDate.orEmpty(),
-        overview: this.overview.orEmpty(),
-        popularity: this.popularity.orZero(),
-        voteAverage: this.voteAverage.orEmpty(),
-        voteCount: this.voteCount.orZero());
+      id: this?.id ?? 0,
+      name: this?.name ?? '',
+      originalName: this?.originalName ?? '',
+      originalLanguage: this?.originalLanguage ?? '',
+      backdropPath: this?.backdropPath ?? '',
+      posterPath: this?.posterPath ?? '',
+      firstAirDate: this?.firstAirDate ?? '',
+      overview: this?.overview ?? '',
+      popularity: this?.popularity ?? 0,
+      voteAverage: this?.voteAverage ?? '',
+      voteCount: this?.voteCount ?? 0,
+    );
   }
 }
 
-extension TvShowExtension on TvShow {
+extension TvShowExtension on TvShow? {
   TvShow orEmpty() {
     return this ??
         TvShow(
-            id: 0,
-            name: "",
-            originalName: "",
-            originalLanguage: "",
-            backdropPath: "",
-            posterPath: "",
-            firstAirDate: "",
-            overview: "",
-            popularity: 0,
-            voteAverage: "",
-            voteCount: 0);
+          id: 0,
+          name: "",
+          originalName: "",
+          originalLanguage: "",
+          backdropPath: "",
+          posterPath: "",
+          firstAirDate: "",
+          overview: "",
+          popularity: 0,
+          voteAverage: "",
+          voteCount: 0,
+        );
   }
 }
 
-extension DetailTvShowDTOExtension on DetailTvShowDTO {
+extension DetailTvShowDTOExtension on DetailTvShowDTO? {
   DetailTvShow toModel() {
+    List<GenreDTO> tempGenre = this?.genres ?? [];
+    List<SeasonDTO> tempSeason = this?.seasons ?? [];
     return DetailTvShow(
-        backdropPath: this.backdropPath.orEmpty(),
-        firstAirDate: this.firstAirDate.orEmpty(),
-        genres: this.genres.orEmpty().map((e) => e.toModel()).toList(),
-        homepage: this.homepage.orEmpty(),
-        id: this.id.orZero(),
-        inProduction: this.inProduction ?? false,
-        lastAirDate: this.lastAirDate.orEmpty(),
-        name: this.name.orEmpty(),
-        numberOfEpisodes: this.numberOfEpisodes.orZero(),
-        numberOfSeasons: this.numberOfSeasons.orZero(),
-        originalLanguage: this.originalLanguage.orEmpty(),
-        originalName: this.originalName.orEmpty(),
-        overview: this.overview.orEmpty(),
-        popularity: this.popularity.orZero(),
-        posterPath: this.posterPath.orEmpty(),
-        seasons: this.seasons.orEmpty().map((e) => e.toModel()).toList(),
-        status: this.status.orEmpty(),
-        tagline: this.tagline.orEmpty(),
-        type: this.type.orEmpty(),
-        voteAverage: this.voteAverage.orEmpty(),
-        voteCount: this.voteCount.orZero());
+      backdropPath: this?.backdropPath ?? '',
+      firstAirDate: this?.firstAirDate ?? '',
+      genres: tempGenre.map((e) => e.toModel()).toList(),
+      homepage: this?.homepage ?? '',
+      id: this?.id ?? 0,
+      inProduction: this?.inProduction ?? false,
+      lastAirDate: this?.lastAirDate ?? '',
+      name: this?.name ?? '',
+      numberOfEpisodes: this?.numberOfEpisodes ?? 0,
+      numberOfSeasons: this?.numberOfSeasons ?? 0,
+      originalLanguage: this?.originalLanguage ?? '',
+      originalName: this?.originalName ?? '',
+      overview: this?.overview ?? '',
+      popularity: this?.popularity ?? 0,
+      posterPath: this?.posterPath ?? '',
+      seasons: tempSeason.map((e) => e.toModel()).toList(),
+      status: this?.status ?? '',
+      tagline: this?.tagline ?? '',
+      type: this?.type ?? '',
+      voteAverage: this?.voteAverage ?? '',
+      voteCount: this?.voteCount ?? 0,
+    );
   }
 }
 
-extension DetailTvShowExtension on DetailTvShow {
+extension DetailTvShowExtension on DetailTvShow? {
   DetailTvShow orEmpty() {
     return this ??
         DetailTvShow(

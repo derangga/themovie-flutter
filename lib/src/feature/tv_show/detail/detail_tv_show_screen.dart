@@ -16,7 +16,7 @@ import '../../../widget/detail_shimmer.dart';
 import 'detail_tv_show_bloc.dart';
 
 class DetailTvShowScreen extends StatefulWidget {
-  final int tvShowId;
+  final int? tvShowId;
   DetailTvShowScreen(this.tvShowId);
   @override
   _DetailTvShowScreenState createState() => _DetailTvShowScreenState();
@@ -24,7 +24,7 @@ class DetailTvShowScreen extends StatefulWidget {
 
 class _DetailTvShowScreenState
     extends BaseState<DetailTvShowBloc, DetailTvShowState, DetailTvShowScreen> {
-  Size _size;
+  late Size _size;
   Color gradientStart = Colors.transparent;
   Color gradientEnd = Colors.black;
 
@@ -291,7 +291,7 @@ class _DetailTvShowScreenState
     );
   }
 
-  Widget _castAndCrew(List<Cast> castAndCrew, {double height, double width}) {
+  Widget _castAndCrew(List<Cast> castAndCrew, {double? height, double? width}) {
     logDebug("size of cast ${castAndCrew.length}");
     return ListView.separated(
       separatorBuilder: (ctx, position) => Container(
@@ -301,8 +301,8 @@ class _DetailTvShowScreenState
       scrollDirection: Axis.horizontal,
       itemCount: castAndCrew.length,
       itemBuilder: (ctx, position) => PortraitContent(
-        height: height,
-        width: width,
+        height: height!,
+        width: width!,
         imageUrl:
             '${UrlConstant.IMAGE_URL}${castAndCrew[position].profilePath}',
         margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
@@ -322,7 +322,7 @@ class _DetailTvShowScreenState
     );
   }
 
-  Widget _similarTvShow(List<TvShow> tvShows, {double height, double width}) {
+  Widget _similarTvShow(List<TvShow> tvShows, {double? height, double? width}) {
     return ListView.separated(
       separatorBuilder: (ctx, position) => Container(
         width: 12.0,
@@ -331,8 +331,8 @@ class _DetailTvShowScreenState
       scrollDirection: Axis.horizontal,
       itemCount: tvShows.length,
       itemBuilder: (ctx, position) => PortraitContent(
-        height: height,
-        width: width,
+        height: height!,
+        width: width!,
         imageUrl: '${UrlConstant.IMAGE_URL}${tvShows[position].posterPath}',
         margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
         content: TextView(

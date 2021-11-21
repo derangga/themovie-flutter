@@ -10,36 +10,51 @@ class _$Injection extends Injection {
   @override
   void configure() {
     final KiwiContainer container = KiwiContainer();
-    container.registerSingleton((c) => Preferences(c<FlutterSecureStorage>()));
-    container.registerSingleton<LogFilter>((c) => DebugFilter());
-    container.registerSingleton<LogPrinter>((c) => DefaultLogPrinter());
-    container.registerSingleton<LogOutput>((c) => ConsoleOutput());
-    container.registerSingleton((c) => Logger(
-        filter: c<LogFilter>(),
-        printer: c<LogPrinter>(),
-        output: c<LogOutput>()));
-    container.registerSingleton<BaseOptions>((c) => DioOptions());
-    container.registerSingleton<Interceptor>((c) => LoggingInterceptor());
-    container.registerSingleton((c) => DefaultHttpClientAdapter());
-    container.registerSingleton<Dio>((c) => DioModule(
-        c<BaseOptions>(), c<Interceptor>(), c<DefaultHttpClientAdapter>()));
-    container.registerSingleton<MovieRemoteSource>(
-        (c) => MovieRemoteSourceImpl(c<Dio>(), c<Logger>()));
-    container.registerSingleton<MovieRepository>(
-        (c) => MovieRepositoryImpl(c<Logger>(), c<MovieRemoteSource>()));
-    container.registerSingleton<GenreRepository>(
-        (c) => GenreRepositoryImpl(c<Logger>(), c<MovieRemoteSource>()));
-    container.registerSingleton<TvShowRemoteSource>(
-        (c) => TvShowRemoteSourceImpl(c<Dio>(), c<Logger>()));
-    container.registerSingleton<TvShowRepository>(
-        (c) => TvShowRepositoryImpl(c<Logger>(), c<TvShowRemoteSource>()));
-    container.registerFactory(
-        (c) => DiscoverMovieBloc(c<Logger>(), c<MovieRepository>()));
-    container.registerFactory(
-        (c) => DetailMovieBloc(c<Logger>(), c<MovieRepository>()));
-    container.registerFactory(
-        (c) => DiscoverTvShowBloc(c<Logger>(), c<TvShowRepository>()));
-    container.registerFactory(
-        (c) => DetailTvShowBloc(c<Logger>(), c<TvShowRepository>()));
+    container
+      ..registerSingleton<LogFilter>((c) => DevelopmentFilter(),
+          name: 'LogFilter')
+      ..registerSingleton<LogPrinter>((c) => DefaultLogPrinter(),
+          name: 'LogPrinter')
+      ..registerSingleton<LogOutput>((c) => ConsoleOutput(), name: 'LogOutput')
+      ..registerSingleton(
+          (c) => AppLogger(c<LogFilter>('LogFilter'),
+              c<LogPrinter>('LogPrinter'), c<LogOutput>('LogOutput')),
+          name: 'AppLogger')
+      ..registerSingleton<BaseOptions>((c) => DioOptions(), name: 'BaseOptions')
+      ..registerSingleton<Interceptor>((c) => LoggingInterceptor(),
+          name: 'Interceptor')
+      ..registerSingleton((c) => DefaultHttpClientAdapter(),
+          name: 'DefaultHttpClientAdapter')
+      ..registerSingleton<Dio>((c) => DioModule(
+          c<BaseOptions>('BaseOptions'),
+          c<Interceptor>('Interceptor'),
+          c<DefaultHttpClientAdapter>('DefaultHttpClientAdapter')))
+      ..registerSingleton<MovieRemoteSource>(
+          (c) => MovieRemoteSourceImpl(c<Dio>(), c<AppLogger>('AppLogger')),
+          name: 'MovieRemoteSource')
+      ..registerSingleton<MovieRepository>(
+          (c) => MovieRepositoryImpl(c<AppLogger>('AppLogger'),
+              c<MovieRemoteSource>('MovieRemoteSource')),
+          name: 'MovieRepository')
+      ..registerSingleton<GenreRepository>(
+          (c) => GenreRepositoryImpl(c<AppLogger>('AppLogger'),
+              c<MovieRemoteSource>('MovieRemoteSource')),
+          name: 'GenreRepository')
+      ..registerSingleton<TvShowRemoteSource>(
+          (c) =>
+              TvShowRemoteSourceImpl(c<Dio>('Dio'), c<AppLogger>('AppLogger')),
+          name: 'TvShowRemoteSource')
+      ..registerSingleton<TvShowRepository>(
+          (c) => TvShowRepositoryImpl(c<AppLogger>('AppLogger'),
+              c<TvShowRemoteSource>('TvShowRemoteSource')),
+          name: 'TvShowRepository')
+      ..registerFactory((c) => DiscoverMovieBloc(
+          c<AppLogger>('AppLogger'), c<MovieRepository>('MovieRepository')))
+      ..registerFactory((c) => DetailMovieBloc(
+          c<AppLogger>('AppLogger'), c<MovieRepository>('MovieRepository')))
+      ..registerFactory((c) => DiscoverTvShowBloc(
+          c<AppLogger>('AppLogger'), c<TvShowRepository>('TvShowRepository')))
+      ..registerFactory((c) => DetailTvShowBloc(
+          c<AppLogger>('AppLogger'), c<TvShowRepository>('TvShowRepository')));
   }
 }

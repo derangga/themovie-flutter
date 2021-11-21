@@ -3,11 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter_config/flutter_config.dart';
 
 class DioModule with DioMixin implements Dio {
-  DioModule(BaseOptions setup, Interceptor interceptor,
-      DefaultHttpClientAdapter adapter)
-      : assert(setup != null),
-        assert(interceptor != null),
-        assert(adapter != null) {
+  DioModule(
+    BaseOptions setup,
+    Interceptor interceptor,
+    DefaultHttpClientAdapter adapter,
+  ) {
     options = setup;
     interceptors.add(interceptor);
     httpClientAdapter = adapter;

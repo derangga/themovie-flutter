@@ -1,5 +1,5 @@
-import 'package:logger/logger.dart';
 import 'package:dartz/dartz.dart';
+import '../logger/app_logger.dart';
 import '../data/config/failure.dart';
 import '../data/model/videos.dart';
 import '../data/model/cast_and_crew.dart';
@@ -10,34 +10,34 @@ import '../data/model/tv_show.dart';
 import 'tv_show_repository.dart';
 
 class TvShowRepositoryImpl extends TvShowRepository {
-  final TvShowRemoteSource _remoteSource;
+  final TvShowRemoteSource? _remoteSource;
 
-  TvShowRepositoryImpl(Logger logger, this._remoteSource) : super(logger);
+  TvShowRepositoryImpl(AppLogger logger, this._remoteSource) : super(logger);
 
   @override
   Future<Either<Failure, List<TvShow>>> getDiscoverTvShow(int page) async {
-    return await _remoteSource.getDiscoverTvShow(page);
+    return await _remoteSource!.getDiscoverTvShow(page);
   }
 
   @override
-  Future<Either<Failure, List<Cast>>> getCastAndCrew(int tvShowId) async {
-    return await _remoteSource.getCastAndCrew(tvShowId);
+  Future<Either<Failure, List<Cast>>> getCastAndCrew(int? tvShowId) async {
+    return await _remoteSource!.getCastAndCrew(tvShowId);
   }
 
   @override
-  Future<Either<Failure, DetailTvShow>> getDetailTvShow(int tvShowId) async {
-    return await _remoteSource.getDetailTvShow(tvShowId);
+  Future<Either<Failure, DetailTvShow>> getDetailTvShow(int? tvShowId) async {
+    return await _remoteSource!.getDetailTvShow(tvShowId);
   }
 
   @override
   Future<Either<Failure, List<TvShow>>> getSimilarTvShow(
-      int tvShowId, int page) async {
-    return await _remoteSource.getSimilarTvShow(tvShowId, page);
+      int? tvShowId, int page) async {
+    return await _remoteSource!.getSimilarTvShow(tvShowId, page);
   }
 
   @override
-  Future<Either<Failure, DetailTvShowContent>> getDetailTvShowContent(
-      int tvShowId) async {
+  Future<Either<Failure?, DetailTvShowContent>> getDetailTvShowContent(
+      int? tvShowId) async {
     var detailDef = getDetailTvShow(tvShowId);
     var castsDef = getCastAndCrew(tvShowId);
     var similarDef = getSimilarTvShow(tvShowId, 1);
@@ -46,7 +46,7 @@ class TvShowRepositoryImpl extends TvShowRepository {
     final casts = await castsDef;
     final similar = await similarDef;
     final detailContent = DetailTvShowContent();
-    Failure failedGetContent;
+    Failure? failedGetContent;
 
     detail.fold((failure) {
       failure.message = 'Failed get detail tv show';
@@ -76,6 +76,6 @@ class TvShowRepositoryImpl extends TvShowRepository {
 
   @override
   Future<Either<Failure, List<Video>>> getTvShowTrailer(int tvShowId) async {
-    return await _remoteSource.getTvShowTrailer(tvShowId);
+    return await _remoteSource!.getTvShowTrailer(tvShowId);
   }
 }

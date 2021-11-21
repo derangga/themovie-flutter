@@ -3,27 +3,27 @@ import 'package:equatable/equatable.dart';
 import 'genre.dart';
 
 class DetailTvShowDTO {
-  String backdropPath;
-  String firstAirDate;
-  List<GenreDTO> genres;
-  String homepage;
-  int id;
-  bool inProduction;
-  String lastAirDate;
-  String name;
-  int numberOfEpisodes;
-  int numberOfSeasons;
-  String originalLanguage;
-  String originalName;
-  String overview;
-  double popularity;
-  String posterPath;
-  List<SeasonDTO> seasons;
-  String status;
-  String tagline;
-  String type;
-  String voteAverage;
-  int voteCount;
+  String? backdropPath;
+  String? firstAirDate;
+  List<GenreDTO>? genres;
+  String? homepage;
+  int? id;
+  bool? inProduction;
+  String? lastAirDate;
+  String? name;
+  int? numberOfEpisodes;
+  int? numberOfSeasons;
+  String? originalLanguage;
+  String? originalName;
+  String? overview;
+  double? popularity;
+  String? posterPath;
+  List<SeasonDTO>? seasons;
+  String? status;
+  String? tagline;
+  String? type;
+  String? voteAverage;
+  int? voteCount;
 
   DetailTvShowDTO(
       {this.backdropPath,
@@ -52,9 +52,9 @@ class DetailTvShowDTO {
     backdropPath = json['backdrop_path'];
     firstAirDate = json['first_air_date'];
     if (json['genres'] != null) {
-      genres = new List<GenreDTO>();
+      genres = List.empty(growable: true);
       json['genres'].forEach((v) {
-        genres.add(GenreDTO.fromJson(v));
+        genres!.add(GenreDTO.fromJson(v));
       });
     }
     homepage = json['homepage'];
@@ -70,9 +70,9 @@ class DetailTvShowDTO {
     popularity = json['popularity'];
     posterPath = json['poster_path'];
     if (json['seasons'] != null) {
-      seasons = List<SeasonDTO>();
+      seasons = List.empty(growable: true);
       json['seasons'].forEach((v) {
-        seasons.add(SeasonDTO.fromJson(v));
+        seasons!.add(SeasonDTO.fromJson(v));
       });
     }
     status = json['status'];
@@ -84,13 +84,13 @@ class DetailTvShowDTO {
 }
 
 class SeasonDTO {
-  String airDate;
-  int episodeCount;
-  int id;
-  String name;
-  String overview;
-  String posterPath;
-  int seasonNumber;
+  String? airDate;
+  int? episodeCount;
+  int? id;
+  String? name;
+  String? overview;
+  String? posterPath;
+  int? seasonNumber;
 
   SeasonDTO(
       {this.airDate,
@@ -136,48 +136,27 @@ class DetailTvShow extends Equatable {
   final int voteCount;
 
   DetailTvShow(
-      {this.backdropPath,
-      this.firstAirDate,
-      this.genres,
-      this.homepage,
-      this.id,
-      this.inProduction,
-      this.lastAirDate,
-      this.name,
-      this.numberOfEpisodes,
-      this.numberOfSeasons,
-      this.originalLanguage,
-      this.originalName,
-      this.overview,
-      this.popularity,
-      this.posterPath,
-      this.seasons,
-      this.status,
-      this.tagline,
-      this.type,
-      this.voteAverage,
-      this.voteCount})
-      : assert(backdropPath != null),
-        assert(firstAirDate != null),
-        assert(genres != null),
-        assert(homepage != null),
-        assert(id != null),
-        assert(inProduction != null),
-        assert(lastAirDate != null),
-        assert(name != null),
-        assert(numberOfEpisodes != null),
-        assert(numberOfSeasons != null),
-        assert(originalLanguage != null),
-        assert(originalName != null),
-        assert(overview != null),
-        assert(popularity != null),
-        assert(posterPath != null),
-        assert(seasons != null),
-        assert(status != null),
-        assert(tagline != null),
-        assert(type != null),
-        assert(voteAverage != null),
-        assert(voteCount != null);
+      {required this.backdropPath,
+      required this.firstAirDate,
+      required this.genres,
+      required this.homepage,
+      required this.id,
+      required this.inProduction,
+      required this.lastAirDate,
+      required this.name,
+      required this.numberOfEpisodes,
+      required this.numberOfSeasons,
+      required this.originalLanguage,
+      required this.originalName,
+      required this.overview,
+      required this.popularity,
+      required this.posterPath,
+      required this.seasons,
+      required this.status,
+      required this.tagline,
+      required this.type,
+      required this.voteAverage,
+      required this.voteCount});
 
   @override
   List<Object> get props => [
@@ -215,22 +194,22 @@ class Season extends Equatable {
   final int seasonNumber;
 
   Season(
-      {this.airDate,
-      this.episodeCount,
-      this.id,
-      this.name,
-      this.overview,
-      this.posterPath,
-      this.seasonNumber})
-      : assert(airDate != null),
-        assert(episodeCount != null),
-        assert(id != null),
-        assert(name != null),
-        assert(overview != null),
-        assert(posterPath != null),
-        assert(seasonNumber != null);
+      {required this.airDate,
+      required this.episodeCount,
+      required this.id,
+      required this.name,
+      required this.overview,
+      required this.posterPath,
+      required this.seasonNumber});
 
   @override
-  List<Object> get props =>
-      [airDate, episodeCount, id, name, overview, posterPath, seasonNumber];
+  List<Object> get props => [
+        airDate,
+        episodeCount,
+        id,
+        name,
+        overview,
+        posterPath,
+        seasonNumber,
+      ];
 }

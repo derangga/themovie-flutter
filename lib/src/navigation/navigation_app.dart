@@ -17,14 +17,14 @@ class NavigationApp {
         return MaterialPageRoute(builder: (_) => DiscoverMovieScreen());
 
       case RouteApp.DETAIL_MOVIE_SCREEN:
-        final int movieId = settings.arguments as int;
+        final int? movieId = settings.arguments as int?;
         return MaterialPageRoute(builder: (_) => DetailMovieScreen(movieId));
 
       case RouteApp.DISCOVER_TV_SCREEN:
         return MaterialPageRoute(builder: (_) => DiscoverTvShowScreen());
 
       case RouteApp.DETAIL_TV_SCREEN:
-        final int tvShowId = settings.arguments as int;
+        final int? tvShowId = settings.arguments as int?;
         return MaterialPageRoute(builder: (_) => DetailTvShowScreen(tvShowId));
 
       default:

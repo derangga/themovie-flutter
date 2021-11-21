@@ -14,17 +14,17 @@ extension ListGenreDTOExtension on ListGenreDTO<List<GenreDTO>> {
 
 extension GenreDTOExtension on GenreDTO {
   Genre toModel() {
-    return Genre(id: this.id.orZero(), name: this.name.orEmpty());
+    return Genre(id: this.id.orZero(), name: this.name!.orEmpty());
   }
 
-  GenreMovieEntityData toEntity() {
-    return GenreMovieEntityData(id: this.id, name: this.name);
-  }
+  // GenreMovieEntityData toEntity() {
+  //   return GenreMovieEntityData(id: this.id, name: this.name);
+  // }
 }
 
 extension GenreEntityExtension on GenreMovieEntityData {
   Genre toModel() {
-    return Genre(id: this.id.orZero(), name: this.name.orEmpty());
+    return Genre(id: this.id.orZero(), name: this.name!.orEmpty());
   }
 }
 
@@ -33,7 +33,7 @@ extension GenreMovieExtension on Genre {
     return this != null ? this : Genre(id: 0, name: '');
   }
 
-  GenreMovieEntityData toEntity() {
-    return GenreMovieEntityData(id: this.id, name: this.name);
-  }
+  // GenreMovieEntityData toEntity() {
+  //   return GenreMovieEntityData(id: this.id, name: this.name);
+  // }
 }

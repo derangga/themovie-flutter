@@ -8,6 +8,7 @@ import '../../../data/model/tv_show.dart';
 import '../../../resources/color_theme.dart';
 import '../../../widget/text_view.dart';
 import '../../../widget/footer_progress.dart';
+import '../../../utils/extension/string_utils.dart';
 import 'discover_tv_show_bloc.dart';
 
 class DiscoverTvShowScreen extends StatefulWidget {
@@ -50,31 +51,42 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
   }
 
   @override
-  Widget mapStateToWidget(DiscoverTvShowState state) {
-    if (state is LoadingFirstPageState) {
-      return Center(child: CircularProgressIndicator());
-    } else if (state is SuccessGetDiscoverTvShowState) {
-      return _tvShowList(state.tvShows, state.hasReachedMax);
-    } else if (state is ErrorGetFirstPageTvShowState) {
+  Widget? mapStateToWidget(DiscoverTvShowState state) {
+    if (state.status == DiscoverTvShowStatus.INITIAL) {
       return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextView('${state.message}',
-                textColor: Colors.white, textSize: 18.0),
-            SizedBox(height: 12.0),
-            RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0)),
-                child: TextView('Retry', textColor: Colors.white),
-                color: ColorTheme.light_brown,
-                onPressed: () {})
-          ],
+        child: CircularProgressIndicator(
+          backgroundColor: ColorTheme.light_brown,
         ),
       );
-    } else if (state is ErrorGetNextPageTvShowState) {
-      return _tvShowList(state.tvShows, false,
-          footerState: FooterLoadingState.ERROR, error: state.message);
+    } else if (state.status == DiscoverTvShowStatus.SUCCESS ||
+        state.status == DiscoverTvShowStatus.LOADING) {
+      return _tvShowList(state.tvShows, state.hasReachedMax);
+    } else if (state.status == DiscoverTvShowStatus.FAILED) {
+      if (state.tvShows.isEmpty) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextView('${state.errorMessage.orEmpty()}',
+                  textColor: Colors.white, textSize: 18.0),
+              SizedBox(height: 12.0),
+              RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                  child: TextView('Retry', textColor: Colors.white),
+                  color: ColorTheme.light_brown,
+                  onPressed: () {})
+            ],
+          ),
+        );
+      } else {
+        return _tvShowList(
+          state.tvShows,
+          false,
+          footerState: FooterLoadingState.ERROR,
+          error: state.errorMessage.orEmpty(),
+        );
+      }
     }
     return null;
   }
@@ -109,7 +121,7 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
 
   Widget _tvShowList(List<TvShow> tvShows, bool hasReachBottom,
       {FooterLoadingState footerState = FooterLoadingState.LOADING,
-      String error}) {
+      String? error}) {
     return ListView.separated(
         separatorBuilder: (ctx, position) =>
             Container(height: 12.0, color: ColorTheme.primary),

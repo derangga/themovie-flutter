@@ -10,6 +10,7 @@ import '../../../resources/drawable.dart';
 import '../../../widget/footer_progress.dart';
 import '../../../widget/text_view.dart';
 import '../../../utils/extension/context_utils.dart';
+import '../../../utils/extension/string_utils.dart';
 import 'discover_movie_bloc.dart';
 
 class DiscoverMovieScreen extends StatefulWidget {
@@ -37,7 +38,8 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
-    if (maxScroll - currentScroll <= _scrollThreshold) {
+    if (maxScroll - currentScroll <= _scrollThreshold &&
+        !bloc.isOnLoadingOrFailed()) {
       getMovies(false);
     }
   }
@@ -45,39 +47,50 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
   void getMovies(bool isFirstLoad) {
     if (isFirstLoad)
       bloc.add(GetFirstPageMovieEvent());
-    else
+    else {
       bloc.add(GetNextPageMovieEvent());
+    }
   }
 
   @override
-  Widget mapStateToWidget(DiscoverMovieState state) {
-    if (state is LoadingFirstPageState) {
+  Widget? mapStateToWidget(DiscoverMovieState state) {
+    if (state.status == DiscoverMoviesStatus.INITIAL) {
       return Center(
-          child: CircularProgressIndicator(
-        backgroundColor: ColorTheme.light_brown,
-      ));
-    } else if (state is SuccessGetDiscoverMovieState) {
-      return _movieList(state.movies, state.hasReachedMax);
-    } else if (state is ErrorGetFirstPageMovieState) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextView('${state.message}',
-                textColor: Colors.white, textSize: 18.0),
-            SizedBox(height: 12.0),
-            RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0)),
-                child: TextView('Retry', textColor: Colors.white),
-                color: ColorTheme.light_brown,
-                onPressed: () {})
-          ],
+        child: CircularProgressIndicator(
+          backgroundColor: ColorTheme.light_brown,
         ),
       );
-    } else if (state is ErrorGetNextPageMovieState) {
-      return _movieList(state.movies, false,
-          footerState: FooterLoadingState.ERROR, error: state.message);
+    } else if (state.status == DiscoverMoviesStatus.SUCCESS ||
+        state.status == DiscoverMoviesStatus.LOADING) {
+      return _movieList(state.movies, state.hasReachedMax);
+    } else if (state.status == DiscoverMoviesStatus.FAILED) {
+      if (state.movies.isEmpty) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextView('${state.errorMessage.orEmpty()}',
+                  textColor: Colors.white, textSize: 18.0),
+              SizedBox(height: 12.0),
+              RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                  child: TextView('Retry', textColor: Colors.white),
+                  color: ColorTheme.light_brown,
+                  onPressed: () {
+                    bloc.add(GetFirstPageMovieEvent());
+                  })
+            ],
+          ),
+        );
+      } else {
+        return _movieList(
+          state.movies,
+          state.hasReachedMax,
+          footerState: FooterLoadingState.ERROR,
+          error: state.errorMessage.orEmpty(),
+        );
+      }
     }
     return null;
   }
@@ -99,14 +112,17 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
         body: Container(child:
             BlocBuilder<DiscoverMovieBloc, DiscoverMovieState>(
                 builder: (blocContext, state) {
-          return mapStateToWidget(state);
+          return mapStateToWidget(state)!;
           // return Center(child: Text('Dummy'));
         })));
   }
 
-  Widget _movieList(List<Movie> tvShows, bool hasReachBottom,
-      {FooterLoadingState footerState = FooterLoadingState.LOADING,
-      String error}) {
+  Widget _movieList(
+    List<Movie> tvShows,
+    bool hasReachBottom, {
+    FooterLoadingState footerState = FooterLoadingState.LOADING,
+    String? error,
+  }) {
     return ListView.separated(
         separatorBuilder: (ctx, position) =>
             Container(height: 12.0, color: ColorTheme.primaryDark),
@@ -116,8 +132,8 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
           if (position >= tvShows.length) {
             return FooterCircularProgressIndicator(
               loadingState: footerState,
-              errorText: error,
-              errorColorText: Colors.red,
+              errorText: 'Retry',
+              errorColorText: Colors.white,
               loadingColor: ColorTheme.light_brown,
               onRetryTap: () {
                 getMovies(false);
@@ -137,10 +153,13 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FadeInImage.assetNetwork(
-            image: '${UrlConstant.IMAGE_URL}${movie.backdropPath}',
-            fit: BoxFit.cover,
-            placeholder: Drawable.NO_IMAGE,
+          Container(
+            child: FadeInImage.assetNetwork(
+              image: '${UrlConstant.IMAGE_URL}${movie.backdropPath}',
+              fit: BoxFit.cover,
+              placeholder: Drawable.NO_IMAGE,
+              imageErrorBuilder: _imageLoadError,
+            ),
           ),
           Padding(
               padding: EdgeInsets.all(8),
@@ -162,5 +181,9 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
         ],
       ),
     );
+  }
+
+  Widget _imageLoadError(BuildContext ctx, Object obj, StackTrace? stackTrace) {
+    return Image(image: AssetImage(Drawable.NO_IMAGE));
   }
 }

@@ -22,139 +22,91 @@ class MovieEntityData extends DataClass implements Insertable<MovieEntityData> {
   final String voteAverage;
   final int voteCount;
   MovieEntityData(
-      {@required this.adult,
-      @required this.backdropPath,
-      @required this.id,
-      @required this.originalLanguage,
-      @required this.originalTitle,
-      @required this.overview,
-      @required this.popularity,
-      @required this.posterPath,
-      @required this.releaseDate,
-      @required this.title,
-      @required this.video,
-      @required this.voteAverage,
-      @required this.voteCount});
+      {required this.adult,
+      required this.backdropPath,
+      required this.id,
+      required this.originalLanguage,
+      required this.originalTitle,
+      required this.overview,
+      required this.popularity,
+      required this.posterPath,
+      required this.releaseDate,
+      required this.title,
+      required this.video,
+      required this.voteAverage,
+      required this.voteCount});
   factory MovieEntityData.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
+      {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    final boolType = db.typeSystem.forDartType<bool>();
-    final stringType = db.typeSystem.forDartType<String>();
-    final intType = db.typeSystem.forDartType<int>();
-    final doubleType = db.typeSystem.forDartType<double>();
     return MovieEntityData(
-      adult: boolType.mapFromDatabaseResponse(data['${effectivePrefix}adult']),
-      backdropPath: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}backdrop_path']),
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      originalLanguage: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}original_language']),
-      originalTitle: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}original_title']),
-      overview: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}overview']),
-      popularity: doubleType
-          .mapFromDatabaseResponse(data['${effectivePrefix}popularity']),
-      posterPath: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}poster_path']),
-      releaseDate: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}release_date']),
-      title:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
-      video: boolType.mapFromDatabaseResponse(data['${effectivePrefix}video']),
-      voteAverage: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}vote_average']),
-      voteCount:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}vote_count']),
+      adult: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}adult'])!,
+      backdropPath: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}backdrop_path'])!,
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      originalLanguage: const StringType().mapFromDatabaseResponse(
+          data['${effectivePrefix}original_language'])!,
+      originalTitle: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}original_title'])!,
+      overview: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}overview'])!,
+      popularity: const RealType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}popularity'])!,
+      posterPath: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}poster_path'])!,
+      releaseDate: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}release_date'])!,
+      title: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
+      video: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}video'])!,
+      voteAverage: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}vote_average'])!,
+      voteCount: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}vote_count'])!,
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || adult != null) {
-      map['adult'] = Variable<bool>(adult);
-    }
-    if (!nullToAbsent || backdropPath != null) {
-      map['backdrop_path'] = Variable<String>(backdropPath);
-    }
-    if (!nullToAbsent || id != null) {
-      map['id'] = Variable<int>(id);
-    }
-    if (!nullToAbsent || originalLanguage != null) {
-      map['original_language'] = Variable<String>(originalLanguage);
-    }
-    if (!nullToAbsent || originalTitle != null) {
-      map['original_title'] = Variable<String>(originalTitle);
-    }
-    if (!nullToAbsent || overview != null) {
-      map['overview'] = Variable<String>(overview);
-    }
-    if (!nullToAbsent || popularity != null) {
-      map['popularity'] = Variable<double>(popularity);
-    }
-    if (!nullToAbsent || posterPath != null) {
-      map['poster_path'] = Variable<String>(posterPath);
-    }
-    if (!nullToAbsent || releaseDate != null) {
-      map['release_date'] = Variable<String>(releaseDate);
-    }
-    if (!nullToAbsent || title != null) {
-      map['title'] = Variable<String>(title);
-    }
-    if (!nullToAbsent || video != null) {
-      map['video'] = Variable<bool>(video);
-    }
-    if (!nullToAbsent || voteAverage != null) {
-      map['vote_average'] = Variable<String>(voteAverage);
-    }
-    if (!nullToAbsent || voteCount != null) {
-      map['vote_count'] = Variable<int>(voteCount);
-    }
+    map['adult'] = Variable<bool>(adult);
+    map['backdrop_path'] = Variable<String>(backdropPath);
+    map['id'] = Variable<int>(id);
+    map['original_language'] = Variable<String>(originalLanguage);
+    map['original_title'] = Variable<String>(originalTitle);
+    map['overview'] = Variable<String>(overview);
+    map['popularity'] = Variable<double>(popularity);
+    map['poster_path'] = Variable<String>(posterPath);
+    map['release_date'] = Variable<String>(releaseDate);
+    map['title'] = Variable<String>(title);
+    map['video'] = Variable<bool>(video);
+    map['vote_average'] = Variable<String>(voteAverage);
+    map['vote_count'] = Variable<int>(voteCount);
     return map;
   }
 
   MovieEntityCompanion toCompanion(bool nullToAbsent) {
     return MovieEntityCompanion(
-      adult:
-          adult == null && nullToAbsent ? const Value.absent() : Value(adult),
-      backdropPath: backdropPath == null && nullToAbsent
-          ? const Value.absent()
-          : Value(backdropPath),
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      originalLanguage: originalLanguage == null && nullToAbsent
-          ? const Value.absent()
-          : Value(originalLanguage),
-      originalTitle: originalTitle == null && nullToAbsent
-          ? const Value.absent()
-          : Value(originalTitle),
-      overview: overview == null && nullToAbsent
-          ? const Value.absent()
-          : Value(overview),
-      popularity: popularity == null && nullToAbsent
-          ? const Value.absent()
-          : Value(popularity),
-      posterPath: posterPath == null && nullToAbsent
-          ? const Value.absent()
-          : Value(posterPath),
-      releaseDate: releaseDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(releaseDate),
-      title:
-          title == null && nullToAbsent ? const Value.absent() : Value(title),
-      video:
-          video == null && nullToAbsent ? const Value.absent() : Value(video),
-      voteAverage: voteAverage == null && nullToAbsent
-          ? const Value.absent()
-          : Value(voteAverage),
-      voteCount: voteCount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(voteCount),
+      adult: Value(adult),
+      backdropPath: Value(backdropPath),
+      id: Value(id),
+      originalLanguage: Value(originalLanguage),
+      originalTitle: Value(originalTitle),
+      overview: Value(overview),
+      popularity: Value(popularity),
+      posterPath: Value(posterPath),
+      releaseDate: Value(releaseDate),
+      title: Value(title),
+      video: Value(video),
+      voteAverage: Value(voteAverage),
+      voteCount: Value(voteCount),
     );
   }
 
   factory MovieEntityData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
+      {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return MovieEntityData(
       adult: serializer.fromJson<bool>(json['adult']),
@@ -173,7 +125,7 @@ class MovieEntityData extends DataClass implements Insertable<MovieEntityData> {
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'adult': serializer.toJson<bool>(adult),
@@ -193,19 +145,19 @@ class MovieEntityData extends DataClass implements Insertable<MovieEntityData> {
   }
 
   MovieEntityData copyWith(
-          {bool adult,
-          String backdropPath,
-          int id,
-          String originalLanguage,
-          String originalTitle,
-          String overview,
-          double popularity,
-          String posterPath,
-          String releaseDate,
-          String title,
-          bool video,
-          String voteAverage,
-          int voteCount}) =>
+          {bool? adult,
+          String? backdropPath,
+          int? id,
+          String? originalLanguage,
+          String? originalTitle,
+          String? overview,
+          double? popularity,
+          String? posterPath,
+          String? releaseDate,
+          String? title,
+          bool? video,
+          String? voteAverage,
+          int? voteCount}) =>
       MovieEntityData(
         adult: adult ?? this.adult,
         backdropPath: backdropPath ?? this.backdropPath,
@@ -242,34 +194,22 @@ class MovieEntityData extends DataClass implements Insertable<MovieEntityData> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      adult.hashCode,
-      $mrjc(
-          backdropPath.hashCode,
-          $mrjc(
-              id.hashCode,
-              $mrjc(
-                  originalLanguage.hashCode,
-                  $mrjc(
-                      originalTitle.hashCode,
-                      $mrjc(
-                          overview.hashCode,
-                          $mrjc(
-                              popularity.hashCode,
-                              $mrjc(
-                                  posterPath.hashCode,
-                                  $mrjc(
-                                      releaseDate.hashCode,
-                                      $mrjc(
-                                          title.hashCode,
-                                          $mrjc(
-                                              video.hashCode,
-                                              $mrjc(
-                                                  voteAverage.hashCode,
-                                                  voteCount
-                                                      .hashCode)))))))))))));
+  int get hashCode => Object.hash(
+      adult,
+      backdropPath,
+      id,
+      originalLanguage,
+      originalTitle,
+      overview,
+      popularity,
+      posterPath,
+      releaseDate,
+      title,
+      video,
+      voteAverage,
+      voteCount);
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is MovieEntityData &&
           other.adult == this.adult &&
@@ -317,19 +257,19 @@ class MovieEntityCompanion extends UpdateCompanion<MovieEntityData> {
     this.voteCount = const Value.absent(),
   });
   MovieEntityCompanion.insert({
-    @required bool adult,
-    @required String backdropPath,
-    @required int id,
-    @required String originalLanguage,
-    @required String originalTitle,
-    @required String overview,
-    @required double popularity,
-    @required String posterPath,
-    @required String releaseDate,
-    @required String title,
-    @required bool video,
-    @required String voteAverage,
-    @required int voteCount,
+    required bool adult,
+    required String backdropPath,
+    required int id,
+    required String originalLanguage,
+    required String originalTitle,
+    required String overview,
+    required double popularity,
+    required String posterPath,
+    required String releaseDate,
+    required String title,
+    required bool video,
+    required String voteAverage,
+    required int voteCount,
   })  : adult = Value(adult),
         backdropPath = Value(backdropPath),
         id = Value(id),
@@ -344,19 +284,19 @@ class MovieEntityCompanion extends UpdateCompanion<MovieEntityData> {
         voteAverage = Value(voteAverage),
         voteCount = Value(voteCount);
   static Insertable<MovieEntityData> custom({
-    Expression<bool> adult,
-    Expression<String> backdropPath,
-    Expression<int> id,
-    Expression<String> originalLanguage,
-    Expression<String> originalTitle,
-    Expression<String> overview,
-    Expression<double> popularity,
-    Expression<String> posterPath,
-    Expression<String> releaseDate,
-    Expression<String> title,
-    Expression<bool> video,
-    Expression<String> voteAverage,
-    Expression<int> voteCount,
+    Expression<bool>? adult,
+    Expression<String>? backdropPath,
+    Expression<int>? id,
+    Expression<String>? originalLanguage,
+    Expression<String>? originalTitle,
+    Expression<String>? overview,
+    Expression<double>? popularity,
+    Expression<String>? posterPath,
+    Expression<String>? releaseDate,
+    Expression<String>? title,
+    Expression<bool>? video,
+    Expression<String>? voteAverage,
+    Expression<int>? voteCount,
   }) {
     return RawValuesInsertable({
       if (adult != null) 'adult': adult,
@@ -376,19 +316,19 @@ class MovieEntityCompanion extends UpdateCompanion<MovieEntityData> {
   }
 
   MovieEntityCompanion copyWith(
-      {Value<bool> adult,
-      Value<String> backdropPath,
-      Value<int> id,
-      Value<String> originalLanguage,
-      Value<String> originalTitle,
-      Value<String> overview,
-      Value<double> popularity,
-      Value<String> posterPath,
-      Value<String> releaseDate,
-      Value<String> title,
-      Value<bool> video,
-      Value<String> voteAverage,
-      Value<int> voteCount}) {
+      {Value<bool>? adult,
+      Value<String>? backdropPath,
+      Value<int>? id,
+      Value<String>? originalLanguage,
+      Value<String>? originalTitle,
+      Value<String>? overview,
+      Value<double>? popularity,
+      Value<String>? posterPath,
+      Value<String>? releaseDate,
+      Value<String>? title,
+      Value<bool>? video,
+      Value<String>? voteAverage,
+      Value<int>? voteCount}) {
     return MovieEntityCompanion(
       adult: adult ?? this.adult,
       backdropPath: backdropPath ?? this.backdropPath,
@@ -475,174 +415,69 @@ class MovieEntityCompanion extends UpdateCompanion<MovieEntityData> {
 class $MovieEntityTable extends MovieEntity
     with TableInfo<$MovieEntityTable, MovieEntityData> {
   final GeneratedDatabase _db;
-  final String _alias;
+  final String? _alias;
   $MovieEntityTable(this._db, [this._alias]);
   final VerificationMeta _adultMeta = const VerificationMeta('adult');
-  GeneratedBoolColumn _adult;
-  @override
-  GeneratedBoolColumn get adult => _adult ??= _constructAdult();
-  GeneratedBoolColumn _constructAdult() {
-    return GeneratedBoolColumn(
-      'adult',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<bool?> adult = GeneratedColumn<bool?>(
+      'adult', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      defaultConstraints: 'CHECK (adult IN (0, 1))');
   final VerificationMeta _backdropPathMeta =
       const VerificationMeta('backdropPath');
-  GeneratedTextColumn _backdropPath;
-  @override
-  GeneratedTextColumn get backdropPath =>
-      _backdropPath ??= _constructBackdropPath();
-  GeneratedTextColumn _constructBackdropPath() {
-    return GeneratedTextColumn(
-      'backdrop_path',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> backdropPath = GeneratedColumn<String?>(
+      'backdrop_path', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
-  @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn(
-      'id',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   final VerificationMeta _originalLanguageMeta =
       const VerificationMeta('originalLanguage');
-  GeneratedTextColumn _originalLanguage;
-  @override
-  GeneratedTextColumn get originalLanguage =>
-      _originalLanguage ??= _constructOriginalLanguage();
-  GeneratedTextColumn _constructOriginalLanguage() {
-    return GeneratedTextColumn(
-      'original_language',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> originalLanguage =
+      GeneratedColumn<String?>('original_language', aliasedName, false,
+          typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _originalTitleMeta =
       const VerificationMeta('originalTitle');
-  GeneratedTextColumn _originalTitle;
-  @override
-  GeneratedTextColumn get originalTitle =>
-      _originalTitle ??= _constructOriginalTitle();
-  GeneratedTextColumn _constructOriginalTitle() {
-    return GeneratedTextColumn(
-      'original_title',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> originalTitle = GeneratedColumn<String?>(
+      'original_title', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _overviewMeta = const VerificationMeta('overview');
-  GeneratedTextColumn _overview;
-  @override
-  GeneratedTextColumn get overview => _overview ??= _constructOverview();
-  GeneratedTextColumn _constructOverview() {
-    return GeneratedTextColumn(
-      'overview',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> overview = GeneratedColumn<String?>(
+      'overview', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _popularityMeta = const VerificationMeta('popularity');
-  GeneratedRealColumn _popularity;
-  @override
-  GeneratedRealColumn get popularity => _popularity ??= _constructPopularity();
-  GeneratedRealColumn _constructPopularity() {
-    return GeneratedRealColumn(
-      'popularity',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<double?> popularity = GeneratedColumn<double?>(
+      'popularity', aliasedName, false,
+      typeName: 'REAL', requiredDuringInsert: true);
   final VerificationMeta _posterPathMeta = const VerificationMeta('posterPath');
-  GeneratedTextColumn _posterPath;
-  @override
-  GeneratedTextColumn get posterPath => _posterPath ??= _constructPosterPath();
-  GeneratedTextColumn _constructPosterPath() {
-    return GeneratedTextColumn(
-      'poster_path',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> posterPath = GeneratedColumn<String?>(
+      'poster_path', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _releaseDateMeta =
       const VerificationMeta('releaseDate');
-  GeneratedTextColumn _releaseDate;
-  @override
-  GeneratedTextColumn get releaseDate =>
-      _releaseDate ??= _constructReleaseDate();
-  GeneratedTextColumn _constructReleaseDate() {
-    return GeneratedTextColumn(
-      'release_date',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> releaseDate = GeneratedColumn<String?>(
+      'release_date', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _titleMeta = const VerificationMeta('title');
-  GeneratedTextColumn _title;
-  @override
-  GeneratedTextColumn get title => _title ??= _constructTitle();
-  GeneratedTextColumn _constructTitle() {
-    return GeneratedTextColumn(
-      'title',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
+      'title', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _videoMeta = const VerificationMeta('video');
-  GeneratedBoolColumn _video;
-  @override
-  GeneratedBoolColumn get video => _video ??= _constructVideo();
-  GeneratedBoolColumn _constructVideo() {
-    return GeneratedBoolColumn(
-      'video',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<bool?> video = GeneratedColumn<bool?>(
+      'video', aliasedName, false,
+      typeName: 'INTEGER',
+      requiredDuringInsert: true,
+      defaultConstraints: 'CHECK (video IN (0, 1))');
   final VerificationMeta _voteAverageMeta =
       const VerificationMeta('voteAverage');
-  GeneratedTextColumn _voteAverage;
-  @override
-  GeneratedTextColumn get voteAverage =>
-      _voteAverage ??= _constructVoteAverage();
-  GeneratedTextColumn _constructVoteAverage() {
-    return GeneratedTextColumn(
-      'vote_average',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<String?> voteAverage = GeneratedColumn<String?>(
+      'vote_average', aliasedName, false,
+      typeName: 'TEXT', requiredDuringInsert: true);
   final VerificationMeta _voteCountMeta = const VerificationMeta('voteCount');
-  GeneratedIntColumn _voteCount;
-  @override
-  GeneratedIntColumn get voteCount => _voteCount ??= _constructVoteCount();
-  GeneratedIntColumn _constructVoteCount() {
-    return GeneratedIntColumn(
-      'vote_count',
-      $tableName,
-      false,
-    );
-  }
-
+  late final GeneratedColumn<int?> voteCount = GeneratedColumn<int?>(
+      'vote_count', aliasedName, false,
+      typeName: 'INTEGER', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [
         adult,
@@ -660,11 +495,9 @@ class $MovieEntityTable extends MovieEntity
         voteCount
       ];
   @override
-  $MovieEntityTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'movie_entity';
   @override
-  String get $tableName => _alias ?? 'movie_entity';
-  @override
-  final String actualTableName = 'movie_entity';
+  String get actualTableName => 'movie_entity';
   @override
   VerificationContext validateIntegrity(Insertable<MovieEntityData> instance,
       {bool isInserting = false}) {
@@ -672,7 +505,7 @@ class $MovieEntityTable extends MovieEntity
     final data = instance.toColumns(true);
     if (data.containsKey('adult')) {
       context.handle(
-          _adultMeta, adult.isAcceptableOrUnknown(data['adult'], _adultMeta));
+          _adultMeta, adult.isAcceptableOrUnknown(data['adult']!, _adultMeta));
     } else if (isInserting) {
       context.missing(_adultMeta);
     }
@@ -680,12 +513,12 @@ class $MovieEntityTable extends MovieEntity
       context.handle(
           _backdropPathMeta,
           backdropPath.isAcceptableOrUnknown(
-              data['backdrop_path'], _backdropPathMeta));
+              data['backdrop_path']!, _backdropPathMeta));
     } else if (isInserting) {
       context.missing(_backdropPathMeta);
     }
     if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     } else if (isInserting) {
       context.missing(_idMeta);
     }
@@ -693,7 +526,7 @@ class $MovieEntityTable extends MovieEntity
       context.handle(
           _originalLanguageMeta,
           originalLanguage.isAcceptableOrUnknown(
-              data['original_language'], _originalLanguageMeta));
+              data['original_language']!, _originalLanguageMeta));
     } else if (isInserting) {
       context.missing(_originalLanguageMeta);
     }
@@ -701,13 +534,13 @@ class $MovieEntityTable extends MovieEntity
       context.handle(
           _originalTitleMeta,
           originalTitle.isAcceptableOrUnknown(
-              data['original_title'], _originalTitleMeta));
+              data['original_title']!, _originalTitleMeta));
     } else if (isInserting) {
       context.missing(_originalTitleMeta);
     }
     if (data.containsKey('overview')) {
       context.handle(_overviewMeta,
-          overview.isAcceptableOrUnknown(data['overview'], _overviewMeta));
+          overview.isAcceptableOrUnknown(data['overview']!, _overviewMeta));
     } else if (isInserting) {
       context.missing(_overviewMeta);
     }
@@ -715,7 +548,7 @@ class $MovieEntityTable extends MovieEntity
       context.handle(
           _popularityMeta,
           popularity.isAcceptableOrUnknown(
-              data['popularity'], _popularityMeta));
+              data['popularity']!, _popularityMeta));
     } else if (isInserting) {
       context.missing(_popularityMeta);
     }
@@ -723,7 +556,7 @@ class $MovieEntityTable extends MovieEntity
       context.handle(
           _posterPathMeta,
           posterPath.isAcceptableOrUnknown(
-              data['poster_path'], _posterPathMeta));
+              data['poster_path']!, _posterPathMeta));
     } else if (isInserting) {
       context.missing(_posterPathMeta);
     }
@@ -731,19 +564,19 @@ class $MovieEntityTable extends MovieEntity
       context.handle(
           _releaseDateMeta,
           releaseDate.isAcceptableOrUnknown(
-              data['release_date'], _releaseDateMeta));
+              data['release_date']!, _releaseDateMeta));
     } else if (isInserting) {
       context.missing(_releaseDateMeta);
     }
     if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title'], _titleMeta));
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
     if (data.containsKey('video')) {
       context.handle(
-          _videoMeta, video.isAcceptableOrUnknown(data['video'], _videoMeta));
+          _videoMeta, video.isAcceptableOrUnknown(data['video']!, _videoMeta));
     } else if (isInserting) {
       context.missing(_videoMeta);
     }
@@ -751,13 +584,13 @@ class $MovieEntityTable extends MovieEntity
       context.handle(
           _voteAverageMeta,
           voteAverage.isAcceptableOrUnknown(
-              data['vote_average'], _voteAverageMeta));
+              data['vote_average']!, _voteAverageMeta));
     } else if (isInserting) {
       context.missing(_voteAverageMeta);
     }
     if (data.containsKey('vote_count')) {
       context.handle(_voteCountMeta,
-          voteCount.isAcceptableOrUnknown(data['vote_count'], _voteCountMeta));
+          voteCount.isAcceptableOrUnknown(data['vote_count']!, _voteCountMeta));
     } else if (isInserting) {
       context.missing(_voteCountMeta);
     }
@@ -767,9 +600,9 @@ class $MovieEntityTable extends MovieEntity
   @override
   Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
   @override
-  MovieEntityData map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return MovieEntityData.fromData(data, _db, prefix: effectivePrefix);
+  MovieEntityData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return MovieEntityData.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
@@ -780,10 +613,8 @@ class $MovieEntityTable extends MovieEntity
 
 abstract class _$MovieDb extends GeneratedDatabase {
   _$MovieDb(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $MovieEntityTable _movieEntity;
-  $MovieEntityTable get movieEntity => _movieEntity ??= $MovieEntityTable(this);
-  MovieDao _movieDao;
-  MovieDao get movieDao => _movieDao ??= MovieDao(this as MovieDb);
+  late final $MovieEntityTable movieEntity = $MovieEntityTable(this);
+  late final MovieDao movieDao = MovieDao(this as MovieDb);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override

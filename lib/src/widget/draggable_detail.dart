@@ -5,8 +5,8 @@ import 'rounded_button.dart';
 import 'text_view.dart';
 
 class DraggableDetail extends StatelessWidget {
-  final String title, releaseDate, voteAverage, genre, overview, similarTitle;
-  final Widget castAndCrew, similarMovie;
+  final String? title, releaseDate, voteAverage, genre, overview, similarTitle;
+  final Widget? castAndCrew, similarMovie;
 
   DraggableDetail(
       {this.title,
@@ -171,7 +171,7 @@ class DraggableDetail extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 20.0),
-                            castAndCrew
+                            castAndCrew!
                           ],
                         ),
                       ),
@@ -192,7 +192,7 @@ class DraggableDetail extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 20.0),
-                            similarMovie
+                            similarMovie!
                           ],
                         ),
                       ),

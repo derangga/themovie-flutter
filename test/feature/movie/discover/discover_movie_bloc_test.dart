@@ -1,68 +1,68 @@
-import 'package:bloc_test/bloc_test.dart';
-import 'package:core/core.dart';
-import 'package:dartz/dartz.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:movie/movie.dart';
-import 'package:movie/src/data/model/movie.dart';
+// import 'package:bloc_test/bloc_test.dart';
+// import 'package:core/core.dart';
+// import 'package:dartz/dartz.dart';
+// import 'package:flutter_test/flutter_test.dart';
+// import 'package:mockito/mockito.dart';
+// import 'package:movie/movie.dart';
+// import 'package:movie/src/data/model/movie.dart';
 
-class MockMovieRepository extends Mock implements MovieRepository {}
+// class MockMovieRepository extends Mock implements MovieRepository {}
 
-void main() {
-  MockMovieRepository movieRepository;
-  final Logger logger = Logger();
-  DiscoverMovieBloc movieBloc;
-  setUp(() {
-    movieRepository = MockMovieRepository();
-    movieBloc = DiscoverMovieBloc(logger, movieRepository);
-  });
+// void main() {
+//   MockMovieRepository movieRepository;
+//   final Logger logger = Logger();
+//   DiscoverMovieBloc movieBloc;
+//   setUp(() {
+//     movieRepository = MockMovieRepository();
+//     movieBloc = DiscoverMovieBloc(logger, movieRepository);
+//   });
 
-  group('Test Discover Movie Bloc', () {
-    test(
-        'test get discover movie from bloc should called movieRepository.getDiscoverMovieRemote',
-        () async {
-      // given
-      final movieResponse =
-          PagingModel(data: [Movie()], page: 1, totalPage: 1, totalResults: 1);
+//   group('Test Discover Movie Bloc', () {
+//     test(
+//         'test get discover movie from bloc should called movieRepository.getDiscoverMovieRemote',
+//         () async {
+//       // given
+//       final movieResponse =
+//           PagingModel(data: [Movie()], page: 1, totalPage: 1, totalResults: 1);
 
-      // when
-      when(movieRepository.getDiscoverMovieRemote(any))
-          .thenAnswer((realInvocation) async => Right(movieResponse));
+//       // when
+//       when(movieRepository.getDiscoverMovieRemote(any))
+//           .thenAnswer((realInvocation) async => Right(movieResponse));
 
-      movieBloc.add(GetDiscoverMovieEvent());
-      await untilCalled(movieRepository.getDiscoverMovieRemote(1));
+//       movieBloc.add(GetDiscoverMovieEvent());
+//       await untilCalled(movieRepository.getDiscoverMovieRemote(1));
 
-      // then
-      verify(movieRepository.getDiscoverMovieRemote(1));
-    });
+//       // then
+//       verify(movieRepository.getDiscoverMovieRemote(1));
+//     });
 
-    blocTest(
-      'test get discover movie from bloc and emit success state',
-      build: () {
-        // given
-        final movieResponse = PagingModel(
-            data: [Movie()], page: 1, totalPage: 1, totalResults: 1);
-        when(movieRepository.getDiscoverMovieRemote(any))
-            .thenAnswer((realInvocation) async => Right(movieResponse));
+//     blocTest(
+//       'test get discover movie from bloc and emit success state',
+//       build: () {
+//         // given
+//         final movieResponse = PagingModel(
+//             data: [Movie()], page: 1, totalPage: 1, totalResults: 1);
+//         when(movieRepository.getDiscoverMovieRemote(any))
+//             .thenAnswer((realInvocation) async => Right(movieResponse));
 
-        return movieBloc;
-      },
-      act: (bloc) => bloc.add(GetDiscoverMovieEvent()),
-      expect: [isA<SuccessGetDiscoverMovieState>()],
-    );
+//         return movieBloc;
+//       },
+//       act: (bloc) => bloc.add(GetDiscoverMovieEvent()),
+//       expect: [isA<SuccessGetDiscoverMovieState>()],
+//     );
 
-    blocTest(
-      'test get discover movie from bloc and emit error state',
-      build: () {
-        // given
-        final failure = Failure();
-        when(movieRepository.getDiscoverMovieRemote(any))
-            .thenAnswer((realInvocation) async => Left(failure));
+//     blocTest(
+//       'test get discover movie from bloc and emit error state',
+//       build: () {
+//         // given
+//         final failure = Failure();
+//         when(movieRepository.getDiscoverMovieRemote(any))
+//             .thenAnswer((realInvocation) async => Left(failure));
 
-        return movieBloc;
-      },
-      act: (bloc) => bloc.add(GetDiscoverMovieEvent()),
-      expect: [isA<ErrorGetDiscoverMovieState>()],
-    );
-  });
-}
+//         return movieBloc;
+//       },
+//       act: (bloc) => bloc.add(GetDiscoverMovieEvent()),
+//       expect: [isA<ErrorGetDiscoverMovieState>()],
+//     );
+//   });
+// }

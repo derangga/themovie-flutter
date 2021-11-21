@@ -1,10 +1,10 @@
 class VideoDTO {
-  String id;
-  String key;
-  String name;
-  String site;
-  int size;
-  String type;
+  String? id;
+  String? key;
+  String? name;
+  String? site;
+  int? size;
+  String? type;
 
   VideoDTO({this.id, this.key, this.name, this.site, this.size, this.type});
 
@@ -26,11 +26,11 @@ class Video {
   final int size;
   final String type;
 
-  Video({this.id, this.key, this.name, this.site, this.size, this.type})
-      : assert(id != null),
-        assert(key != null),
-        assert(name != null),
-        assert(site != null),
-        assert(size != null),
-        assert(type != null);
+  Video(
+      {required this.id,
+      required this.key,
+      required this.name,
+      required this.site,
+      required this.size,
+      required this.type});
 }

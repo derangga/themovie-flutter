@@ -3,7 +3,7 @@ import 'movie.dart';
 import 'cast_and_crew.dart';
 
 class DetailMovieContent {
-  DetailMovie detailMovie;
-  List<Cast> castsMovie;
-  List<Movie> similarMOvie;
+  late DetailMovie detailMovie;
+  late List<Cast> castsMovie;
+  late List<Movie> similarMOvie;
 }

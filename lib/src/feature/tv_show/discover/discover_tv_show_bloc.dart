@@ -1,7 +1,8 @@
-import 'package:dio/dio.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
-import 'package:rxdart/rxdart.dart';
+import '../../../data/config/failure.dart';
+import '../../../logger/app_logger.dart';
+import '../../../utils/bloc_throttle.dart';
 import '../../../core/base/base_bloc.dart';
 import '../../../core/base/base_event_state.dart';
 import '../../../domain/tv_show_repository.dart';
@@ -14,81 +15,78 @@ class DiscoverTvShowBloc
   final TvShowRepository _repository;
   int _page = 1;
 
-  DiscoverTvShowBloc(Logger logger, this._repository)
-      : super(logger, LoadingFirstPageState());
-
-  @override
-  Stream<Transition<DiscoverTvShowEvent, DiscoverTvShowState>> transformEvents(
-      Stream<DiscoverTvShowEvent> events, transitionFn) {
-    return super.transformEvents(
-      events.debounceTime(
-        Duration(milliseconds: 500),
-      ),
-      transitionFn,
+  DiscoverTvShowBloc(AppLogger logger, this._repository)
+      : super(logger, DiscoverTvShowState()) {
+    on<DiscoverTvShowEvent>(
+      _fetchDiscoverTvShow,
+      transformer: throttleDroppable(Duration(milliseconds: 500)),
     );
   }
 
-  @override
-  Stream<DiscoverTvShowState> mapEventToState(
-      DiscoverTvShowEvent event) async* {
-    final currentState = state;
+  Future<void> _fetchDiscoverTvShow(
+    DiscoverTvShowEvent event,
+    Emitter<DiscoverTvShowState> emit,
+  ) async {
+    if (state.hasReachedMax) return;
+
     if (event is GetFirstPageTvShowEvent) {
-      _page = event.page;
-      yield LoadingFirstPageState();
+      emit(state.copyWith());
+
       final result = await _repository.getDiscoverTvShow(_page);
-      yield* result.fold((failure) async* {
-        String message;
-        if (failure.dioError == DioErrorType.RESPONSE) {
-          message = 'Error : ${failure.code}\nCause ${failure.errorBody}';
-        } else
-          message = 'Network failure';
-        yield ErrorGetFirstPageTvShowState(message);
-      }, (success) async* {
-        _page++;
-        yield SuccessGetDiscoverTvShowState(success, false);
-      });
-    } else if (event is GetNextPageTvShowEvent &&
-        currentState is SuccessGetDiscoverTvShowState &&
-        !_hasReachedMax(currentState)) {
+
+      _onGetFirstPage(emit, result);
+    } else if (event is GetNextPageTvShowEvent) {
+      emit(state.copyWith(status: DiscoverTvShowStatus.LOADING));
+
       final result = await _repository.getDiscoverTvShow(_page);
-      yield* result.fold((failure) async* {
-        String message;
-        if (failure.dioError == DioErrorType.RESPONSE) {
-          message = 'Error : ${failure.code}\nCause ${failure.errorBody}';
-        } else
-          message = 'Network failure';
-        yield ErrorGetNextPageTvShowState(currentState.tvShows, message);
-      }, (success) async* {
-        _page++;
-        yield success.isEmpty
-            ? currentState.copyWith(hasReachedMax: true)
-            : SuccessGetDiscoverTvShowState(
-                currentState.tvShows + success,
-                false,
-              );
-      });
-    } else if (event is GetNextPageTvShowEvent &&
-        currentState is ErrorGetNextPageTvShowState) {
-      final result = await _repository.getDiscoverTvShow(_page);
-      yield* result.fold((failure) async* {
-        String message;
-        if (failure.dioError == DioErrorType.RESPONSE) {
-          message = 'Error : ${failure.code}\nCause ${failure.errorBody}';
-        } else
-          message = 'Network failure';
-        yield ErrorGetNextPageTvShowState(currentState.tvShows, message);
-      }, (success) async* {
-        _page++;
-        yield success.isEmpty
-            ? currentState.copyWith(hasReachedMax: true)
-            : SuccessGetDiscoverTvShowState(
-                currentState.tvShows + success,
-                false,
-              );
-      });
+
+      _onGetNextPage(emit, result);
     }
   }
 
-  bool _hasReachedMax(DiscoverTvShowState state) =>
-      state is SuccessGetDiscoverTvShowState && state.hasReachedMax;
+  void _onGetFirstPage(
+    Emitter<DiscoverTvShowState> emit,
+    Either<Failure, List<TvShow>> result,
+  ) {
+    result.fold((error) {
+      emit(state.copyWith(
+        status: DiscoverTvShowStatus.FAILED,
+        errorMessage: '${error.code}: ${error.errorBody}',
+      ));
+    }, (response) {
+      _page++;
+      emit(state.copyWith(
+        status: DiscoverTvShowStatus.SUCCESS,
+        tvShows: response,
+        hasReachedMax: false,
+      ));
+    });
+  }
+
+  void _onGetNextPage(
+    Emitter<DiscoverTvShowState> emit,
+    Either<Failure, List<TvShow>> result,
+  ) {
+    result.fold((error) {
+      emit(state.copyWith(
+        status: DiscoverTvShowStatus.FAILED,
+        errorMessage: '${error.code}: ${error.errorBody}',
+        hasReachedMax: false,
+      ));
+    }, (response) {
+      if (response.isNotEmpty) {
+        _page++;
+        emit(state.copyWith(
+          status: DiscoverTvShowStatus.SUCCESS,
+          tvShows: List.of(state.tvShows)..addAll(response),
+          hasReachedMax: false,
+        ));
+      } else {
+        emit(state.copyWith(
+          status: DiscoverTvShowStatus.SUCCESS,
+          hasReachedMax: true,
+        ));
+      }
+    });
+  }
 }

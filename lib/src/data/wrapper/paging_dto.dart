@@ -1,12 +1,10 @@
-import 'package:flutter/foundation.dart';
-
-typedef ArrayParser<T> = T Function(List<dynamic> jsonArray);
+typedef ArrayParser<T> = T Function(List<dynamic>? jsonArray);
 typedef Parser<T> = T Function(dynamic json);
 
 /// DTO Parser wrapper
 class PagingDTO<T> {
-  int page, totalPage, totalResults;
-  T data;
+  int? page, totalPage, totalResults;
+  T? data;
 
   /// To parse json that the result field is JsonArray :
   /// {
@@ -42,13 +40,10 @@ class PagingModel<T> {
   int page, totalPage, totalResults;
   T data;
 
-  PagingModel(
-      {@required this.data,
-      @required this.page,
-      @required this.totalPage,
-      @required this.totalResults})
-      : assert(data != null),
-        assert(page != null),
-        assert(totalPage != null),
-        assert(totalResults != null);
+  PagingModel({
+    required this.data,
+    required this.page,
+    required this.totalPage,
+    required this.totalResults,
+  });
 }
