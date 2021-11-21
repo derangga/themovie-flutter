@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
 
-import 'rounded_button.dart';
+import 'button/button_view.dart';
 import 'text/text_view.dart';
 
 class DraggableDetail extends StatelessWidget {
@@ -108,7 +108,7 @@ class DraggableDetail extends StatelessWidget {
                         child: Row(
                           children: [
                             Expanded(
-                              child: RoundedButton(
+                              child: ButtonView(
                                 radius: 8.0,
                                 height: 46.0,
                                 width: size.width,
