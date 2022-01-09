@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
-import '../resources/drawable.dart';
+import 'package:themovie_flutter/src/widget/image/asset_image_view.dart';
+import 'package:themovie_flutter/src/widget/image/image_view.dart';
 import '../resources/color_theme.dart';
 
 class PortraitContent extends StatelessWidget {
-  final double height;
-  final double width;
   final EdgeInsetsGeometry? margin;
+  final String placeholderPath;
+  final String errorPlaceholderPath;
   final String imageUrl;
   final Widget? content;
   final Widget? subContent;
 
-  PortraitContent(
-      {required this.height,
-      required this.width,
-      required this.imageUrl,
-      this.margin,
-      this.content,
-      this.subContent})
-      : assert(height != null),
-        assert(width != null),
-        assert(imageUrl != null);
+  PortraitContent({
+    required this.imageUrl,
+    required this.placeholderPath,
+    required this.errorPlaceholderPath,
+    this.margin,
+    this.content,
+    this.subContent,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
-      width: width,
+      height: 260.0,
+      width: 140.0,
       margin: margin,
       padding: EdgeInsets.only(bottom: 12.0),
       decoration: BoxDecoration(
@@ -36,12 +35,28 @@ class PortraitContent extends StatelessWidget {
         children: [
           Container(
             height: 160.0,
-            width: width,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: FadeInImage.assetNetwork(
-                placeholder: Drawable.NO_IMAGE,
-                image: imageUrl,
+            width: double.infinity,
+            child: CacheImageView(
+              imageUrl,
+              rounded: BorderRadius.only(
+                topLeft: Radius.circular(8.0),
+                topRight: Radius.circular(8.0),
+              ),
+              fit: BoxFit.cover,
+              placeholder: (context, url) => AssetImageView(
+                path: placeholderPath,
+                rounded: BorderRadius.only(
+                  topLeft: Radius.circular(8.0),
+                  topRight: Radius.circular(8.0),
+                ),
+                fit: BoxFit.cover,
+              ),
+              errorPlaceholder: (context, url, error) => AssetImageView(
+                path: errorPlaceholderPath,
+                rounded: BorderRadius.only(
+                  topLeft: Radius.circular(8.0),
+                  topRight: Radius.circular(8.0),
+                ),
                 fit: BoxFit.cover,
               ),
             ),

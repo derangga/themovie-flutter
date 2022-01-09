@@ -113,28 +113,20 @@ class _DetailMovieScreenState
           castAndCrew: Container(
             width: _size.width,
             height: 260.0,
-            child: _castAndCrew(
-              content.castsMovie,
-              height: 260.0,
-              width: 140.0,
-            ),
+            child: _castAndCrew(content.castsMovie),
           ),
           similarTitle: 'Similar Movies',
           similarMovie: Container(
             width: _size.width,
             height: 260.0,
-            child: _similarMovie(
-              content.similarMOvie,
-              height: 260.0,
-              width: 140.0,
-            ),
+            child: _similarMovie(content.similarMOvie),
           ),
         ),
       ],
     );
   }
 
-  Widget _castAndCrew(List<Cast> castAndCrew, {double? height, double? width}) {
+  Widget _castAndCrew(List<Cast> castAndCrew) {
     if (castAndCrew.isEmpty) return Container();
     return ListView.separated(
       separatorBuilder: (ctx, position) => Container(
@@ -144,11 +136,11 @@ class _DetailMovieScreenState
       scrollDirection: Axis.horizontal,
       itemCount: castAndCrew.length,
       itemBuilder: (ctx, position) => PortraitContent(
-        height: height!,
-        width: width!,
         imageUrl:
             '${UrlConstant.IMAGE_URL}${castAndCrew[position].profilePath}',
         margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
+        placeholderPath: Drawable.NO_IMAGE,
+        errorPlaceholderPath: Drawable.NO_IMAGE,
         content: TextView(
           '${castAndCrew[position].name}',
           maxLines: 2,
@@ -164,7 +156,7 @@ class _DetailMovieScreenState
     );
   }
 
-  Widget _similarMovie(List<Movie> movies, {double? height, double? width}) {
+  Widget _similarMovie(List<Movie> movies) {
     if (movies.isEmpty) return Container();
     return ListView.separated(
       separatorBuilder: (ctx, position) => Container(
@@ -174,9 +166,9 @@ class _DetailMovieScreenState
       scrollDirection: Axis.horizontal,
       itemCount: movies.length,
       itemBuilder: (ctx, position) => PortraitContent(
-        height: height!,
-        width: width!,
         imageUrl: '${UrlConstant.IMAGE_URL}${movies[position].posterPath}',
+        placeholderPath: Drawable.NO_IMAGE,
+        errorPlaceholderPath: Drawable.NO_IMAGE,
         margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
         content: TextView(
           '${movies[position].title}',
