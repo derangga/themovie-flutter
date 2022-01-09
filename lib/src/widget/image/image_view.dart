@@ -7,7 +7,7 @@ class CacheImageView extends StatelessWidget {
   final LoadingErrorWidgetBuilder? errorPlaceholder;
   final double? width, height;
   final BoxFit? fit;
-  final BorderRadius? rounded;
+  final BorderRadius rounded;
   const CacheImageView(
     this.imageUrl, {
     Key? key,
@@ -16,7 +16,7 @@ class CacheImageView extends StatelessWidget {
     this.fit,
     this.placeholder,
     this.errorPlaceholder,
-    this.rounded,
+    this.rounded = BorderRadius.zero,
   }) : super(key: key);
 
   @override
