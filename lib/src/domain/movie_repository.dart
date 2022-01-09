@@ -1,10 +1,15 @@
 import 'package:dartz/dartz.dart';
-import '../data/model/detail_movie_content.dart';
+import 'package:themovie_flutter/src/data/model/cast_and_crew.dart';
+import 'package:themovie_flutter/src/data/model/detail_movie.dart';
 import '../data/config/failure.dart';
 import '../data/model/movie.dart';
 
 abstract class MovieRepository {
-  Future<Either<Failure, List<Movie>>> getDiscoverMovieRemote(int page);
-  Future<Either<Failure?, DetailMovieContent>> getDetailMovieRemote(
-      int? movieId);
+  Future<Either<Failure, List<Movie>>> getDiscoverMovie(int page);
+
+  Future<Either<Failure, List<Cast>>> getCastAndCrew(int movieId);
+
+  Future<Either<Failure, DetailMovie>> getMovieById(int movieId);
+
+  Future<Either<Failure, List<Movie>>> getSimilarMovie(int movieId);
 }

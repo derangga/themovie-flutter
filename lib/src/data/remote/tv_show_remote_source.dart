@@ -11,9 +11,8 @@ abstract class TvShowRemoteSource extends BaseRemote {
   TvShowRemoteSource(Dio dio) : super(dio);
 
   Future<Either<Failure, List<TvShow>>> getDiscoverTvShow(int page);
-  Future<Either<Failure, DetailTvShow>> getDetailTvShow(int? tvShowId);
-  Future<Either<Failure, List<Cast>>> getCastAndCrew(int? tvShowId);
-  Future<Either<Failure, List<TvShow>>> getSimilarTvShow(
-      int? tvShowId, int page);
+  Future<Either<Failure, DetailTvShow>> getTvShowById(int tvShowId);
+  Future<Either<Failure, List<Cast>>> getCastAndCrew(int tvShowId);
+  Future<Either<Failure, List<TvShow>>> getSimilarTvShow(int tvShowId);
   Future<Either<Failure, List<Video>>> getTvShowTrailer(int tvShowId);
 }

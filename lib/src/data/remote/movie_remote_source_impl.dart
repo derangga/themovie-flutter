@@ -15,7 +15,7 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   MovieRemoteSourceImpl(Dio dio) : super(dio);
 
   @override
-  Future<Either<Failure, DetailMovie>> getDetailMovie(int? movieId) async {
+  Future<Either<Failure, DetailMovie>> getMovieById(int movieId) async {
     String url =
         "${Endpoint.DETAIL_MOVIE.replaceAll(Endpoint.MOVIE_ID, '$movieId')}?api_key=$token";
     final result = await get<DetailMovie>(url,
@@ -54,7 +54,7 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   }
 
   @override
-  Future<Either<Failure, List<Cast>>> getCastAndCrew(int? movieId) async {
+  Future<Either<Failure, List<Cast>>> getCastAndCrew(int movieId) async {
     String url =
         '${Endpoint.CREDITS_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=$token';
     final result = await get<List<Cast>>(url, converter: (response) {
@@ -70,7 +70,7 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getSimilarMovie(int? movieId) async {
+  Future<Either<Failure, List<Movie>>> getSimilarMovie(int movieId) async {
     String url =
         '${Endpoint.SIMILIAR_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=$token&sort_by=popularity.desc';
     final result = await get<List<Movie>>(url, converter: (response) {

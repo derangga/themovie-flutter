@@ -30,11 +30,11 @@ class DiscoverMovieBloc
     if (event is GetFirstPageMovieEvent) {
       _page = event.page;
       emit(DiscoverMovieState());
-      final result = await _repository.getDiscoverMovieRemote(_page);
+      final result = await _repository.getDiscoverMovie(_page);
       _onGetFirstPage(emit, result);
     } else if (event is GetNextPageMovieEvent) {
       emit(state.copyWith(status: DiscoverMoviesStatus.LOADING));
-      final result = await _repository.getDiscoverMovieRemote(_page);
+      final result = await _repository.getDiscoverMovie(_page);
       _onGetNextPage(emit, result);
     }
   }

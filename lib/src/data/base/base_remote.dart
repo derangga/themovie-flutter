@@ -49,7 +49,13 @@ abstract class BaseRemote {
   }) async {
     Options opsi = Options(headers: headers);
     var response = await _callApi(
-        _dio.delete(endpoint, data: body, options: opsi), converter);
+      _dio.delete(
+        endpoint,
+        data: body,
+        options: opsi,
+      ),
+      converter,
+    );
     return response;
   }
 
@@ -60,10 +66,12 @@ abstract class BaseRemote {
       var transform = converter(response.data);
       return Right(transform);
     } on DioError catch (e) {
-      return Left(Failure(
-          dioError: e.type,
-          code: e.response?.statusCode,
-          errorBody: e.response?.data));
+      return Left(
+        Failure(
+            dioError: e.type,
+            code: e.response?.statusCode,
+            errorBody: e.response?.data),
+      );
     }
   }
 }
