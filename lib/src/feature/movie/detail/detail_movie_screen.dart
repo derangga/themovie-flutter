@@ -7,12 +7,13 @@ import 'package:themovie_flutter/src/data/model/detail_movie_content.dart';
 import 'package:themovie_flutter/src/data/model/movie.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
 import 'package:themovie_flutter/src/resources/drawable.dart';
-import 'package:themovie_flutter/src/utils/date_helper.dart';
-import 'package:themovie_flutter/src/widget/detail_shimmer.dart';
+import 'package:themovie_flutter/src/widget/app_scaffold.dart';
 import 'package:themovie_flutter/src/widget/draggable_detail.dart';
+import 'package:themovie_flutter/src/widget/image/asset_image_view.dart';
+import 'package:themovie_flutter/src/widget/image/image_view.dart';
+import 'package:themovie_flutter/src/widget/loading/detail_loading_view.dart';
 import 'package:themovie_flutter/src/widget/portrait_content.dart';
 import 'package:themovie_flutter/src/widget/text/text_view.dart';
-import '../../../utils/extension/string_utils.dart';
 import 'detail_movie_bloc.dart';
 
 class DetailMovieScreen extends StatefulWidget {
@@ -35,7 +36,7 @@ class _DetailMovieScreenState
     } else if (state is ErrorGetDetailMovie) {
       return Container();
     } else {
-      return DetailShimmer();
+      return DetailLoadingView();
     }
   }
 
@@ -48,11 +49,9 @@ class _DetailMovieScreenState
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
     return SafeArea(
-      child: Scaffold(
-        body: Container(
-          color: ColorTheme.primaryDark,
-          child: BlocBuilder<DetailMovieBloc, DetailMovieState>(
-              builder: (ctx, state) => mapStateToWidget(state)),
+      child: AppScaffold(
+        body: BlocBuilder<DetailMovieBloc, DetailMovieState>(
+          builder: (ctx, state) => mapStateToWidget(state),
         ),
       ),
     );
@@ -63,37 +62,51 @@ class _DetailMovieScreenState
     return Stack(
       children: [
         Positioned(
-            top: 0.0,
-            left: 0.0,
-            right: 0.0,
-            child: Container(
-              width: _size.width,
-              height: _size.height,
-              child: ShaderMask(
-                shaderCallback: (rect) {
-                  return LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [gradientStart, gradientEnd],
-                  ).createShader(
-                      Rect.fromLTRB(0, 120, rect.width, rect.height - 20));
-                },
-                blendMode: BlendMode.darken,
-                child: Container(
-                  child: FadeInImage.assetNetwork(
-                      placeholder: Drawable.NO_IMAGE,
-                      image:
-                          '${UrlConstant.IMAGE_URL}${detailMovie.posterPath}',
-                      fit: BoxFit.cover),
-                ),
+          top: 0.0,
+          left: 0.0,
+          right: 0.0,
+          child: Container(
+            width: _size.width,
+            height: _size.height,
+            child: ShaderMask(
+              shaderCallback: (rect) {
+                return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [gradientStart, gradientEnd],
+                ).createShader(
+                  Rect.fromLTRB(0, 120, rect.width, rect.height - 20),
+                );
+              },
+              blendMode: BlendMode.darken,
+              child: CacheImageView(
+                '${UrlConstant.IMAGE_URL}${detailMovie.posterPath}',
+                placeholder: (context, url) =>
+                    AssetImageView(path: Drawable.NO_IMAGE),
+                errorPlaceholder: (context, url, error) =>
+                    AssetImageView(path: Drawable.NO_IMAGE),
+                fit: BoxFit.cover,
               ),
-            )),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 12.0,
+          left: 12.0,
+          child: Container(
+            decoration: ShapeDecoration(
+              shape: CircleBorder(),
+              color: ColorTheme.primaryDark.withOpacity(0.65),
+            ),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios_rounded),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+        ),
         DraggableDetail(
           title: detailMovie.originalTitle,
-          releaseDate: detailMovie.releaseDate!.convertDateFormat(
-            DateHelper.FORMAT_YYYY_MM_DD,
-            DateHelper.FORMAT_DD_MMM_COMMA_YYYY,
-          ),
+          releaseDate: detailMovie.releaseDate,
           voteAverage: '${detailMovie.voteAverage}',
           genre: '${detailMovie.genres!.first.name}',
           overview: detailMovie.overview,
@@ -122,6 +135,7 @@ class _DetailMovieScreenState
   }
 
   Widget _castAndCrew(List<Cast> castAndCrew, {double? height, double? width}) {
+    if (castAndCrew.isEmpty) return Container();
     return ListView.separated(
       separatorBuilder: (ctx, position) => Container(
         width: 12.0,
@@ -151,6 +165,7 @@ class _DetailMovieScreenState
   }
 
   Widget _similarMovie(List<Movie> movies, {double? height, double? width}) {
+    if (movies.isEmpty) return Container();
     return ListView.separated(
       separatorBuilder: (ctx, position) => Container(
         width: 12.0,

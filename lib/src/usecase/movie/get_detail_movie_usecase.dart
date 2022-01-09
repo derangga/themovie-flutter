@@ -6,6 +6,7 @@ import 'package:themovie_flutter/src/usecase/movie/get_cast_and_crew_movie_useca
 import 'package:themovie_flutter/src/usecase/movie/get_movie_by_id_usecase.dart';
 import 'package:themovie_flutter/src/usecase/movie/get_similar_movie_usecase.dart';
 import 'package:themovie_flutter/src/usecase/usecase.dart';
+import 'package:themovie_flutter/src/utils/date_helper.dart';
 
 class GetDetailMovieUseCase implements UseCase<DetailMovieContent, int> {
   final MovieRepository _repository;
@@ -25,6 +26,11 @@ class GetDetailMovieUseCase implements UseCase<DetailMovieContent, int> {
       failure.message = 'Failed get detail movie';
       failedGetContent = failure;
     }, (success) {
+      success.releaseDate = DateHelper.formatConverter(
+        success.releaseDate,
+        DateHelper.FORMAT_YYYY_MM_DD,
+        DateHelper.FORMAT_DD_MMM_COMMA_YYYY,
+      );
       detailContent.detailMovie = success;
     });
 

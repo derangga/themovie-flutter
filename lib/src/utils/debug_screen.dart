@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
+import 'package:themovie_flutter/src/widget/app_scaffold.dart';
 import 'package:themovie_flutter/src/widget/button/button_view.dart';
 import 'package:themovie_flutter/src/widget/loading/circular_loading_view.dart';
+import 'package:themovie_flutter/src/widget/loading/detail_loading_view.dart';
 import 'package:themovie_flutter/src/widget/text/text_view.dart';
 
 class DebugScreen extends StatelessWidget {
@@ -16,17 +18,11 @@ class DebugScreen extends StatelessWidget {
       title: 'Debug',
       theme: ThemeData.dark(),
       home: SafeArea(
-        child: Scaffold(
+        child: AppScaffold(
           appBar: AppBar(
             title: Text('Debug Screen'),
           ),
-          body: Center(
-            child: ButtonView(
-              text: TextView('Press Me'),
-              color: ColorTheme.light_brown,
-              onPressed: () {},
-            ),
-          ),
+          body: DetailLoadingView(),
         ),
       ),
     );
