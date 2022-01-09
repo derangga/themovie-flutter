@@ -51,14 +51,8 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
   }
 
   @override
-  Widget? mapStateToWidget(DiscoverTvShowState state) {
-    if (state.status == DiscoverTvShowStatus.INITIAL) {
-      return Center(
-        child: CircularProgressIndicator(
-          backgroundColor: ColorTheme.light_brown,
-        ),
-      );
-    } else if (state.status == DiscoverTvShowStatus.SUCCESS ||
+  Widget mapStateToWidget(DiscoverTvShowState state) {
+    if (state.status == DiscoverTvShowStatus.SUCCESS ||
         state.status == DiscoverTvShowStatus.LOADING) {
       return _tvShowList(state.tvShows, state.hasReachedMax);
     } else if (state.status == DiscoverTvShowStatus.FAILED) {
@@ -90,8 +84,13 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
           error: state.errorMessage.orEmpty(),
         );
       }
+    } else {
+      return Center(
+        child: CircularProgressIndicator(
+          backgroundColor: ColorTheme.light_brown,
+        ),
+      );
     }
-    return null;
   }
 
   @override
@@ -134,7 +133,7 @@ class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
           if (position >= tvShows.length) {
             return FooterCircularProgressIndicator(
               loadingState: footerState,
-              errorText: error,
+              errorText: 'Retry',
               errorColorText: Colors.red,
               onRetryTap: () {
                 getMovies(false);

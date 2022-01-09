@@ -1,3 +1,5 @@
+import 'package:themovie_flutter/src/utils/date_helper.dart';
+
 import '../wrapper/paging_dto.dart';
 import '../local/db/movie_db.dart';
 import '../model/detail_movie.dart';
@@ -27,7 +29,11 @@ extension MovieDTOExtension on MovieDTO? {
         overview: this?.overview ?? '',
         popularity: this?.popularity ?? 0,
         posterPath: this?.posterPath ?? '',
-        releaseDate: this?.releaseDate ?? '',
+        releaseDate: DateHelper.formatConverter(
+          this?.releaseDate,
+          DateHelper.FORMAT_YYYY_MM_DD,
+          DateHelper.FORMAT_DD_MMM_COMMA_YYYY,
+        ),
         title: this?.title ?? '',
         video: this?.video ?? false,
         voteAverage: this?.voteAverage ?? '',

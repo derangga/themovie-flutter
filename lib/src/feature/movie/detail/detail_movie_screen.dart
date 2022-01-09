@@ -7,7 +7,7 @@ import 'package:themovie_flutter/src/data/model/detail_movie_content.dart';
 import 'package:themovie_flutter/src/data/model/movie.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
 import 'package:themovie_flutter/src/resources/drawable.dart';
-import 'package:themovie_flutter/src/utils/date_format.dart';
+import 'package:themovie_flutter/src/utils/date_helper.dart';
 import 'package:themovie_flutter/src/widget/detail_shimmer.dart';
 import 'package:themovie_flutter/src/widget/draggable_detail.dart';
 import 'package:themovie_flutter/src/widget/portrait_content.dart';
@@ -91,8 +91,9 @@ class _DetailMovieScreenState
         DraggableDetail(
           title: detailMovie.originalTitle,
           releaseDate: detailMovie.releaseDate!.convertDateFormat(
-              DateFormat.FORMAT_YYYY_MM_DD,
-              DateFormat.FORMAT_DD_MMM_COMMA_YYYY),
+            DateHelper.FORMAT_YYYY_MM_DD,
+            DateHelper.FORMAT_DD_MMM_COMMA_YYYY,
+          ),
           voteAverage: '${detailMovie.voteAverage}',
           genre: '${detailMovie.genres!.first.name}',
           overview: detailMovie.overview,

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:themovie_flutter/src/navigation/route_app.dart';
+import 'package:themovie_flutter/src/widget/app_scaffold.dart';
+import 'package:themovie_flutter/src/widget/button/button_view.dart';
+import 'package:themovie_flutter/src/widget/container/linear_container_view.dart';
+import 'package:themovie_flutter/src/widget/custom_widget/movie_card_view.dart';
+import 'package:themovie_flutter/src/widget/dark_app_bar.dart';
+import 'package:themovie_flutter/src/widget/loading/circular_loading_view.dart';
 import '../../../core/base/base_stateful.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/movie.dart';
@@ -9,8 +14,8 @@ import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
 import '../../../widget/footer_progress.dart';
 import '../../../widget/text/text_view.dart';
-import '../../../utils/extension/context_utils.dart';
 import '../../../utils/extension/string_utils.dart';
+import '../../../utils/extension/context_utils.dart';
 import 'discover_movie_bloc.dart';
 
 class DiscoverMovieScreen extends StatefulWidget {
@@ -53,79 +58,92 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
   }
 
   @override
-  Widget? mapStateToWidget(DiscoverMovieState state) {
-    if (state.status == DiscoverMoviesStatus.INITIAL) {
-      return Center(
-        child: CircularProgressIndicator(
-          backgroundColor: ColorTheme.light_brown,
-        ),
-      );
-    } else if (state.status == DiscoverMoviesStatus.SUCCESS ||
+  Widget mapStateToWidget(DiscoverMovieState state) {
+    if (state.status == DiscoverMoviesStatus.SUCCESS ||
         state.status == DiscoverMoviesStatus.LOADING) {
-      return _movieList(state.movies, state.hasReachedMax);
+      return movieList(state.movies, state.hasReachedMax);
     } else if (state.status == DiscoverMoviesStatus.FAILED) {
       if (state.movies.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextView('${state.errorMessage.orEmpty()}',
-                  textColor: Colors.white, textSize: 18.0),
-              SizedBox(height: 12.0),
-              RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0)),
-                  child: TextView('Retry', textColor: Colors.white),
-                  color: ColorTheme.light_brown,
-                  onPressed: () {
-                    bloc.add(GetFirstPageMovieEvent());
-                  })
-            ],
-          ),
-        );
+        return initialLoadView();
       } else {
-        return _movieList(
+        return movieList(
           state.movies,
           state.hasReachedMax,
           footerState: FooterLoadingState.ERROR,
           error: state.errorMessage.orEmpty(),
         );
       }
+    } else {
+      return Center(
+        child: CircularLoadingView(),
+      );
     }
-    return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Popular'),
-          leading: Container(
-            margin: EdgeInsets.symmetric(vertical: 8),
-            decoration: ShapeDecoration(
-                shape: CircleBorder(), color: ColorTheme.primary),
-            child: IconButton(
-                icon: Icon(Icons.arrow_back_ios_rounded),
-                onPressed: () => Navigator.pop(context)),
-          ),
+    return AppScaffold(
+      appBar: DarkAppBar(
+        title: Text('Discover Movies'),
+        leading: Container(
+          margin: EdgeInsets.symmetric(vertical: 8),
+          decoration: ShapeDecoration(
+              shape: CircleBorder(), color: ColorTheme.primaryDark),
+          child: IconButton(
+              icon: Icon(Icons.arrow_back_ios_rounded),
+              onPressed: () => Navigator.pop(context)),
         ),
-        body: Container(child:
-            BlocBuilder<DiscoverMovieBloc, DiscoverMovieState>(
-                builder: (blocContext, state) {
-          return mapStateToWidget(state)!;
-          // return Center(child: Text('Dummy'));
-        })));
+      ),
+      body: Container(
+        child: BlocBuilder<DiscoverMovieBloc, DiscoverMovieState>(
+          builder: (blocContext, state) {
+            return mapStateToWidget(state);
+          },
+        ),
+      ),
+    );
   }
 
-  Widget _movieList(
+  Widget initialLoadView() {
+    return Center(
+      child: LinearContainerView(
+        width: double.infinity,
+        padding: EdgeInsets.all(24.0),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextView(
+            'There is something wrong with your request',
+            textColor: Colors.white,
+            textSize: 16.0,
+            bold: true,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 12.0),
+          ButtonView(
+            text: TextView(
+              'Retry',
+              textColor: Colors.white,
+              textSize: 14.0,
+            ),
+            color: Colors.redAccent,
+            onPressed: () {
+              bloc.add(GetFirstPageMovieEvent());
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget movieList(
     List<Movie> tvShows,
     bool hasReachBottom, {
     FooterLoadingState footerState = FooterLoadingState.LOADING,
     String? error,
   }) {
     return ListView.separated(
-        separatorBuilder: (ctx, position) =>
-            Container(height: 12.0, color: ColorTheme.primaryDark),
+        separatorBuilder: (ctx, position) => SizedBox(height: 8.0),
         controller: _scrollController,
         itemCount: hasReachBottom ? tvShows.length : tvShows.length + 1,
         itemBuilder: (ctx, position) {
@@ -134,63 +152,36 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
               loadingState: footerState,
               errorText: 'Retry',
               errorColorText: Colors.white,
-              loadingColor: ColorTheme.light_brown,
+              buttonColor: Colors.redAccent,
               onRetryTap: () {
                 getMovies(false);
               },
             );
-          } else
-            return movieItem(tvShows[position]);
+          } else {
+            return movieItem(position, tvShows[position]);
+          }
         });
   }
 
-  Widget movieItem(Movie movie) {
-    return InkWell(
+  Widget movieItem(int position, Movie movie) {
+    final topMargin = position == 0 ? 8.0 : 0.0;
+    return MovieCardView(
+      margin: EdgeInsets.fromLTRB(16.0, topMargin, 16.0, 0.0),
+      backgroundColor: ColorTheme.primaryDark,
+      imageUrl: '${UrlConstant.IMAGE_URL}${movie.posterPath}',
+      title: movie.title,
+      overview: movie.overview,
+      movieRating: movie.voteAverage,
+      dateRelease: movie.releaseDate,
+      voteCount: movie.voteCount,
+      placeholder: Drawable.NO_IMAGE,
+      errorPlaceholder: Drawable.NO_IMAGE,
       onTap: () {
-        context.navigatePushNamed(RouteApp.DETAIL_MOVIE_SCREEN,
-            arguments: movie.id);
+        context.navigatePushNamed(
+          RouteApp.DETAIL_MOVIE_SCREEN,
+          arguments: movie.id,
+        );
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            child: FadeInImage.assetNetwork(
-              image: '${UrlConstant.IMAGE_URL}${movie.backdropPath}',
-              fit: BoxFit.cover,
-              placeholder: Drawable.NO_IMAGE,
-              imageErrorBuilder: _imageLoadError,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(8, 12, 8, 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextView(
-                  movie.title,
-                  textSize: 24,
-                  bold: true,
-                ),
-                SizedBox(height: 8),
-                TextView(
-                  DateFormat("MMM dd, yyyy")
-                      .format(DateTime.parse(movie.releaseDate).toLocal()),
-                  textSize: 14,
-                ),
-                TextView(
-                  movie.overview,
-                  maxLines: 3,
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 8),
-        ],
-      ),
     );
-  }
-
-  Widget _imageLoadError(BuildContext ctx, Object obj, StackTrace? stackTrace) {
-    return Image(image: AssetImage(Drawable.NO_IMAGE));
   }
 }
