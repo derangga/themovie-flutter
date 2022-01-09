@@ -17,6 +17,6 @@ class ErrorGetDetailMovie extends DetailMovieState {
 abstract class DetailMovieEvent implements BlocEvent {}
 
 class GetDetailMovieEvent extends DetailMovieEvent {
-  final int? movieId;
+  final int movieId;
   GetDetailMovieEvent(this.movieId);
 }

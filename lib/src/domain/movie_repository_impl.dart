@@ -1,54 +1,33 @@
 import 'package:dartz/dartz.dart';
-import '../data/model/detail_movie_content.dart';
+import 'package:themovie_flutter/src/data/model/cast_and_crew.dart';
+import 'package:themovie_flutter/src/data/model/detail_movie.dart';
 import '../data/config/failure.dart';
 import '../data/remote/movie_remote_source.dart';
 import '../data/model/movie.dart';
 import 'movie_repository.dart';
 
 class MovieRepositoryImpl extends MovieRepository {
-  final MovieRemoteSource? _remoteSource;
+  final MovieRemoteSource _remoteSource;
 
   MovieRepositoryImpl(this._remoteSource);
 
   @override
-  Future<Either<Failure?, DetailMovieContent>> getDetailMovieRemote(
-      int? movieId) async {
-    final detailMovie = await _remoteSource!.getDetailMovie(movieId);
-    final casts = await _remoteSource!.getCastAndCrew(movieId);
-    final similarMovie = await _remoteSource!.getSimilarMovie(movieId);
-    final detailContent = DetailMovieContent();
-    Failure? failedGetContent;
-
-    detailMovie.fold((failure) {
-      failure.message = 'Failed get detail tv show';
-      failedGetContent = failure;
-    }, (success) {
-      detailContent.detailMovie = success;
-    });
-
-    casts.fold((failure) {
-      failure.message = 'Failed get casts and crew tv show';
-      failedGetContent = failure;
-    }, (success) {
-      detailContent.castsMovie = success;
-    });
-
-    similarMovie.fold((failure) {
-      failure.message = 'Failed get similar tv show';
-      failedGetContent = failure;
-    }, (success) {
-      detailContent.similarMOvie = success;
-    });
-
-    if (failedGetContent == null) {
-      return Right(detailContent);
-    } else {
-      return Left(failedGetContent);
-    }
+  Future<Either<Failure, DetailMovie>> getMovieById(int movieId) async {
+    return await _remoteSource.getMovieById(movieId);
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getDiscoverMovieRemote(int page) async {
-    return await _remoteSource!.getDiscoverMovie(page);
+  Future<Either<Failure, List<Movie>>> getDiscoverMovie(int page) async {
+    return await _remoteSource.getDiscoverMovie(page);
+  }
+
+  @override
+  Future<Either<Failure, List<Cast>>> getCastAndCrew(int movieId) async {
+    return await _remoteSource.getCastAndCrew(movieId);
+  }
+
+  @override
+  Future<Either<Failure, List<Movie>>> getSimilarMovie(int movieId) async {
+    return _remoteSource.getSimilarMovie(movieId);
   }
 }

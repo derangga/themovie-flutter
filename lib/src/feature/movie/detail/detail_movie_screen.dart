@@ -16,7 +16,7 @@ import '../../../utils/extension/string_utils.dart';
 import 'detail_movie_bloc.dart';
 
 class DetailMovieScreen extends StatefulWidget {
-  final int? movieId;
+  final int movieId;
   DetailMovieScreen(this.movieId);
   @override
   _DetailMovieScreenState createState() => _DetailMovieScreenState();
