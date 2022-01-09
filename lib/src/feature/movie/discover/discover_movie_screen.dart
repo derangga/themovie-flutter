@@ -64,7 +64,7 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
       return movieList(state.movies, state.hasReachedMax);
     } else if (state.status == DiscoverMoviesStatus.FAILED) {
       if (state.movies.isEmpty) {
-        return initialLoadView();
+        return initialErrorView();
       } else {
         return movieList(
           state.movies,
@@ -104,7 +104,7 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
     );
   }
 
-  Widget initialLoadView() {
+  Widget initialErrorView() {
     return Center(
       child: LinearContainerView(
         width: double.infinity,
@@ -143,24 +143,25 @@ class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
     String? error,
   }) {
     return ListView.separated(
-        separatorBuilder: (ctx, position) => SizedBox(height: 8.0),
-        controller: _scrollController,
-        itemCount: hasReachBottom ? tvShows.length : tvShows.length + 1,
-        itemBuilder: (ctx, position) {
-          if (position >= tvShows.length) {
-            return FooterCircularProgressIndicator(
-              loadingState: footerState,
-              errorText: 'Retry',
-              errorColorText: Colors.white,
-              buttonColor: Colors.redAccent,
-              onRetryTap: () {
-                getMovies(false);
-              },
-            );
-          } else {
-            return movieItem(position, tvShows[position]);
-          }
-        });
+      separatorBuilder: (ctx, position) => SizedBox(height: 8.0),
+      controller: _scrollController,
+      itemCount: hasReachBottom ? tvShows.length : tvShows.length + 1,
+      itemBuilder: (ctx, position) {
+        if (position >= tvShows.length) {
+          return FooterCircularProgressIndicator(
+            loadingState: footerState,
+            errorText: 'Retry',
+            errorColorText: Colors.white,
+            buttonColor: Colors.redAccent,
+            onRetryTap: () {
+              getMovies(false);
+            },
+          );
+        } else {
+          return movieItem(position, tvShows[position]);
+        }
+      },
+    );
   }
 
   Widget movieItem(int position, Movie movie) {

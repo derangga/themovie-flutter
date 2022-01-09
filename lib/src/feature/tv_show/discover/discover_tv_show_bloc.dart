@@ -28,7 +28,8 @@ class DiscoverTvShowBloc
     if (state.hasReachedMax) return;
 
     if (event is GetFirstPageTvShowEvent) {
-      emit(state.copyWith());
+      _page = event.page;
+      emit(DiscoverTvShowState());
 
       final result = await _repository.getDiscoverTvShow(_page);
 
@@ -86,5 +87,10 @@ class DiscoverTvShowBloc
         ));
       }
     });
+  }
+
+  bool isOnLoadingOrFailed() {
+    return state.status == DiscoverTvShowStatus.LOADING ||
+        state.status == DiscoverTvShowStatus.FAILED;
   }
 }
