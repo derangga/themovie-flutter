@@ -1,4 +1,5 @@
 import 'package:themovie_flutter/src/data/model/genre.dart';
+import 'package:themovie_flutter/src/utils/date_helper.dart';
 
 import '../wrapper/paging_dto.dart';
 import 'genre_mapper.dart';
@@ -27,7 +28,11 @@ extension TvShowDTOExtension on TvShowDTO? {
       originalLanguage: this?.originalLanguage ?? '',
       backdropPath: this?.backdropPath ?? '',
       posterPath: this?.posterPath ?? '',
-      firstAirDate: this?.firstAirDate ?? '',
+      firstAirDate: DateHelper.formatConverter(
+        this?.firstAirDate,
+        DateHelper.FORMAT_YYYY_MM_DD,
+        DateHelper.FORMAT_DD_MMM_COMMA_YYYY,
+      ),
       overview: this?.overview ?? '',
       voteAverage: this?.voteAverage ?? '',
       voteCount: this?.voteCount ?? 0,
