@@ -11,7 +11,7 @@ import 'base_event_state.dart';
 abstract class BaseState<BlocApp extends BaseBloc, StateApp extends BlocState,
     S extends StatefulWidget> extends State<S> {
   void setupOnInitState();
-  Widget? mapStateToWidget(StateApp state);
+  Widget mapStateToWidget(StateApp state);
 
   late BlocApp bloc;
   AppLogger _logger = KiwiContainer().resolve<AppLogger>('AppLogger');

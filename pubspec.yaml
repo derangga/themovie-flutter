@@ -24,7 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
   kiwi: ^4.0.1
-  flutter_secure_storage: ^4.2.1
   flutter_config: ^2.0.0
   dartz: ^0.10.0
   moor_flutter: ^4.0.0
@@ -37,6 +36,7 @@ dependencies:
   fluttertoast: ^8.0.8
   logger: ^1.1.0
   intl: ^0.17.0
+  cached_network_image: ^3.2.0
 
 
   # The following adds the Cupertino Icons font to your application.

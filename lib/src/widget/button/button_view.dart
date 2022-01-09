@@ -11,13 +11,14 @@ class ButtonView extends StatelessWidget {
 
   ButtonView({
     required this.text,
+    Key? key,
     this.height,
     this.width,
     this.padding,
     this.onPressed,
     this.color,
     this.radius = 0.0,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

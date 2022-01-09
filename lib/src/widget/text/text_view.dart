@@ -41,7 +41,7 @@ class TextView extends StatelessWidget {
     );
   }
 
-  FontWeight get fontWeight => bold ? FontWeight.normal : FontWeight.bold;
+  FontWeight get fontWeight => bold ? FontWeight.bold : FontWeight.normal;
 
   int? get lines => singleLine ? 1 : maxLines;
 }

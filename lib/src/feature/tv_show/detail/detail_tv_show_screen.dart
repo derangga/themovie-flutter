@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
-import '../../../utils/date_format.dart';
 import '../../../widget/portrait_content.dart';
 import '../../../widget/button/button_view.dart';
 import '../../../widget/text/text_view.dart';
@@ -13,6 +12,7 @@ import '../../../data/model/detail_tv_show_content.dart';
 import '../../../data/model/tv_show.dart';
 import '../../../utils/extension/string_utils.dart';
 import '../../../widget/detail_shimmer.dart';
+import '../../../utils/date_helper.dart';
 import 'detail_tv_show_bloc.dart';
 
 class DetailTvShowScreen extends StatefulWidget {
@@ -125,7 +125,7 @@ class _DetailTvShowScreenState
                                       Expanded(
                                         flex: 1,
                                         child: TextView(
-                                          '${detailTvShow.firstAirDate.convertDateFormat(DateFormat.FORMAT_YYYY_MM_DD, DateFormat.FORMAT_DD_MMM_COMMA_YYYY)}',
+                                          '${detailTvShow.firstAirDate.convertDateFormat(DateHelper.FORMAT_YYYY_MM_DD, DateHelper.FORMAT_DD_MMM_COMMA_YYYY)}',
                                           textColor: Colors.grey[400],
                                           textAlign: TextAlign.end,
                                         ),
