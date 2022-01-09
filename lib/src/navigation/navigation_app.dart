@@ -24,7 +24,7 @@ class NavigationApp {
         return MaterialPageRoute(builder: (_) => DiscoverTvShowScreen());
 
       case RouteApp.DETAIL_TV_SCREEN:
-        final int? tvShowId = settings.arguments as int?;
+        final int tvShowId = settings.arguments as int;
         return MaterialPageRoute(builder: (_) => DetailTvShowScreen(tvShowId));
 
       default:

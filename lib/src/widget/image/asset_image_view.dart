@@ -10,7 +10,7 @@ class AssetImageView extends StatelessWidget {
     required this.path,
     this.width,
     this.height,
-    this.rounded,
+    this.rounded = BorderRadius.zero,
     this.fit,
   }) : super(key: key);
 
