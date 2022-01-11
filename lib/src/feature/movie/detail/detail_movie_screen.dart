@@ -108,19 +108,11 @@ class _DetailMovieScreenState
           title: detailMovie.originalTitle,
           releaseDate: detailMovie.releaseDate,
           voteAverage: '${detailMovie.voteAverage}',
-          genre: '${detailMovie.genres!.first.name}',
+          genre: '${detailMovie.genres.first.name}',
           overview: detailMovie.overview,
-          castAndCrew: Container(
-            width: _size.width,
-            height: 260.0,
-            child: _castAndCrew(content.castsMovie),
-          ),
+          castAndCrew: _castAndCrew(content.castsMovie),
           similarTitle: 'Similar Movies',
-          similarMovie: Container(
-            width: _size.width,
-            height: 260.0,
-            child: _similarMovie(content.similarMOvie),
-          ),
+          similarMovie: _similarMovie(content.similarMOvie),
         ),
       ],
     );
@@ -128,29 +120,33 @@ class _DetailMovieScreenState
 
   Widget _castAndCrew(List<Cast> castAndCrew) {
     if (castAndCrew.isEmpty) return Container();
-    return ListView.separated(
-      separatorBuilder: (ctx, position) => Container(
-        width: 12.0,
-        color: ColorTheme.primary,
-      ),
-      scrollDirection: Axis.horizontal,
-      itemCount: castAndCrew.length,
-      itemBuilder: (ctx, position) => PortraitContent(
-        imageUrl:
-            '${UrlConstant.IMAGE_URL}${castAndCrew[position].profilePath}',
-        margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
-        placeholderPath: Drawable.NO_IMAGE,
-        errorPlaceholderPath: Drawable.NO_IMAGE,
-        content: TextView(
-          '${castAndCrew[position].name}',
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+    return Container(
+      width: _size.width,
+      height: 260.0,
+      child: ListView.separated(
+        separatorBuilder: (ctx, position) => Container(
+          width: 12.0,
+          color: ColorTheme.primary,
         ),
-        subContent: TextView(
-          '${castAndCrew[position].character}',
-          textColor: Colors.grey[400],
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+        scrollDirection: Axis.horizontal,
+        itemCount: castAndCrew.length,
+        itemBuilder: (ctx, position) => PortraitContent(
+          imageUrl:
+              '${UrlConstant.IMAGE_URL}${castAndCrew[position].profilePath}',
+          margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
+          placeholderPath: Drawable.NO_IMAGE,
+          errorPlaceholderPath: Drawable.NO_IMAGE,
+          content: TextView(
+            '${castAndCrew[position].name}',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subContent: TextView(
+            '${castAndCrew[position].character}',
+            textColor: Colors.grey[400],
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ),
     );
@@ -158,34 +154,38 @@ class _DetailMovieScreenState
 
   Widget _similarMovie(List<Movie> movies) {
     if (movies.isEmpty) return Container();
-    return ListView.separated(
-      separatorBuilder: (ctx, position) => Container(
-        width: 12.0,
-        color: ColorTheme.primary,
-      ),
-      scrollDirection: Axis.horizontal,
-      itemCount: movies.length,
-      itemBuilder: (ctx, position) => PortraitContent(
-        imageUrl: '${UrlConstant.IMAGE_URL}${movies[position].posterPath}',
-        placeholderPath: Drawable.NO_IMAGE,
-        errorPlaceholderPath: Drawable.NO_IMAGE,
-        margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
-        content: TextView(
-          '${movies[position].title}',
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+    return Container(
+      width: _size.width,
+      height: 260.0,
+      child: ListView.separated(
+        separatorBuilder: (ctx, position) => Container(
+          width: 12.0,
+          color: ColorTheme.primary,
         ),
-        subContent: Row(
-          children: [
-            TextView(
-              '${movies[position].voteAverage}',
-              textColor: Colors.grey[400],
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(width: 8.0),
-            Icon(Icons.star, color: Colors.amber)
-          ],
+        scrollDirection: Axis.horizontal,
+        itemCount: movies.length,
+        itemBuilder: (ctx, position) => PortraitContent(
+          imageUrl: '${UrlConstant.IMAGE_URL}${movies[position].posterPath}',
+          placeholderPath: Drawable.NO_IMAGE,
+          errorPlaceholderPath: Drawable.NO_IMAGE,
+          margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
+          content: TextView(
+            '${movies[position].title}',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subContent: Row(
+            children: [
+              TextView(
+                '${movies[position].voteAverage}',
+                textColor: Colors.grey[400],
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(width: 8.0),
+              Icon(Icons.star, color: Colors.amber)
+            ],
+          ),
         ),
       ),
     );

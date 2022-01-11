@@ -29,10 +29,6 @@ extension GenreEntityExtension on GenreMovieEntityData {
 }
 
 extension GenreMovieExtension on Genre {
-  Genre orEmpty() {
-    return this != null ? this : Genre(id: 0, name: '');
-  }
-
   // GenreMovieEntityData toEntity() {
   //   return GenreMovieEntityData(id: this.id, name: this.name);
   // }

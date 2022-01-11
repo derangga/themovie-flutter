@@ -71,44 +71,45 @@ class DetailMovieDTO {
 }
 
 class DetailMovie {
-  bool? adult;
-  String? backdropPath;
-  int? budget;
-  List<Genre>? genres;
-  String? homepage;
-  int? id;
-  String? imdbId;
-  String? originalLanguage;
-  String? originalTitle;
-  String? overview;
-  double? popularity;
-  String? posterPath;
-  String? status;
-  String? tagline;
-  String? title;
-  String? releaseDate;
-  bool? video;
-  double? voteAverage;
-  int? voteCount;
+  final bool adult;
+  final String backdropPath;
+  final int budget;
+  final List<Genre> genres;
+  final String homepage;
+  final int id;
+  final String imdbId;
+  final String originalLanguage;
+  final String originalTitle;
+  final String overview;
+  final double popularity;
+  final String posterPath;
+  final String status;
+  final String tagline;
+  final String title;
+  String releaseDate;
+  final bool video;
+  final double voteAverage;
+  final int voteCount;
 
-  DetailMovie(
-      {this.adult,
-      this.backdropPath,
-      this.budget,
-      this.genres,
-      this.homepage,
-      this.id,
-      this.imdbId,
-      this.originalLanguage,
-      this.originalTitle,
-      this.overview,
-      this.popularity,
-      this.posterPath,
-      this.status,
-      this.tagline,
-      this.title,
-      this.releaseDate,
-      this.video,
-      this.voteAverage,
-      this.voteCount});
+  DetailMovie({
+    required this.adult,
+    required this.backdropPath,
+    required this.budget,
+    required this.genres,
+    required this.homepage,
+    required this.id,
+    required this.imdbId,
+    required this.originalLanguage,
+    required this.originalTitle,
+    required this.overview,
+    required this.popularity,
+    required this.posterPath,
+    required this.status,
+    required this.tagline,
+    required this.title,
+    required this.releaseDate,
+    required this.video,
+    required this.voteAverage,
+    required this.voteCount,
+  });
 }
