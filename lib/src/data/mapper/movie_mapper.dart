@@ -4,7 +4,6 @@ import '../wrapper/paging_dto.dart';
 import '../local/db/movie_db.dart';
 import '../model/detail_movie.dart';
 import '../model/movie.dart';
-import '../../utils/extension/list_utils.dart';
 import 'genre_mapper.dart';
 
 extension PagingMovieDTOExtension on PagingDTO<List<MovieDTO?>?>? {
@@ -100,26 +99,28 @@ extension MovieExtension on Movie {
 
 extension DetailMovieDTOExtension on DetailMovieDTO? {
   DetailMovie toModel() {
+    final tempGenre = this?.genres ?? [];
     return DetailMovie(
-        adult: this?.adult ?? false,
-        backdropPath: this?.backdropPath,
-        budget: this?.budget,
-        genres: this?.genres?.orEmpty().map((e) => e.toModel()).toList(),
-        homepage: this?.homepage,
-        id: this?.id,
-        imdbId: this?.imdbId,
-        originalLanguage: this?.originalLanguage,
-        originalTitle: this?.originalTitle,
-        overview: this?.overview,
-        popularity: this?.popularity,
-        posterPath: this?.posterPath,
-        status: this?.status,
-        tagline: this?.tagline,
-        title: this?.title,
-        releaseDate: this?.releaseDate,
-        video: this?.video,
-        voteAverage: this?.voteAverage,
-        voteCount: this?.voteCount);
+      adult: this?.adult ?? false,
+      backdropPath: this?.backdropPath ?? '',
+      budget: this?.budget ?? 0,
+      genres: tempGenre.map((e) => e.toModel()).toList(),
+      homepage: this?.homepage ?? '',
+      id: this?.id ?? 0,
+      imdbId: this?.imdbId ?? '',
+      originalLanguage: this?.originalLanguage ?? '',
+      originalTitle: this?.originalTitle ?? '',
+      overview: this?.overview ?? '',
+      popularity: this?.popularity ?? 0,
+      posterPath: this?.posterPath ?? '',
+      status: this?.status ?? '',
+      tagline: this?.tagline ?? '',
+      title: this?.title ?? '',
+      releaseDate: this?.releaseDate ?? '',
+      video: this?.video ?? false,
+      voteAverage: this?.voteAverage ?? 0.0,
+      voteCount: this?.voteCount ?? 0,
+    );
   }
 }
 
