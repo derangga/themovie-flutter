@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:themovie_flutter/src/feature/account/account_bloc.dart';
+import 'package:themovie_flutter/src/feature/favorite/favorite_bloc.dart';
+import 'package:themovie_flutter/src/feature/home/home_bloc.dart';
+import 'package:themovie_flutter/src/feature/search/search_bloc.dart';
 import 'feature/movie/detail/detail_movie_bloc.dart';
 import 'feature/movie/discover/discover_movie_bloc.dart';
 import 'feature/tv_show/detail/detail_tv_show_bloc.dart';
@@ -13,14 +17,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
+          BlocProvider<HomeBloc>(
+            create: (ctx) => HomeBloc(),
+          ),
+          BlocProvider<SearchBloc>(
+            create: (ctx) => SearchBloc(),
+          ),
+          BlocProvider<FavoriteBloc>(
+            create: (ctx) => FavoriteBloc(),
+          ),
+          BlocProvider<AccountBloc>(
+            create: (ctx) => AccountBloc(),
+          ),
           BlocProvider<DiscoverMovieBloc>(
-              create: (ctx) => KiwiContainer().resolve<DiscoverMovieBloc>()),
+            create: (ctx) => KiwiContainer().resolve<DiscoverMovieBloc>(),
+          ),
           BlocProvider<DiscoverTvShowBloc>(
-              create: (ctx) => KiwiContainer().resolve<DiscoverTvShowBloc>()),
+            create: (ctx) => KiwiContainer().resolve<DiscoverTvShowBloc>(),
+          ),
           BlocProvider<DetailTvShowBloc>(
-              create: (ctx) => KiwiContainer().resolve<DetailTvShowBloc>()),
+            create: (ctx) => KiwiContainer().resolve<DetailTvShowBloc>(),
+          ),
           BlocProvider<DetailMovieBloc>(
-              create: (ctx) => KiwiContainer().resolve<DetailMovieBloc>())
+            create: (ctx) => KiwiContainer().resolve<DetailMovieBloc>(),
+          )
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

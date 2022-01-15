@@ -25,8 +25,8 @@ class DetailTvShowScreen extends StatefulWidget {
   _DetailTvShowScreenState createState() => _DetailTvShowScreenState();
 }
 
-class _DetailTvShowScreenState
-    extends BaseState<DetailTvShowBloc, DetailTvShowState, DetailTvShowScreen> {
+class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
+    DetailTvShowState, DetailTvShowScreen> {
   late Size _size;
   Color gradientStart = Colors.transparent;
   Color gradientEnd = Colors.black;

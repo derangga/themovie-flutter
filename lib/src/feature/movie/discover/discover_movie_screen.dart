@@ -23,7 +23,7 @@ class DiscoverMovieScreen extends StatefulWidget {
   _DiscoverMovieScreenState createState() => _DiscoverMovieScreenState();
 }
 
-class _DiscoverMovieScreenState extends BaseState<DiscoverMovieBloc,
+class _DiscoverMovieScreenState extends BaseStateWidget<DiscoverMovieBloc,
     DiscoverMovieState, DiscoverMovieScreen> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;

@@ -11,7 +11,7 @@ class TrailerTvShowScreen extends StatefulWidget {
   _TrailerTvShowScreenState createState() => _TrailerTvShowScreenState();
 }
 
-class _TrailerTvShowScreenState extends BaseState<TrailerTvShowBloc,
+class _TrailerTvShowScreenState extends BaseStateWidget<TrailerTvShowBloc,
     TrailerTvShowState, TrailerTvShowScreen> {
   @override
   void setupOnInitState() {
@@ -46,6 +46,7 @@ class _TrailerTvShowScreenState extends BaseState<TrailerTvShowBloc,
 
   Widget _loading() {
     return Center(
-        child: CircularProgressIndicator(backgroundColor: ColorTheme.light_brown));
+        child:
+            CircularProgressIndicator(backgroundColor: ColorTheme.light_brown));
   }
 }
