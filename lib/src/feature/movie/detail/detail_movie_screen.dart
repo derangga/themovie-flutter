@@ -23,8 +23,8 @@ class DetailMovieScreen extends StatefulWidget {
   _DetailMovieScreenState createState() => _DetailMovieScreenState();
 }
 
-class _DetailMovieScreenState
-    extends BaseState<DetailMovieBloc, DetailMovieState, DetailMovieScreen> {
+class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
+    DetailMovieState, DetailMovieScreen> {
   late Size _size;
   Color gradientStart = Colors.transparent;
   Color gradientEnd = Colors.black;

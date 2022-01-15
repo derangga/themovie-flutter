@@ -4,14 +4,14 @@ import '../feature/movie/discover/discover_movie_screen.dart';
 import '../feature/tv_show/detail/detail_tv_show_screen.dart';
 import '../feature/tv_show/discover/discover_tv_show_screen.dart';
 import '../navigation/route_app.dart';
-import '../ui/home_screen.dart';
+import '../ui/main_screen.dart';
 import '../widget/undefined_view.dart';
 
 class NavigationApp {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteApp.HOME_SCREEN:
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        return MaterialPageRoute(builder: (_) => MainScreen());
 
       case RouteApp.DISCOVER_MOVIE_SCREEN:
         return MaterialPageRoute(builder: (_) => DiscoverMovieScreen());

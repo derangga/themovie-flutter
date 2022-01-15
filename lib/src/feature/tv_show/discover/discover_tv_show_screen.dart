@@ -23,7 +23,7 @@ class DiscoverTvShowScreen extends StatefulWidget {
   _DiscoverTvShowScreenState createState() => _DiscoverTvShowScreenState();
 }
 
-class _DiscoverTvShowScreenState extends BaseState<DiscoverTvShowBloc,
+class _DiscoverTvShowScreenState extends BaseStateWidget<DiscoverTvShowBloc,
     DiscoverTvShowState, DiscoverTvShowScreen> {
   Color gradientStart = Colors.transparent;
   Color gradientEnd = ColorTheme.primaryDark;

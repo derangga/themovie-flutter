@@ -8,8 +8,8 @@ import 'package:themovie_flutter/src/logger/app_logger.dart';
 import 'base_bloc.dart';
 import 'base_event_state.dart';
 
-abstract class BaseState<BlocApp extends BaseBloc, StateApp extends BlocState,
-    S extends StatefulWidget> extends State<S> {
+abstract class BaseStateWidget<BlocApp extends BaseBloc,
+    StateApp extends BlocState, S extends StatefulWidget> extends State<S> {
   void setupOnInitState();
   Widget mapStateToWidget(StateApp state);
 
