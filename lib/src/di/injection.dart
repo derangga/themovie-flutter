@@ -8,18 +8,15 @@ import 'package:themovie_flutter/src/data/remote/movie_remote_source.dart';
 import 'package:themovie_flutter/src/data/remote/movie_remote_source_impl.dart';
 import 'package:themovie_flutter/src/data/remote/tv_show_remote_source.dart';
 import 'package:themovie_flutter/src/data/remote/tv_show_remote_source_impl.dart';
-import 'package:themovie_flutter/src/domain/genre_repository.dart';
-import 'package:themovie_flutter/src/domain/genre_repository_impl.dart';
 import 'package:themovie_flutter/src/domain/movie_repository.dart';
 import 'package:themovie_flutter/src/domain/movie_repository_impl.dart';
 import 'package:themovie_flutter/src/domain/tv_show_repository.dart';
 import 'package:themovie_flutter/src/domain/tv_show_repository_impl.dart';
+import 'package:themovie_flutter/src/feature/home/home_bloc.dart';
 import 'package:themovie_flutter/src/feature/movie/detail/detail_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/movie/discover/discover_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/tv_show/detail/detail_tv_show_bloc.dart';
 import 'package:themovie_flutter/src/feature/tv_show/discover/discover_tv_show_bloc.dart';
-import 'package:themovie_flutter/src/logger/app_logger.dart';
-import 'package:themovie_flutter/src/logger/default_prety_printer.dart';
 
 part 'injection.g.dart';
 
@@ -30,23 +27,9 @@ abstract class Injection {
     name: 'LogFilter',
   )
   @Register.singleton(
-    LogPrinter,
-    from: DefaultLogPrinter,
-    name: 'LogPrinter',
-  )
-  @Register.singleton(
     LogOutput,
     from: ConsoleOutput,
     name: 'LogOutput',
-  )
-  @Register.singleton(
-    AppLogger,
-    name: 'AppLogger',
-    resolvers: {
-      LogFilter: 'LogFilter',
-      LogPrinter: 'LogPrinter',
-      LogOutput: 'LogOutput'
-    },
   )
   @Register.singleton(
     BaseOptions,
@@ -85,14 +68,6 @@ abstract class Injection {
       MovieRemoteSource: 'MovieRemoteSource',
     },
     name: 'MovieRepository',
-  )
-  @Register.singleton(
-    GenreRepository,
-    from: GenreRepositoryImpl,
-    resolvers: {
-      MovieRemoteSource: 'MovieRemoteSource',
-    },
-    name: 'GenreRepository',
   )
   @Register.singleton(
     TvShowRemoteSource,

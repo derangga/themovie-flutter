@@ -1,20 +1,21 @@
 import '../model/genre.dart';
 import '../../data/local/db/genre_db.dart';
-import '../../utils/extension/list_utils.dart';
 import '../../utils/extension/number_utils.dart';
 import '../../utils/extension/string_utils.dart';
 
-extension ListGenreDTOExtension on ListGenreDTO<List<GenreDTO>> {
-  ListGenre<List<Genre>> toGenreModelPaging() {
-    return ListGenre(
-      data: this.data.orEmpty().map((e) => e.toModel()).toList(),
-    );
+extension GenresDTOExtension on GenresDTO? {
+  List<Genre> toModel() {
+    final genres = this?.genres ?? [];
+    return genres.map((e) => e.toModel()).toList();
   }
 }
 
-extension GenreDTOExtension on GenreDTO {
+extension GenreDTOExtension on GenreDTO? {
   Genre toModel() {
-    return Genre(id: this.id.orZero(), name: this.name!.orEmpty());
+    return Genre(
+      id: this?.id ?? 0,
+      name: this?.name ?? '',
+    );
   }
 
   // GenreMovieEntityData toEntity() {

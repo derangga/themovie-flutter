@@ -13,13 +13,7 @@ class _$Injection extends Injection {
     container
       ..registerSingleton<LogFilter>((c) => DevelopmentFilter(),
           name: 'LogFilter')
-      ..registerSingleton<LogPrinter>((c) => DefaultLogPrinter(),
-          name: 'LogPrinter')
       ..registerSingleton<LogOutput>((c) => ConsoleOutput(), name: 'LogOutput')
-      ..registerSingleton(
-          (c) => AppLogger(c<LogFilter>('LogFilter'),
-              c<LogPrinter>('LogPrinter'), c<LogOutput>('LogOutput')),
-          name: 'AppLogger')
       ..registerSingleton<BaseOptions>((c) => DioOptions(), name: 'BaseOptions')
       ..registerSingleton<Interceptor>((c) => LoggingInterceptor(),
           name: 'Interceptor')
@@ -37,9 +31,6 @@ class _$Injection extends Injection {
       ..registerSingleton<MovieRepository>(
           (c) => MovieRepositoryImpl(c<MovieRemoteSource>('MovieRemoteSource')),
           name: 'MovieRepository')
-      ..registerSingleton<GenreRepository>(
-          (c) => GenreRepositoryImpl(c<MovieRemoteSource>('MovieRemoteSource')),
-          name: 'GenreRepository')
       ..registerSingleton<TvShowRemoteSource>(
           (c) => TvShowRemoteSourceImpl(c<Dio>('Dio')),
           name: 'TvShowRemoteSource')

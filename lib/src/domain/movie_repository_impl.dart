@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:themovie_flutter/src/data/model/cast_and_crew.dart';
 import 'package:themovie_flutter/src/data/model/detail_movie.dart';
+import 'package:themovie_flutter/src/data/model/genre.dart';
 import '../data/config/failure.dart';
 import '../data/remote/movie_remote_source.dart';
 import '../data/model/movie.dart';
@@ -28,6 +29,11 @@ class MovieRepositoryImpl extends MovieRepository {
 
   @override
   Future<Either<Failure, List<Movie>>> getSimilarMovie(int movieId) async {
-    return _remoteSource.getSimilarMovie(movieId);
+    return await _remoteSource.getSimilarMovie(movieId);
+  }
+
+  @override
+  Future<Either<Failure, List<Genre>>> getGenreMovie() async {
+    return await _remoteSource.getGenreMovie();
   }
 }
