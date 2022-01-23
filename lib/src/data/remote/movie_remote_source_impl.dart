@@ -18,8 +18,10 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   Future<Either<Failure, DetailMovie>> getMovieById(int movieId) async {
     String url =
         "${Endpoint.DETAIL_MOVIE.replaceAll(Endpoint.MOVIE_ID, '$movieId')}?api_key=$token";
-    final result = await get<DetailMovie>(url,
-        converter: (json) => DetailMovieDTO.fromJson(json).toModel());
+    final result = await get<DetailMovie>(
+      url,
+      converter: (json) => DetailMovieDTO.fromJson(json).toModel(),
+    );
     return result;
   }
 
@@ -27,28 +29,29 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   Future<Either<Failure, List<Movie>>> getDiscoverMovie(int page) async {
     String url =
         '${Endpoint.DISCOVER_MOVIE}?api_key=$token&sort_by=popularity.desc&page=$page';
-    final result = await get<List<Movie>>(url, converter: (response) {
-      final List<Movie> movies = [];
-      if (response['results'] != null) {
-        response['results'].forEach((v) {
-          movies.add(MovieDTO.fromJson(v).toModel());
-        });
-      }
-      return movies;
-    });
+    final result = await get<List<Movie>>(
+      url,
+      converter: (response) {
+        final List<Movie> movies = [];
+        if (response['results'] != null) {
+          response['results'].forEach(
+            (v) {
+              movies.add(MovieDTO.fromJson(v).toModel());
+            },
+          );
+        }
+        return movies;
+      },
+    );
     return result;
   }
 
   @override
-  Future<Either<Failure, ListGenre<List<Genre>>>> getGenreMovie() async {
+  Future<Either<Failure, List<Genre>>> getGenreMovie() async {
     String url = '${Endpoint.GENRE_MOVIE}?api_key=$token&language=en-US';
-    final result = await get<ListGenre<List<Genre>>>(
+    final result = await get<List<Genre>>(
       url,
-      converter: (response) => ListGenreDTO.fromJsonArray(
-              response,
-              (jsonArray) =>
-                  jsonArray!.map((e) => GenreDTO.fromJson(e)).toList())
-          .toGenreModelPaging(),
+      converter: (response) => GenresDTO.fromJson(response).toModel(),
     );
     return result;
   }
@@ -57,15 +60,20 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   Future<Either<Failure, List<Cast>>> getCastAndCrew(int movieId) async {
     String url =
         '${Endpoint.CREDITS_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=$token';
-    final result = await get<List<Cast>>(url, converter: (response) {
-      final List<Cast> casts = [];
-      if (response['cast'] != null) {
-        response['cast'].forEach((v) {
-          casts.add(CastDTO.fromJson(v).toModel());
-        });
-      }
-      return casts;
-    });
+    final result = await get<List<Cast>>(
+      url,
+      converter: (response) {
+        final List<Cast> casts = [];
+        if (response['cast'] != null) {
+          response['cast'].forEach(
+            (v) {
+              casts.add(CastDTO.fromJson(v).toModel());
+            },
+          );
+        }
+        return casts;
+      },
+    );
     return result;
   }
 
@@ -73,15 +81,20 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   Future<Either<Failure, List<Movie>>> getSimilarMovie(int movieId) async {
     String url =
         '${Endpoint.SIMILIAR_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=$token&sort_by=popularity.desc';
-    final result = await get<List<Movie>>(url, converter: (response) {
-      final List<Movie> movies = [];
-      if (response['results'] != null) {
-        response['results'].forEach((v) {
-          movies.add(MovieDTO.fromJson(v).toModel());
-        });
-      }
-      return movies;
-    });
+    final result = await get<List<Movie>>(
+      url,
+      converter: (response) {
+        final List<Movie> movies = [];
+        if (response['results'] != null) {
+          response['results'].forEach(
+            (v) {
+              movies.add(MovieDTO.fromJson(v).toModel());
+            },
+          );
+        }
+        return movies;
+      },
+    );
     return result;
   }
 }

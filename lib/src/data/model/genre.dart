@@ -4,23 +4,27 @@ import 'package:moor_flutter/moor_flutter.dart';
 typedef ArrayParser<T> = T Function(List<dynamic>? jsonArray);
 typedef Parser<T> = T Function(dynamic json);
 
-class ListGenreDTO<T> {
-  late T data;
+class GenresDTO {
+  List<GenreDTO>? genres;
 
-  ListGenreDTO.fromJsonArray(
-      Map<String, dynamic> json, ArrayParser<T> parserArray) {
-    data = parserArray(json['results']);
+  GenresDTO({this.genres});
+
+  GenresDTO.fromJson(Map<String, dynamic> json) {
+    if (json['genres'] != null) {
+      genres = <GenreDTO>[];
+      json['genres'].forEach((v) {
+        genres!.add(new GenreDTO.fromJson(v));
+      });
+    }
   }
 
-  ListGenreDTO.fromJsonObject(Map<String, dynamic> json, Parser<T> parser) {
-    data = parser(json['results']);
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.genres != null) {
+      data['genres'] = this.genres!.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
-}
-
-class ListGenre<T> {
-  T data;
-
-  ListGenre({required this.data}) : assert(data != null);
 }
 
 class GenreDTO {
@@ -32,6 +36,13 @@ class GenreDTO {
   GenreDTO.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    return data;
   }
 }
 
