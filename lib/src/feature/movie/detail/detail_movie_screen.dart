@@ -4,6 +4,7 @@ import 'package:themovie_flutter/src/core/base/base_stateful.dart';
 import 'package:themovie_flutter/src/data/config/url_constant.dart';
 import 'package:themovie_flutter/src/data/model/cast_and_crew.dart';
 import 'package:themovie_flutter/src/data/model/detail_movie_content.dart';
+import 'package:themovie_flutter/src/data/model/genre.dart';
 import 'package:themovie_flutter/src/data/model/movie.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
 import 'package:themovie_flutter/src/resources/drawable.dart';
@@ -108,7 +109,7 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
           title: detailMovie.originalTitle,
           releaseDate: detailMovie.releaseDate,
           voteAverage: '${detailMovie.voteAverage}',
-          genre: '${detailMovie.genres.first.name}',
+          genre: genreText(detailMovie.genres),
           overview: detailMovie.overview,
           castAndCrew: _castAndCrew(content.castsMovie),
           similarTitle: 'Similar Movies',
@@ -189,5 +190,13 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
         ),
       ),
     );
+  }
+
+  String genreText(List<Genre> genres) {
+    if (genres.isEmpty) {
+      return 'Unknown';
+    } else {
+      return genres.first.name;
+    }
   }
 }

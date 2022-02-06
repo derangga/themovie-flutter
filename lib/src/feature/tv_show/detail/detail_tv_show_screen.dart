@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:themovie_flutter/src/data/model/genre.dart';
 import 'package:themovie_flutter/src/widget/app_scaffold.dart';
 import 'package:themovie_flutter/src/widget/button/button_view.dart';
 import 'package:themovie_flutter/src/widget/container/linear_container_view.dart';
@@ -118,7 +119,7 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
                 placeholder: (context, url) =>
                     AssetImageView(path: Drawable.NO_IMAGE),
                 errorPlaceholder: (context, url, error) =>
-                    AssetImageView(path: Drawable.DUMMY_IMAGE),
+                    AssetImageView(path: Drawable.NO_IMAGE),
                 fit: BoxFit.cover,
               ),
             ),
@@ -142,7 +143,7 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
           title: detailTvShow.originalName,
           releaseDate: detailTvShow.firstAirDate,
           voteAverage: '${detailTvShow.voteAverage}',
-          genre: '${detailTvShow.genres.first.name}',
+          genre: genreText(detailTvShow.genres),
           overview: detailTvShow.overview,
           castAndCrew: _castAndCrew(detailTvShowContent.castsTvShow),
           similarTitle: 'Similar Tv Show',
@@ -227,5 +228,13 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
         ),
       ),
     );
+  }
+
+  String genreText(List<Genre> genres) {
+    if (genres.isEmpty) {
+      return 'Unknown';
+    } else {
+      return genres.first.name;
+    }
   }
 }

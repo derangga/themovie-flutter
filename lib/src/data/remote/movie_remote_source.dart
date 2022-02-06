@@ -19,4 +19,6 @@ abstract class MovieRemoteSource extends BaseRemote {
   Future<Either<Failure, List<Cast>>> getCastAndCrew(int movieId);
 
   Future<Either<Failure, List<Movie>>> getSimilarMovie(int movieId);
+
+  Future<Either<Failure, List<Movie>>> getUpcomingMovie();
 }

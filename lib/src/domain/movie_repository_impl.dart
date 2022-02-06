@@ -36,4 +36,9 @@ class MovieRepositoryImpl extends MovieRepository {
   Future<Either<Failure, List<Genre>>> getGenreMovie() async {
     return await _remoteSource.getGenreMovie();
   }
+
+  @override
+  Future<Either<Failure, List<Movie>>> getUpcomingMovie() async {
+    return await _remoteSource.getUpcomingMovie();
+  }
 }

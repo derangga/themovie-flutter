@@ -1,6 +1,7 @@
 class Endpoint {
   static const DISCOVER_MOVIE = 'discover/movie';
   static const MOVIE_ID = '{movie_id}';
+  static const UPCOMING_MOVIE = 'movie/upcoming';
   static const DETAIL_MOVIE = 'movie/$MOVIE_ID';
   static const SIMILIAR_MOVIE = 'movie/$MOVIE_ID/similar';
   static const CREDITS_MOVIE = 'movie/$MOVIE_ID/credits';
@@ -14,4 +15,6 @@ class Endpoint {
   static const CREDITS_TV_SHOW = 'tv/$TV_ID/credits';
   static const REVIEW_TV_SHOW = 'tv/$TV_ID/reviews';
   static const TRAILER_TV_SHOW = 'tv/$TV_ID/videos';
+  static const TRENDING_MOVIE = 'trending/movie/day';
+  static const TRENDING_TV_SHOW = 'trending/tv/day';
 }

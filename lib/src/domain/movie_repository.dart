@@ -15,4 +15,6 @@ abstract class MovieRepository {
   Future<Either<Failure, List<Movie>>> getSimilarMovie(int movieId);
 
   Future<Either<Failure, List<Genre>>> getGenreMovie();
+
+  Future<Either<Failure, List<Movie>>> getUpcomingMovie();
 }

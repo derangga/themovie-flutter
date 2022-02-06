@@ -25,16 +25,19 @@ class _$Injection extends Injection {
               c<Interceptor>('Interceptor'),
               c<DefaultHttpClientAdapter>('DefaultHttpClientAdapter')),
           name: 'Dio')
-      ..registerSingleton<MovieRemoteSource>(
+      ..registerFactory<MovieRemoteSource>(
           (c) => MovieRemoteSourceImpl(c<Dio>('Dio')),
           name: 'MovieRemoteSource')
-      ..registerSingleton<MovieRepository>(
+      ..registerFactory<MovieRepository>(
           (c) => MovieRepositoryImpl(c<MovieRemoteSource>('MovieRemoteSource')),
           name: 'MovieRepository')
-      ..registerSingleton<TvShowRemoteSource>(
+      ..registerFactory<TvShowRemoteSource>(
           (c) => TvShowRemoteSourceImpl(c<Dio>('Dio')),
           name: 'TvShowRemoteSource')
-      ..registerSingleton<TvShowRepository>(
+      ..registerFactory<TrendingRemoteSouce>(
+          (c) => TrendingRemoteSourceImpl(c<Dio>('Dio')),
+          name: 'TrendingRemoteSouce')
+      ..registerFactory<TvShowRepository>(
           (c) =>
               TvShowRepositoryImpl(c<TvShowRemoteSource>('TvShowRemoteSource')),
           name: 'TvShowRepository')
@@ -45,6 +48,15 @@ class _$Injection extends Injection {
       ..registerFactory(
           (c) => DiscoverTvShowBloc(c<TvShowRepository>('TvShowRepository')))
       ..registerFactory(
-          (c) => DetailTvShowBloc(c<TvShowRepository>('TvShowRepository')));
+          (c) => DetailTvShowBloc(c<TvShowRepository>('TvShowRepository')))
+      ..registerFactory((c) =>
+          TrendingMovieBloc(c<TrendingRemoteSouce>('TrendingRemoteSouce')))
+      ..registerFactory(
+          (c) => UpcomingMovieBloc(c<MovieRepository>('MovieRepository')))
+      ..registerFactory((c) =>
+          HomeDiscoverTvShowBloc(c<TvShowRepository>('TvShowRepository')))
+      ..registerFactory(
+          (c) => HomeDiscoverMovieBloc(c<MovieRepository>('MovieRepository')))
+      ..registerFactory((c) => HomeBloc());
   }
 }

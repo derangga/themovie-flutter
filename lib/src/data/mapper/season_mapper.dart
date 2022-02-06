@@ -1,17 +1,15 @@
 import '../model/detail_tv_show.dart';
-import '../../utils/extension/string_utils.dart';
-import '../../utils/extension/number_utils.dart';
 
-extension SeasonDTOExtension on SeasonDTO {
+extension SeasonDTOExtension on SeasonDTO? {
   Season toModel() {
     return Season(
-      airDate: this.airDate!.orEmpty(),
-      episodeCount: this.episodeCount.orZero(),
-      id: this.id.orZero(),
-      name: this.name.orEmpty(),
-      overview: this.overview.orEmpty(),
-      posterPath: this.posterPath.orEmpty(),
-      seasonNumber: this.seasonNumber.orZero(),
+      airDate: this?.airDate ?? '',
+      episodeCount: this?.episodeCount ?? 0,
+      id: this?.id ?? 0,
+      name: this?.name ?? '',
+      overview: this?.overview ?? '',
+      posterPath: this?.posterPath ?? '',
+      seasonNumber: this?.seasonNumber ?? 0,
     );
   }
 }

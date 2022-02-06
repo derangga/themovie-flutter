@@ -75,6 +75,7 @@ class DraggableDetail extends StatelessWidget {
                           overview,
                           textColor: Colors.grey[400],
                           maxLines: 50,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                       SizedBox(height: 24.0),

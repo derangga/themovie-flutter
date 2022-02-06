@@ -3,7 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:themovie_flutter/src/feature/account/account_bloc.dart';
 import 'package:themovie_flutter/src/feature/favorite/favorite_bloc.dart';
+import 'package:themovie_flutter/src/feature/home/discover_movies/home_discover_movie_bloc.dart';
+import 'package:themovie_flutter/src/feature/home/discover_tv_show/home_discover_tv_show_bloc.dart';
 import 'package:themovie_flutter/src/feature/home/home_bloc.dart';
+import 'package:themovie_flutter/src/feature/home/trending_movie/trending_movie_bloc.dart';
+import 'package:themovie_flutter/src/feature/home/upcoming_movie/upcoming_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/search/search_bloc.dart';
 import 'feature/movie/detail/detail_movie_bloc.dart';
 import 'feature/movie/discover/discover_movie_bloc.dart';
@@ -17,8 +21,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
+          BlocProvider<TrendingMovieBloc>(
+            create: (ctx) => KiwiContainer().resolve<TrendingMovieBloc>(),
+          ),
+          BlocProvider<UpcomingMovieBloc>(
+            create: (ctx) => KiwiContainer().resolve<UpcomingMovieBloc>(),
+          ),
+          BlocProvider<HomeDiscoverTvShowBloc>(
+            create: (ctx) => KiwiContainer().resolve<HomeDiscoverTvShowBloc>(),
+          ),
+          BlocProvider<HomeDiscoverMovieBloc>(
+            create: (ctx) => KiwiContainer().resolve<HomeDiscoverMovieBloc>(),
+          ),
           BlocProvider<HomeBloc>(
-            create: (ctx) => HomeBloc(),
+            create: (ctx) => KiwiContainer().resolve<HomeBloc>(),
           ),
           BlocProvider<SearchBloc>(
             create: (ctx) => SearchBloc(),
