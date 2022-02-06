@@ -1,24 +1,14 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:themovie_flutter/src/core/base/base_stateful.dart';
-import 'package:themovie_flutter/src/feature/home/discover_movies/home_discover_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/home/discover_movies/home_discover_movie_section.dart';
-import 'package:themovie_flutter/src/feature/home/discover_tv_show/home_discover_tv_show_bloc.dart';
 import 'package:themovie_flutter/src/feature/home/discover_tv_show/home_discover_tv_show_section.dart';
 import 'package:themovie_flutter/src/feature/home/home_bloc.dart';
-import 'package:themovie_flutter/src/feature/home/trending_movie/trending_movie.dart';
-import 'package:themovie_flutter/src/feature/home/upcoming_movie/upcoming_movie_bloc.dart';
-import 'package:themovie_flutter/src/feature/home/upcoming_movie/upcoming_movie_section.dart';
-import 'package:themovie_flutter/src/resources/color_theme.dart';
-import 'package:themovie_flutter/src/resources/drawable.dart';
+import 'package:themovie_flutter/src/feature/home/trending_movie/home_trending_movie.dart';
+import 'package:themovie_flutter/src/feature/home/upcoming_movie/home_upcoming_movie_section.dart';
 import 'package:themovie_flutter/src/widget/app_scaffold.dart';
-import 'package:themovie_flutter/src/widget/button/button_view.dart';
-import 'package:themovie_flutter/src/widget/image/asset_image_view.dart';
-import 'package:themovie_flutter/src/widget/text/text_view.dart';
+import 'package:themovie_flutter/src/widget/custom_widget/no_connection_view.dart';
 import 'home_event_state.dart';
-import 'trending_movie/trending_movie_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,10 +20,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState
     extends BaseStateWidget<HomeBloc, HomeState, HomeScreen> {
   int errorSection = 0;
-  late TrendingMovieBloc trendingMovieBloc;
-  late UpcomingMovieBloc upcomingMovieBloc;
-  late HomeDiscoverMovieBloc homeDiscoverMovieBloc;
-  late HomeDiscoverTvShowBloc homeDiscoverTvShowBloc;
 
   @override
   Widget mapStateToWidget(HomeState state) {
@@ -62,7 +48,7 @@ class _HomeScreenState
     return Builder(
       builder: (context) => ListView(
         children: [
-          TrendingMovieSection(
+          HomeTrendingMovieSection(
             onTrendingSectionError: handleErrorView,
           ),
           UpcomingMovieSection(
@@ -81,31 +67,12 @@ class _HomeScreenState
   }
 
   Widget createNoConnection() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        AssetImageView(path: Drawable.NO_CONNECTION),
-        SizedBox(height: 20.0),
-        TextView(
-          'There is some problem with your request',
-          textSize: 16,
-          bold: true,
-        ),
-        SizedBox(height: 12.0),
-        ButtonView(
-          width: 80.0,
-          text: TextView(
-            'Retry',
-            bold: true,
-          ),
-          color: ColorTheme.light_brown,
-          radius: 4.0,
-          onPressed: () {
-            errorSection = 0;
-            bloc.add(InitialEvent());
-          },
-        ),
-      ],
+    return NoConnectionView(
+      errorText: 'There is some problem with your request',
+      onPressed: () {
+        errorSection = 0;
+        bloc.add(InitialEvent());
+      },
     );
   }
 

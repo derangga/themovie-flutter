@@ -99,8 +99,9 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getUpcomingMovie() async {
-    String url = '${Endpoint.UPCOMING_MOVIE}?api_key=$token&language=en-US';
+  Future<Either<Failure, List<Movie>>> getUpcomingMovie(int page) async {
+    String url =
+        '${Endpoint.UPCOMING_MOVIE}?api_key=$token&language=en-US&page=$page';
     final result = await get<List<Movie>>(
       url,
       converter: (response) {

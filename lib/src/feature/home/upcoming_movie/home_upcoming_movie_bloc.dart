@@ -2,13 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:themovie_flutter/src/core/base/base_bloc.dart';
 import 'package:themovie_flutter/src/domain/movie_repository.dart';
 import 'package:themovie_flutter/src/usecase/movie/get_upcoming_movie_usecase.dart';
-import 'package:themovie_flutter/src/usecase/usecase.dart';
 
 import '../home_event_state.dart';
 
-class UpcomingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
+class HomeUpcomingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
   final MovieRepository _repository;
-  UpcomingMovieBloc(this._repository) : super(LoadingState()) {
+  HomeUpcomingMovieBloc(this._repository) : super(LoadingState()) {
     on<HomeEvent>(_fetchUpcomingMovie);
   }
 
@@ -19,7 +18,7 @@ class UpcomingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
     if (event is GetUpcomingMovieEvent) {
       emit(LoadingState());
 
-      final result = await _getUpcomingMovie(NoParams());
+      final result = await _getUpcomingMovie(1);
 
       result.fold((failure) {
         emit(FailedGetMovieState(failure.message));

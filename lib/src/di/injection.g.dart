@@ -50,13 +50,17 @@ class _$Injection extends Injection {
       ..registerFactory(
           (c) => DetailTvShowBloc(c<TvShowRepository>('TvShowRepository')))
       ..registerFactory((c) =>
-          TrendingMovieBloc(c<TrendingRemoteSouce>('TrendingRemoteSouce')))
+          HomeTrendingMovieBloc(c<TrendingRemoteSouce>('TrendingRemoteSouce')))
       ..registerFactory(
-          (c) => UpcomingMovieBloc(c<MovieRepository>('MovieRepository')))
+          (c) => HomeUpcomingMovieBloc(c<MovieRepository>('MovieRepository')))
       ..registerFactory((c) =>
           HomeDiscoverTvShowBloc(c<TvShowRepository>('TvShowRepository')))
       ..registerFactory(
           (c) => HomeDiscoverMovieBloc(c<MovieRepository>('MovieRepository')))
-      ..registerFactory((c) => HomeBloc());
+      ..registerFactory((c) => HomeBloc())
+      ..registerFactory(
+          (c) => UpcomingMovieBloc(c<MovieRepository>('MovieRepository')))
+      ..registerFactory((c) =>
+          TrendingMovieBloc(c<TrendingRemoteSouce>('TrendingRemoteSouce')));
   }
 }
