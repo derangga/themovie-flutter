@@ -47,20 +47,6 @@ class _HomeScreenState
   @override
   void setupOnInitState() {}
 
-  // void initBloc() {
-  //   trendingMovieBloc = BlocProvider.of<TrendingMovieBloc>(context);
-  //   upcomingMovieBloc = BlocProvider.of<UpcomingMovieBloc>(context);
-  //   homeDiscoverMovieBloc = BlocProvider.of<HomeDiscoverMovieBloc>(context);
-  //   homeDiscoverTvShowBloc = BlocProvider.of<HomeDiscoverTvShowBloc>(context);
-  // }
-
-  // void fetchHomeContent() {
-  //   trendingMovieBloc.add(GetTrendingMovieEvent());
-  //   upcomingMovieBloc.add(GetUpcomingMovieEvent());
-  //   homeDiscoverMovieBloc.add(GetDiscoverMovieEvent());
-  //   homeDiscoverTvShowBloc.add(GetDiscoverTvShowEvent());
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
