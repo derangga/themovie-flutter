@@ -97,4 +97,24 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
     );
     return result;
   }
+
+  @override
+  Future<Either<Failure, List<Movie>>> getUpcomingMovie() async {
+    String url = '${Endpoint.UPCOMING_MOVIE}?api_key=$token&language=en-US';
+    final result = await get<List<Movie>>(
+      url,
+      converter: (response) {
+        final List<Movie> movies = [];
+        if (response['results'] != null) {
+          response['results'].forEach(
+            (v) {
+              movies.add(MovieDTO.fromJson(v).toModel());
+            },
+          );
+        }
+        return movies;
+      },
+    );
+    return result;
+  }
 }

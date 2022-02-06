@@ -6,17 +6,23 @@ import 'package:themovie_flutter/src/data/config/dio_module.dart';
 import 'package:themovie_flutter/src/data/config/loging_interceptor.dart';
 import 'package:themovie_flutter/src/data/remote/movie_remote_source.dart';
 import 'package:themovie_flutter/src/data/remote/movie_remote_source_impl.dart';
+import 'package:themovie_flutter/src/data/remote/trending_remote_source.dart';
+import 'package:themovie_flutter/src/data/remote/trending_remote_source_impl.dart';
 import 'package:themovie_flutter/src/data/remote/tv_show_remote_source.dart';
 import 'package:themovie_flutter/src/data/remote/tv_show_remote_source_impl.dart';
 import 'package:themovie_flutter/src/domain/movie_repository.dart';
 import 'package:themovie_flutter/src/domain/movie_repository_impl.dart';
 import 'package:themovie_flutter/src/domain/tv_show_repository.dart';
 import 'package:themovie_flutter/src/domain/tv_show_repository_impl.dart';
+import 'package:themovie_flutter/src/feature/home/discover_movies/home_discover_movie_bloc.dart';
+import 'package:themovie_flutter/src/feature/home/discover_tv_show/home_discover_tv_show_bloc.dart';
 import 'package:themovie_flutter/src/feature/home/home_bloc.dart';
+import 'package:themovie_flutter/src/feature/home/upcoming_movie/upcoming_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/movie/detail/detail_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/movie/discover/discover_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/tv_show/detail/detail_tv_show_bloc.dart';
 import 'package:themovie_flutter/src/feature/tv_show/discover/discover_tv_show_bloc.dart';
+import '../feature/home/trending_movie/trending_movie_bloc.dart';
 
 part 'injection.g.dart';
 
@@ -55,13 +61,13 @@ abstract class Injection {
     },
     name: 'Dio',
   )
-  @Register.singleton(
+  @Register.factory(
     MovieRemoteSource,
     from: MovieRemoteSourceImpl,
     resolvers: {Dio: 'Dio'},
     name: 'MovieRemoteSource',
   )
-  @Register.singleton(
+  @Register.factory(
     MovieRepository,
     from: MovieRepositoryImpl,
     resolvers: {
@@ -69,13 +75,19 @@ abstract class Injection {
     },
     name: 'MovieRepository',
   )
-  @Register.singleton(
+  @Register.factory(
     TvShowRemoteSource,
     from: TvShowRemoteSourceImpl,
     resolvers: {Dio: 'Dio'},
     name: 'TvShowRemoteSource',
   )
-  @Register.singleton(
+  @Register.factory(
+    TrendingRemoteSouce,
+    from: TrendingRemoteSourceImpl,
+    resolvers: {Dio: 'Dio'},
+    name: 'TrendingRemoteSouce',
+  )
+  @Register.factory(
     TvShowRepository,
     from: TvShowRepositoryImpl,
     resolvers: {TvShowRemoteSource: 'TvShowRemoteSource'},
@@ -97,6 +109,23 @@ abstract class Injection {
     DetailTvShowBloc,
     resolvers: {TvShowRepository: 'TvShowRepository'},
   )
+  @Register.factory(
+    TrendingMovieBloc,
+    resolvers: {TrendingRemoteSouce: 'TrendingRemoteSouce'},
+  )
+  @Register.factory(
+    UpcomingMovieBloc,
+    resolvers: {MovieRepository: 'MovieRepository'},
+  )
+  @Register.factory(
+    HomeDiscoverTvShowBloc,
+    resolvers: {TvShowRepository: 'TvShowRepository'},
+  )
+  @Register.factory(
+    HomeDiscoverMovieBloc,
+    resolvers: {MovieRepository: 'MovieRepository'},
+  )
+  @Register.factory(HomeBloc)
   void configure();
 }
 
