@@ -4,7 +4,7 @@ import 'package:themovie_flutter/src/core/base/base_stateful.dart';
 import 'package:themovie_flutter/src/data/config/url_constant.dart';
 import 'package:themovie_flutter/src/data/model/movie.dart';
 import 'package:themovie_flutter/src/feature/home/home_event_state.dart';
-import 'package:themovie_flutter/src/feature/home/trending_movie/trending_movie_bloc.dart';
+import 'package:themovie_flutter/src/feature/home/trending_movie/home_trending_movie_bloc.dart';
 import 'package:themovie_flutter/src/navigation/route_app.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
 import 'package:themovie_flutter/src/resources/drawable.dart';
@@ -18,19 +18,20 @@ import 'package:themovie_flutter/src/widget/image/image_view.dart';
 import 'package:themovie_flutter/src/widget/text/text_view.dart';
 import '../../../utils/extension/context_utils.dart';
 
-class TrendingMovieSection extends StatefulWidget {
+class HomeTrendingMovieSection extends StatefulWidget {
   final Function onTrendingSectionError;
-  const TrendingMovieSection({
+  const HomeTrendingMovieSection({
     required this.onTrendingSectionError,
     Key? key,
   }) : super(key: key);
 
   @override
-  _TrendingMovieSectionState createState() => _TrendingMovieSectionState();
+  _HomeTrendingMovieSectionState createState() =>
+      _HomeTrendingMovieSectionState();
 }
 
-class _TrendingMovieSectionState extends BaseStateWidget<TrendingMovieBloc,
-    HomeState, TrendingMovieSection> {
+class _HomeTrendingMovieSectionState extends BaseStateWidget<
+    HomeTrendingMovieBloc, HomeState, HomeTrendingMovieSection> {
   int _current = 0;
   final Color gradientStart = Colors.transparent;
   final Color gradientEnd = Colors.black;
@@ -55,7 +56,7 @@ class _TrendingMovieSectionState extends BaseStateWidget<TrendingMovieBloc,
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TrendingMovieBloc, HomeState>(
+    return BlocBuilder<HomeTrendingMovieBloc, HomeState>(
       builder: (context, state) => mapStateToWidget(state),
     );
   }
@@ -128,7 +129,9 @@ class _TrendingMovieSectionState extends BaseStateWidget<TrendingMovieBloc,
               'See all trending',
               textColor: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              context.navigatePushNamed(RouteApp.TRENDING_MOVIE_SCREEN);
+            },
           ),
         )
       ],

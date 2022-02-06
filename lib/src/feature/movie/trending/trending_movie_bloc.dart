@@ -1,20 +1,26 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:themovie_flutter/src/core/base/base_bloc.dart';
+import 'package:themovie_flutter/src/core/base/base_event_state.dart';
+import 'package:themovie_flutter/src/data/model/movie.dart';
 import 'package:themovie_flutter/src/data/remote/trending_remote_source.dart';
-import 'package:themovie_flutter/src/feature/home/home_event_state.dart';
 import 'package:themovie_flutter/src/usecase/trending/get_trending_movie_usecase.dart';
 import 'package:themovie_flutter/src/usecase/usecase.dart';
 
-class TrendingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
-  final TrendingRemoteSouce _remoteSouce;
+part 'trending_movie_event_state.dart';
 
+class TrendingMovieBloc
+    extends BaseBloc<TrendingMovieEvent, TrendingMovieState> {
+  final TrendingRemoteSouce _remoteSouce;
   TrendingMovieBloc(this._remoteSouce) : super(LoadingState()) {
-    on<HomeEvent>(_fetchTrendingMovie);
+    on<TrendingMovieEvent>(_fetchTrendingMovie);
   }
 
+  GetTrendingMovieUseCase get _getTrendingMovie =>
+      GetTrendingMovieUseCase(_remoteSouce);
+
   Future<void> _fetchTrendingMovie(
-    HomeEvent event,
-    Emitter<HomeState> emit,
+    TrendingMovieEvent event,
+    Emitter<TrendingMovieState> emit,
   ) async {
     if (event is GetTrendingMovieEvent) {
       emit(LoadingState());
@@ -24,19 +30,8 @@ class TrendingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
       result.fold((failure) {
         emit(FailedGetMovieState(failure.message));
       }, (response) {
-        bool isMoreOrEqFiveContent = response.length >= 6;
-        if (isMoreOrEqFiveContent) {
-          final movies = response.sublist(0, 6);
-          emit(SuccessGetMovieState(movies));
-        } else {
-          emit(SuccessGetMovieState(response));
-        }
+        emit(SuccessGetMovieState(response));
       });
-    } else if (event is InitialEvent) {
-      emit(LoadingState());
     }
   }
-
-  GetTrendingMovieUseCase get _getTrendingMovie =>
-      GetTrendingMovieUseCase(_remoteSouce);
 }

@@ -4,7 +4,7 @@ import 'package:themovie_flutter/src/core/base/base_stateful.dart';
 import 'package:themovie_flutter/src/data/config/url_constant.dart';
 import 'package:themovie_flutter/src/data/model/movie.dart';
 import 'package:themovie_flutter/src/feature/home/home_event_state.dart';
-import 'package:themovie_flutter/src/feature/home/upcoming_movie/upcoming_movie_bloc.dart';
+import 'package:themovie_flutter/src/feature/home/upcoming_movie/home_upcoming_movie_bloc.dart';
 import 'package:themovie_flutter/src/navigation/route_app.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
 import 'package:themovie_flutter/src/resources/drawable.dart';
@@ -26,7 +26,7 @@ class UpcomingMovieSection extends StatefulWidget {
   _UpcomingMovieSectionState createState() => _UpcomingMovieSectionState();
 }
 
-class _UpcomingMovieSectionState extends BaseStateWidget<UpcomingMovieBloc,
+class _UpcomingMovieSectionState extends BaseStateWidget<HomeUpcomingMovieBloc,
     HomeState, UpcomingMovieSection> {
   @override
   Widget mapStateToWidget(HomeState state) {
@@ -47,7 +47,7 @@ class _UpcomingMovieSectionState extends BaseStateWidget<UpcomingMovieBloc,
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpcomingMovieBloc, HomeState>(
+    return BlocBuilder<HomeUpcomingMovieBloc, HomeState>(
       builder: (context, state) => mapStateToWidget(state),
     );
   }
@@ -129,7 +129,9 @@ class _UpcomingMovieSectionState extends BaseStateWidget<UpcomingMovieBloc,
         iconColor: ColorTheme.light_brown,
         textSize: 14.0,
         textColor: ColorTheme.light_brown,
-        onTap: () {},
+        onTap: () {
+          context.navigatePushNamed(RouteApp.UPCOMING_MOVIE_SCREEN);
+        },
       );
     }
   }
