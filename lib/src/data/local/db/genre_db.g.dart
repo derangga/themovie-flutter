@@ -132,17 +132,20 @@ class GenreMovieEntityCompanion extends UpdateCompanion<GenreMovieEntityData> {
 
 class $GenreMovieEntityTable extends GenreMovieEntity
     with TableInfo<$GenreMovieEntityTable, GenreMovieEntityData> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $GenreMovieEntityTable(this._db, [this._alias]);
+  $GenreMovieEntityTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
   late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
       'name', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, name];
   @override
@@ -173,13 +176,13 @@ class $GenreMovieEntityTable extends GenreMovieEntity
   Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
   @override
   GenreMovieEntityData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return GenreMovieEntityData.fromData(data, _db,
+    return GenreMovieEntityData.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $GenreMovieEntityTable createAlias(String alias) {
-    return $GenreMovieEntityTable(_db, alias);
+    return $GenreMovieEntityTable(attachedDatabase, alias);
   }
 }
 
