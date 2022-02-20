@@ -414,70 +414,84 @@ class MovieEntityCompanion extends UpdateCompanion<MovieEntityData> {
 
 class $MovieEntityTable extends MovieEntity
     with TableInfo<$MovieEntityTable, MovieEntityData> {
-  final GeneratedDatabase _db;
+  @override
+  final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $MovieEntityTable(this._db, [this._alias]);
+  $MovieEntityTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _adultMeta = const VerificationMeta('adult');
+  @override
   late final GeneratedColumn<bool?> adult = GeneratedColumn<bool?>(
       'adult', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: true,
       defaultConstraints: 'CHECK (adult IN (0, 1))');
   final VerificationMeta _backdropPathMeta =
       const VerificationMeta('backdropPath');
+  @override
   late final GeneratedColumn<String?> backdropPath = GeneratedColumn<String?>(
       'backdrop_path', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _originalLanguageMeta =
       const VerificationMeta('originalLanguage');
+  @override
   late final GeneratedColumn<String?> originalLanguage =
       GeneratedColumn<String?>('original_language', aliasedName, false,
-          typeName: 'TEXT', requiredDuringInsert: true);
+          type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _originalTitleMeta =
       const VerificationMeta('originalTitle');
+  @override
   late final GeneratedColumn<String?> originalTitle = GeneratedColumn<String?>(
       'original_title', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _overviewMeta = const VerificationMeta('overview');
+  @override
   late final GeneratedColumn<String?> overview = GeneratedColumn<String?>(
       'overview', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _popularityMeta = const VerificationMeta('popularity');
+  @override
   late final GeneratedColumn<double?> popularity = GeneratedColumn<double?>(
       'popularity', aliasedName, false,
-      typeName: 'REAL', requiredDuringInsert: true);
+      type: const RealType(), requiredDuringInsert: true);
   final VerificationMeta _posterPathMeta = const VerificationMeta('posterPath');
+  @override
   late final GeneratedColumn<String?> posterPath = GeneratedColumn<String?>(
       'poster_path', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _releaseDateMeta =
       const VerificationMeta('releaseDate');
+  @override
   late final GeneratedColumn<String?> releaseDate = GeneratedColumn<String?>(
       'release_date', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
   late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
       'title', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _videoMeta = const VerificationMeta('video');
+  @override
   late final GeneratedColumn<bool?> video = GeneratedColumn<bool?>(
       'video', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const BoolType(),
       requiredDuringInsert: true,
       defaultConstraints: 'CHECK (video IN (0, 1))');
   final VerificationMeta _voteAverageMeta =
       const VerificationMeta('voteAverage');
+  @override
   late final GeneratedColumn<String?> voteAverage = GeneratedColumn<String?>(
       'vote_average', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _voteCountMeta = const VerificationMeta('voteCount');
+  @override
   late final GeneratedColumn<int?> voteCount = GeneratedColumn<int?>(
       'vote_count', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [
         adult,
@@ -601,13 +615,13 @@ class $MovieEntityTable extends MovieEntity
   Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
   @override
   MovieEntityData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return MovieEntityData.fromData(data, _db,
+    return MovieEntityData.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
   $MovieEntityTable createAlias(String alias) {
-    return $MovieEntityTable(_db, alias);
+    return $MovieEntityTable(attachedDatabase, alias);
   }
 }
 
