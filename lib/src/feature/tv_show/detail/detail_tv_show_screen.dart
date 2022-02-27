@@ -92,8 +92,8 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
     );
   }
 
-  Widget _detailTvView(DetailTvShowContent detailTvShowContent) {
-    final detailTvShow = detailTvShowContent.detailTvShow;
+  Widget _detailTvView(DetailTvShowContent content) {
+    final detailTvShow = content.detailTvShow;
     return Stack(
       children: [
         Positioned(
@@ -145,17 +145,17 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
           voteAverage: '${detailTvShow.voteAverage}',
           genre: genreText(detailTvShow.genres),
           overview: detailTvShow.overview,
-          castAndCrew: _castAndCrew(detailTvShowContent.castsTvShow),
+          showCast: content.castsTvShow.isNotEmpty,
+          castAndCrew: _castAndCrew(content.castsTvShow),
           similarTitle: 'Similar Tv Show',
-          similarMovie: _similarTvShow(detailTvShowContent.similarTvShow),
+          showSimilarMovie: content.similarTvShow.isNotEmpty,
+          similarMovie: _similarTvShow(content.similarTvShow),
         )
       ],
     );
   }
 
   Widget _castAndCrew(List<Cast> castAndCrew) {
-    if (castAndCrew.isEmpty) return Container();
-
     return Container(
       width: _size.width,
       height: 260.0,
@@ -171,7 +171,7 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
               '${UrlConstant.IMAGE_URL}${castAndCrew[position].profilePath}',
           placeholderPath: Drawable.NO_IMAGE,
           errorPlaceholderPath: Drawable.NO_IMAGE,
-          margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
+          margin: marginHorizontalContent(position, castAndCrew.length),
           content: TextView(
             '${castAndCrew[position].name}',
             textColor: Colors.white,
@@ -190,8 +190,6 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
   }
 
   Widget _similarTvShow(List<TvShow> tvShows) {
-    if (tvShows.isEmpty) return Container();
-
     return Container(
       width: _size.width,
       height: 260.0,
@@ -206,7 +204,7 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
           imageUrl: '${UrlConstant.IMAGE_URL}${tvShows[position].posterPath}',
           placeholderPath: Drawable.NO_IMAGE,
           errorPlaceholderPath: Drawable.NO_IMAGE,
-          margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
+          margin: marginHorizontalContent(position, tvShows.length),
           content: TextView(
             '${tvShows[position].originalName}',
             textColor: Colors.white,
@@ -236,5 +234,14 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
     } else {
       return genres.first.name;
     }
+  }
+
+  EdgeInsetsGeometry? marginHorizontalContent(int position, int contentSize) {
+    if (position == 0) {
+      return EdgeInsets.only(left: 12.0);
+    } else if (position == contentSize - 1) {
+      return EdgeInsets.only(right: 12.0);
+    }
+    return null;
   }
 }

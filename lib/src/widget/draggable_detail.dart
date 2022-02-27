@@ -8,6 +8,7 @@ import 'text/text_view.dart';
 class DraggableDetail extends StatelessWidget {
   final String? title, releaseDate, voteAverage, genre, overview, similarTitle;
   final Widget castAndCrew, similarMovie;
+  final bool showCast, showSimilarMovie;
 
   DraggableDetail({
     this.title,
@@ -16,6 +17,8 @@ class DraggableDetail extends StatelessWidget {
     this.genre,
     this.overview,
     this.similarTitle,
+    this.showCast = false,
+    this.showSimilarMovie = false,
     required this.castAndCrew,
     required this.similarMovie,
   });
@@ -45,47 +48,44 @@ class DraggableDetail extends StatelessWidget {
                 color: Colors.grey[600],
               ),
               Expanded(
-                child: SingleChildScrollView(
+                child: ListView(
                   controller: scrollController,
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16.0),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: TextView(
-                          title,
-                          textSize: 24.0,
-                          textColor: Colors.white,
-                          maxLines: 5,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      subHeaderSection(size),
-                      SizedBox(height: 32),
-                      TextView(
-                        'Overview',
-                        textSize: 18,
+                  children: [
+                    SizedBox(height: 16.0),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: TextView(
+                        title,
+                        textSize: 24.0,
                         textColor: Colors.white,
+                        maxLines: 5,
+                        textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 20),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: TextView(
-                          overview,
-                          textColor: Colors.grey[400],
-                          maxLines: 50,
-                          textAlign: TextAlign.center,
-                        ),
+                    ),
+                    SizedBox(height: 16),
+                    subHeaderSection(size),
+                    SizedBox(height: 32),
+                    TextView(
+                      'Overview',
+                      textSize: 18,
+                      textColor: Colors.white,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: TextView(
+                        overview,
+                        textColor: Colors.grey[400],
+                        maxLines: 50,
+                        textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 24.0),
-                      trailerAndFavoriteSection(size),
-                      SizedBox(height: 32.0),
-                      castAndCrewSection(),
-                      SizedBox(height: 24.0),
-                      similarSection(),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 24.0),
+                    trailerAndFavoriteSection(size),
+                    castAndCrewSection(),
+                    similarSection(),
+                  ],
                 ),
               ),
             ],
@@ -198,11 +198,12 @@ class DraggableDetail extends StatelessWidget {
   }
 
   Widget castAndCrewSection() {
-    return Container(
-      color: ColorTheme.primary,
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Column(
+    if (showCast) {
+      return LinearContainerView(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
         crossAxisAlignment: CrossAxisAlignment.start,
+        background: ColorTheme.primary,
+        margin: EdgeInsets.only(top: 24.0),
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -216,16 +217,19 @@ class DraggableDetail extends StatelessWidget {
           SizedBox(height: 20.0),
           castAndCrew
         ],
-      ),
-    );
+      );
+    } else {
+      return Container();
+    }
   }
 
   Widget similarSection() {
-    return Container(
-      color: ColorTheme.primary,
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Column(
+    if (showSimilarMovie) {
+      return LinearContainerView(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
+        background: ColorTheme.primary,
         crossAxisAlignment: CrossAxisAlignment.start,
+        margin: EdgeInsets.only(top: 24.0),
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -239,7 +243,9 @@ class DraggableDetail extends StatelessWidget {
           SizedBox(height: 20.0),
           similarMovie
         ],
-      ),
-    );
+      );
+    } else {
+      return Container();
+    }
   }
 }

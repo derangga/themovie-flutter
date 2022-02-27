@@ -8,6 +8,7 @@ class LinearContainerView extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final List<Widget> children;
+  final Color? background;
   const LinearContainerView({
     Key? key,
     this.width,
@@ -18,6 +19,7 @@ class LinearContainerView extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
     this.children = const <Widget>[],
+    this.background,
   }) : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class LinearContainerView extends StatelessWidget {
       margin: margin,
       width: width,
       height: height,
+      color: background,
       child: getWidgetOrientation(),
     );
   }

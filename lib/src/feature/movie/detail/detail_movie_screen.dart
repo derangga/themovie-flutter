@@ -6,6 +6,7 @@ import 'package:themovie_flutter/src/data/model/cast_and_crew.dart';
 import 'package:themovie_flutter/src/data/model/detail_movie_content.dart';
 import 'package:themovie_flutter/src/data/model/genre.dart';
 import 'package:themovie_flutter/src/data/model/movie.dart';
+import 'package:themovie_flutter/src/navigation/route_app.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
 import 'package:themovie_flutter/src/resources/drawable.dart';
 import 'package:themovie_flutter/src/widget/app_scaffold.dart';
@@ -15,6 +16,7 @@ import 'package:themovie_flutter/src/widget/image/image_view.dart';
 import 'package:themovie_flutter/src/widget/loading/detail_loading_view.dart';
 import 'package:themovie_flutter/src/widget/portrait_content.dart';
 import 'package:themovie_flutter/src/widget/text/text_view.dart';
+import '../../../utils/extension/context_utils.dart';
 import 'detail_movie_bloc.dart';
 
 class DetailMovieScreen extends StatefulWidget {
@@ -111,16 +113,17 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
           voteAverage: '${detailMovie.voteAverage}',
           genre: genreText(detailMovie.genres),
           overview: detailMovie.overview,
+          showCast: content.castsMovie.isNotEmpty,
           castAndCrew: _castAndCrew(content.castsMovie),
+          showSimilarMovie: content.similarMovie.isNotEmpty,
           similarTitle: 'Similar Movies',
-          similarMovie: _similarMovie(content.similarMOvie),
+          similarMovie: _similarMovie(content.similarMovie),
         ),
       ],
     );
   }
 
   Widget _castAndCrew(List<Cast> castAndCrew) {
-    if (castAndCrew.isEmpty) return Container();
     return Container(
       width: _size.width,
       height: 260.0,
@@ -134,7 +137,7 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
         itemBuilder: (ctx, position) => PortraitContent(
           imageUrl:
               '${UrlConstant.IMAGE_URL}${castAndCrew[position].profilePath}',
-          margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
+          margin: marginHorizontalContent(position, castAndCrew.length),
           placeholderPath: Drawable.NO_IMAGE,
           errorPlaceholderPath: Drawable.NO_IMAGE,
           content: TextView(
@@ -154,7 +157,6 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
   }
 
   Widget _similarMovie(List<Movie> movies) {
-    if (movies.isEmpty) return Container();
     return Container(
       width: _size.width,
       height: 260.0,
@@ -169,7 +171,7 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
           imageUrl: '${UrlConstant.IMAGE_URL}${movies[position].posterPath}',
           placeholderPath: Drawable.NO_IMAGE,
           errorPlaceholderPath: Drawable.NO_IMAGE,
-          margin: position == 0 ? EdgeInsets.only(left: 12.0) : null,
+          margin: marginHorizontalContent(position, movies.length),
           content: TextView(
             '${movies[position].title}',
             maxLines: 2,
@@ -198,5 +200,14 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
     } else {
       return genres.first.name;
     }
+  }
+
+  EdgeInsetsGeometry? marginHorizontalContent(int position, int contentSize) {
+    if (position == 0) {
+      return EdgeInsets.only(left: 12.0);
+    } else if (position == contentSize - 1) {
+      return EdgeInsets.only(right: 12.0);
+    }
+    return null;
   }
 }
