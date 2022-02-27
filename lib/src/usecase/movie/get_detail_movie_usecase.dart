@@ -45,7 +45,7 @@ class GetDetailMovieUseCase implements UseCase<DetailMovieContent, int> {
       failure.message = 'Failed get similar movie';
       failedGetContent = failure;
     }, (success) {
-      detailContent.similarMOvie = success;
+      detailContent.similarMovie = success;
     });
 
     if (failedGetContent.dioError == null) {

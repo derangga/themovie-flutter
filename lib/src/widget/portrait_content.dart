@@ -10,6 +10,7 @@ class PortraitContent extends StatelessWidget {
   final String imageUrl;
   final Widget? content;
   final Widget? subContent;
+  final GestureTapCallback? onTap;
 
   PortraitContent({
     required this.imageUrl,
@@ -18,60 +19,64 @@ class PortraitContent extends StatelessWidget {
     this.margin,
     this.content,
     this.subContent,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 260.0,
-      width: 140.0,
-      margin: margin,
-      padding: EdgeInsets.only(bottom: 12.0),
-      decoration: BoxDecoration(
-          color: ColorTheme.primaryDark,
-          borderRadius: BorderRadius.circular(8.0)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 160.0,
-            width: double.infinity,
-            child: CacheImageView(
-              imageUrl,
-              rounded: BorderRadius.only(
-                topLeft: Radius.circular(8.0),
-                topRight: Radius.circular(8.0),
-              ),
-              fit: BoxFit.cover,
-              placeholder: (context, url) => AssetImageView(
-                path: placeholderPath,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 260.0,
+        width: 140.0,
+        margin: margin,
+        padding: EdgeInsets.only(bottom: 12.0),
+        decoration: BoxDecoration(
+            color: ColorTheme.primaryDark,
+            borderRadius: BorderRadius.circular(8.0)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 160.0,
+              width: double.infinity,
+              child: CacheImageView(
+                imageUrl,
                 rounded: BorderRadius.only(
                   topLeft: Radius.circular(8.0),
                   topRight: Radius.circular(8.0),
                 ),
                 fit: BoxFit.cover,
-              ),
-              errorPlaceholder: (context, url, error) => AssetImageView(
-                path: errorPlaceholderPath,
-                rounded: BorderRadius.only(
-                  topLeft: Radius.circular(8.0),
-                  topRight: Radius.circular(8.0),
+                placeholder: (context, url) => AssetImageView(
+                  path: placeholderPath,
+                  rounded: BorderRadius.only(
+                    topLeft: Radius.circular(8.0),
+                    topRight: Radius.circular(8.0),
+                  ),
+                  fit: BoxFit.cover,
                 ),
-                fit: BoxFit.cover,
+                errorPlaceholder: (context, url, error) => AssetImageView(
+                  path: errorPlaceholderPath,
+                  rounded: BorderRadius.only(
+                    topLeft: Radius.circular(8.0),
+                    topRight: Radius.circular(8.0),
+                  ),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 12.0),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: content,
-          ),
-          SizedBox(height: 8.0),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: subContent,
-          )
-        ],
+            SizedBox(height: 12.0),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: content,
+            ),
+            SizedBox(height: 8.0),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child: subContent,
+            )
+          ],
+        ),
       ),
     );
   }

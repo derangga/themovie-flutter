@@ -9,7 +9,8 @@ import 'src/app.dart';
 void main() async {
   AppModule.setup();
   SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: ColorTheme.primaryDark));
+    SystemUiOverlayStyle(statusBarColor: ColorTheme.primaryDark),
+  );
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
   await FlutterConfig.loadEnvVariables();
   runApp(MyApp());
