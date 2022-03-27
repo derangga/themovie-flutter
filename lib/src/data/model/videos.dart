@@ -26,11 +26,12 @@ class Video {
   final int size;
   final String type;
 
-  Video(
-      {required this.id,
-      required this.key,
-      required this.name,
-      required this.site,
-      required this.size,
-      required this.type});
+  Video({
+    required this.id,
+    required this.key,
+    required this.name,
+    required this.site,
+    required this.size,
+    required this.type,
+  });
 }

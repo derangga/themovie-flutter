@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:themovie_flutter/src/data/model/videos.dart';
 import '../model/cast_and_crew.dart';
 import '../model/genre.dart';
 import '../config/failure.dart';
@@ -8,6 +9,7 @@ import '../model/detail_movie.dart';
 import '../mapper/movie_mapper.dart';
 import '../mapper/genre_mapper.dart';
 import '../mapper/cast_and_crew_mapper.dart';
+import '../mapper/video_mapper.dart';
 import 'endpoint.dart';
 import 'movie_remote_source.dart';
 
@@ -114,6 +116,27 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
           );
         }
         return movies;
+      },
+    );
+    return result;
+  }
+
+  @override
+  Future<Either<Failure, List<Video>>> getTrailerMovie(int movieId) async {
+    String url =
+        '${Endpoint.TRAILER_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=$token';
+    final result = await get<List<Video>>(
+      url,
+      converter: (response) {
+        final List<Video> videos = [];
+        if (response['results'] != null) {
+          response['results'].forEach(
+            (v) {
+              videos.add(VideoDTO.fromJson(v).toModel());
+            },
+          );
+        }
+        return videos;
       },
     );
     return result;

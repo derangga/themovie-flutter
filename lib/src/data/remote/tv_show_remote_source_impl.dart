@@ -86,4 +86,25 @@ class TvShowRemoteSourceImpl extends TvShowRemoteSource {
     });
     return result;
   }
+
+  @override
+  Future<Either<Failure, List<Video>>> getTrailerMovie(int tvShowId) async {
+    String url =
+        '${Endpoint.TRAILER_TV_SHOW.replaceAll(Endpoint.TV_ID, "$tvShowId")}?api_key=$token';
+    final result = await get<List<Video>>(
+      url,
+      converter: (response) {
+        final List<Video> videos = [];
+        if (response['results'] != null) {
+          response['results'].forEach(
+            (v) {
+              videos.add(VideoDTO.fromJson(v).toModel());
+            },
+          );
+        }
+        return videos;
+      },
+    );
+    return result;
+  }
 }

@@ -61,6 +61,10 @@ class _$Injection extends Injection {
       ..registerFactory(
           (c) => UpcomingMovieBloc(c<MovieRepository>('MovieRepository')))
       ..registerFactory((c) =>
-          TrendingMovieBloc(c<TrendingRemoteSouce>('TrendingRemoteSouce')));
+          TrendingMovieBloc(c<TrendingRemoteSouce>('TrendingRemoteSouce')))
+      ..registerFactory(
+          (c) => TrailerTvShowBloc(c<TvShowRepository>('TvShowRepository')))
+      ..registerFactory(
+          (c) => TrailerMovieBloc(c<MovieRepository>('MovieRepository')));
   }
 }

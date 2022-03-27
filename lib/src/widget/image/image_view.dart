@@ -5,14 +5,11 @@ class CacheImageView extends StatelessWidget {
   final String imageUrl;
   final PlaceholderWidgetBuilder? placeholder;
   final LoadingErrorWidgetBuilder? errorPlaceholder;
-  final double? width, height;
   final BoxFit? fit;
   final BorderRadius rounded;
   const CacheImageView(
     this.imageUrl, {
     Key? key,
-    this.width,
-    this.height,
     this.fit,
     this.placeholder,
     this.errorPlaceholder,

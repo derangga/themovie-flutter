@@ -3,7 +3,7 @@ part of 'trailer_tv_show_bloc.dart';
 abstract class TrailerTvShowEvent extends BlocEvent {}
 
 class GetTrailerTvShowEvent extends TrailerTvShowEvent {
-  final tvShowId;
+  final int tvShowId;
   GetTrailerTvShowEvent(this.tvShowId);
 }
 
@@ -14,7 +14,7 @@ abstract class TrailerTvShowState extends BlocState {}
 class LoadingState extends TrailerTvShowState {}
 
 class ErrorGetTrailerTvShowState extends TrailerTvShowState {
-  final String message;
+  final String? message;
   ErrorGetTrailerTvShowState(this.message);
 }
 

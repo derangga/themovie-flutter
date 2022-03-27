@@ -8,9 +8,11 @@ import 'package:themovie_flutter/src/feature/home/discover_tv_show/home_discover
 import 'package:themovie_flutter/src/feature/home/home_bloc.dart';
 import 'package:themovie_flutter/src/feature/home/trending_movie/home_trending_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/home/upcoming_movie/home_upcoming_movie_bloc.dart';
+import 'package:themovie_flutter/src/feature/movie/trailer/trailer_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/movie/trending/trending_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/movie/upcoming/upcoming_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/search/search_bloc.dart';
+import 'package:themovie_flutter/src/feature/tv_show/trailer/trailer_tv_show_bloc.dart';
 import 'feature/movie/detail/detail_movie_bloc.dart';
 import 'feature/movie/discover/discover_movie_bloc.dart';
 import 'feature/tv_show/detail/detail_tv_show_bloc.dart';
@@ -64,7 +66,13 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<DetailMovieBloc>(
             create: (ctx) => KiwiContainer().resolve<DetailMovieBloc>(),
-          )
+          ),
+          BlocProvider<TrailerTvShowBloc>(
+            create: (ctx) => KiwiContainer().resolve<TrailerTvShowBloc>(),
+          ),
+          BlocProvider<TrailerMovieBloc>(
+            create: (ctx) => KiwiContainer().resolve<TrailerMovieBloc>(),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

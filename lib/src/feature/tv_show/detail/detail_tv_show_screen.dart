@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:themovie_flutter/src/data/model/genre.dart';
+import 'package:themovie_flutter/src/navigation/route_app.dart';
 import 'package:themovie_flutter/src/widget/app_scaffold.dart';
 import 'package:themovie_flutter/src/widget/button/button_view.dart';
 import 'package:themovie_flutter/src/widget/container/linear_container_view.dart';
@@ -17,6 +18,7 @@ import '../../../data/config/url_constant.dart';
 import '../../../data/model/cast_and_crew.dart';
 import '../../../data/model/detail_tv_show_content.dart';
 import '../../../data/model/tv_show.dart';
+import '../../../utils/extension/context_utils.dart';
 import 'detail_tv_show_bloc.dart';
 
 class DetailTvShowScreen extends StatefulWidget {
@@ -150,6 +152,12 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
           similarTitle: 'Similar Tv Show',
           showSimilarMovie: content.similarTvShow.isNotEmpty,
           similarMovie: _similarTvShow(content.similarTvShow),
+          onTrailerPressed: () {
+            context.navigatePushNamed(
+              RouteApp.TRAILER_TV_SHOW_SCREEN,
+              arguments: widget.tvShowId,
+            );
+          },
         )
       ],
     );
@@ -223,6 +231,10 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
               Icon(Icons.star, color: Colors.amber)
             ],
           ),
+          onTap: () {
+            final movieId = tvShows[position].id;
+            bloc.add(GetDetailTvShowEvent(movieId));
+          },
         ),
       ),
     );

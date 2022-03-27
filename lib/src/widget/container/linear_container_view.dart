@@ -9,12 +9,16 @@ class LinearContainerView extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final List<Widget> children;
   final Color? background;
+  final BoxBorder? border;
+  final BorderRadiusGeometry? borderRadius;
   const LinearContainerView({
     Key? key,
     this.width,
     this.height,
     this.padding,
     this.margin,
+    this.border,
+    this.borderRadius,
     this.orientation = LinearContainerOrientation.VERTICAL,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
@@ -25,13 +29,16 @@ class LinearContainerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: padding,
-      margin: margin,
-      width: width,
-      height: height,
-      color: background,
-      child: getWidgetOrientation(),
-    );
+        padding: padding,
+        margin: margin,
+        width: width,
+        height: height,
+        child: getWidgetOrientation(),
+        decoration: BoxDecoration(
+          color: background,
+          border: border,
+          borderRadius: borderRadius,
+        ));
   }
 
   Widget getWidgetOrientation() {
