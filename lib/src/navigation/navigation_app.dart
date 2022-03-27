@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:themovie_flutter/src/feature/movie/trailer/trailer_movie_screen.dart';
 import 'package:themovie_flutter/src/feature/movie/trending/trending_movie_screen.dart';
 import 'package:themovie_flutter/src/feature/movie/upcoming/upcoming_movie_screen.dart';
+import 'package:themovie_flutter/src/feature/tv_show/trailer/trailer_tv_show_screen.dart';
+import 'package:themovie_flutter/src/feature/video/video_player_screen.dart';
+import 'package:themovie_flutter/src/navigation/screen_args/video_player_arguments.dart';
 import '../feature/movie/detail/detail_movie_screen.dart';
 import '../feature/movie/discover/discover_movie_screen.dart';
 import '../feature/tv_show/detail/detail_tv_show_screen.dart';
@@ -47,6 +51,25 @@ class NavigationApp {
         final int tvShowId = settings.arguments as int;
         return MaterialPageRoute(
           builder: (_) => DetailTvShowScreen(tvShowId),
+        );
+
+      case RouteApp.TRAILER_TV_SHOW_SCREEN:
+        final int tvShowId = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => TrailerTvShowScreen(tvShowId),
+        );
+
+      case RouteApp.TRAILER_MOVIE_SCREEN:
+        final int movieId = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => TrailerMovieScreen(movieId),
+        );
+
+      case RouteApp.VIDEO_PLAYER_SCREEN:
+        final VideoPlayerArguments videoKey =
+            settings.arguments as VideoPlayerArguments;
+        return MaterialPageRoute(
+          builder: (_) => VideoPlayerScreen(videoKey),
         );
 
       default:

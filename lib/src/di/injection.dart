@@ -20,11 +20,13 @@ import 'package:themovie_flutter/src/feature/home/home_bloc.dart';
 import 'package:themovie_flutter/src/feature/home/upcoming_movie/home_upcoming_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/movie/detail/detail_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/movie/discover/discover_movie_bloc.dart';
+import 'package:themovie_flutter/src/feature/movie/trailer/trailer_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/movie/trending/trending_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/movie/upcoming/upcoming_movie_bloc.dart';
 import 'package:themovie_flutter/src/feature/tv_show/detail/detail_tv_show_bloc.dart';
 import 'package:themovie_flutter/src/feature/tv_show/discover/discover_tv_show_bloc.dart';
 import '../feature/home/trending_movie/home_trending_movie_bloc.dart';
+import '../feature/tv_show/trailer/trailer_tv_show_bloc.dart';
 
 part 'injection.g.dart';
 
@@ -135,6 +137,14 @@ abstract class Injection {
   @Register.factory(
     TrendingMovieBloc,
     resolvers: {TrendingRemoteSouce: 'TrendingRemoteSouce'},
+  )
+  @Register.factory(
+    TrailerTvShowBloc,
+    resolvers: {TvShowRepository: 'TvShowRepository'},
+  )
+  @Register.factory(
+    TrailerMovieBloc,
+    resolvers: {MovieRepository: 'MovieRepository'},
   )
   void configure();
 }

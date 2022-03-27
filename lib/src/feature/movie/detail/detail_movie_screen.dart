@@ -118,6 +118,12 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
           showSimilarMovie: content.similarMovie.isNotEmpty,
           similarTitle: 'Similar Movies',
           similarMovie: _similarMovie(content.similarMovie),
+          onTrailerPressed: () {
+            context.navigatePushNamed(
+              RouteApp.TRAILER_MOVIE_SCREEN,
+              arguments: widget.movieId,
+            );
+          },
         ),
       ],
     );
@@ -189,6 +195,10 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
               Icon(Icons.star, color: Colors.amber)
             ],
           ),
+          onTap: () {
+            final movieId = movies[position].id;
+            bloc.add(GetDetailMovieEvent(movieId));
+          },
         ),
       ),
     );

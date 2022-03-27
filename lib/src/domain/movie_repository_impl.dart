@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:themovie_flutter/src/data/model/cast_and_crew.dart';
 import 'package:themovie_flutter/src/data/model/detail_movie.dart';
 import 'package:themovie_flutter/src/data/model/genre.dart';
+import 'package:themovie_flutter/src/data/model/videos.dart';
 import '../data/config/failure.dart';
 import '../data/remote/movie_remote_source.dart';
 import '../data/model/movie.dart';
@@ -40,5 +41,10 @@ class MovieRepositoryImpl extends MovieRepository {
   @override
   Future<Either<Failure, List<Movie>>> getUpcomingMovie(int page) async {
     return await _remoteSource.getUpcomingMovie(page);
+  }
+
+  @override
+  Future<Either<Failure, List<Video>>> getTrailerMovie(int movieId) async {
+    return await _remoteSource.getTrailerMovie(movieId);
   }
 }

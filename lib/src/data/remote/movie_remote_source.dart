@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
+import 'package:themovie_flutter/src/data/model/videos.dart';
 import '../model/cast_and_crew.dart';
 import '../base/base_remote.dart';
 import '../model/genre.dart';
@@ -21,4 +22,6 @@ abstract class MovieRemoteSource extends BaseRemote {
   Future<Either<Failure, List<Movie>>> getSimilarMovie(int movieId);
 
   Future<Either<Failure, List<Movie>>> getUpcomingMovie(int page);
+
+  Future<Either<Failure, List<Video>>> getTrailerMovie(int movieId);
 }

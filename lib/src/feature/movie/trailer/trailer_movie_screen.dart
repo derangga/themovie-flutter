@@ -1,42 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/data/config/url_constant.dart';
+import 'package:themovie_flutter/src/feature/movie/trailer/trailer_movie_bloc.dart';
 import 'package:themovie_flutter/src/navigation/route_app.dart';
 import 'package:themovie_flutter/src/navigation/screen_args/video_player_arguments.dart';
-import 'package:themovie_flutter/src/resources/drawable.dart';
-import 'package:themovie_flutter/src/widget/app_scaffold.dart';
-import 'package:themovie_flutter/src/widget/custom_widget/movie_trailer_view.dart';
-import 'package:themovie_flutter/src/widget/dark_app_bar.dart';
-import 'package:themovie_flutter/src/widget/image/asset_image_view.dart';
-import 'package:themovie_flutter/src/widget/loading/circular_loading_view.dart';
+
 import '../../../core/base/base_stateful.dart';
+import '../../../data/config/url_constant.dart';
 import '../../../data/model/videos.dart';
 import '../../../resources/color_theme.dart';
+import '../../../resources/drawable.dart';
+import '../../../widget/app_scaffold.dart';
 import '../../../widget/button/button_view.dart';
 import '../../../widget/container/linear_container_view.dart';
+import '../../../widget/custom_widget/movie_trailer_view.dart';
+import '../../../widget/dark_app_bar.dart';
+import '../../../widget/image/asset_image_view.dart';
+import '../../../widget/loading/circular_loading_view.dart';
 import '../../../widget/text/text_view.dart';
 import '../../../utils/extension/context_utils.dart';
-import 'trailer_tv_show_bloc.dart';
 
-class TrailerTvShowScreen extends StatefulWidget {
+class TrailerMovieScreen extends StatefulWidget {
   final int tvShowId;
-  TrailerTvShowScreen(this.tvShowId);
+  TrailerMovieScreen(this.tvShowId);
   @override
-  _TrailerTvShowScreenState createState() => _TrailerTvShowScreenState();
+  _TrailerMovieScreenState createState() => _TrailerMovieScreenState();
 }
 
-class _TrailerTvShowScreenState extends BaseStateWidget<TrailerTvShowBloc,
-    TrailerTvShowState, TrailerTvShowScreen> {
+class _TrailerMovieScreenState extends BaseStateWidget<TrailerMovieBloc,
+    TrailerMovieState, TrailerMovieScreen> {
   @override
   void setupOnInitState() {
-    bloc.add(GetTrailerTvShowEvent(widget.tvShowId));
+    bloc.add(GetTrailerMovieEvent(widget.tvShowId));
   }
 
   @override
-  Widget mapStateToWidget(TrailerTvShowState state) {
-    if (state is SuccessGetTrailerTvShowState) {
+  Widget mapStateToWidget(TrailerMovieState state) {
+    if (state is SuccessGetTrailerMovieState) {
       return trailerList(state.videos);
-    } else if (state is ErrorGetTrailerTvShowState) {
+    } else if (state is ErrorGetTrailerMovieState) {
       return errorView();
     }
     return loading();
@@ -46,7 +47,7 @@ class _TrailerTvShowScreenState extends BaseStateWidget<TrailerTvShowBloc,
   Widget build(BuildContext context) {
     return AppScaffold(
       appBar: DarkAppBar(
-        title: Text('Trailer'),
+        title: Text('Video'),
         leading: Container(
           margin: EdgeInsets.symmetric(vertical: 8),
           decoration: ShapeDecoration(
@@ -56,7 +57,7 @@ class _TrailerTvShowScreenState extends BaseStateWidget<TrailerTvShowBloc,
               onPressed: () => Navigator.pop(context)),
         ),
       ),
-      body: BlocBuilder<TrailerTvShowBloc, TrailerTvShowState>(
+      body: BlocBuilder<TrailerMovieBloc, TrailerMovieState>(
         builder: (context, state) => mapStateToWidget(state),
       ),
     );
@@ -141,7 +142,7 @@ class _TrailerTvShowScreenState extends BaseStateWidget<TrailerTvShowBloc,
             ),
             color: Colors.redAccent,
             onPressed: () {
-              bloc.add(GetTrailerTvShowEvent(widget.tvShowId));
+              bloc.add(GetTrailerMovieEvent(widget.tvShowId));
             },
           ),
         ],

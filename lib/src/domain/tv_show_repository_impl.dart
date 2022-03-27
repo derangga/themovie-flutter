@@ -36,4 +36,9 @@ class TvShowRepositoryImpl extends TvShowRepository {
   Future<Either<Failure, List<Video>>> getTvShowTrailer(int tvShowId) async {
     return await _remoteSource.getTvShowTrailer(tvShowId);
   }
+
+  @override
+  Future<Either<Failure, List<Video>>> getTrailerMovie(int tvShowId) async {
+    return await _remoteSource.getTrailerMovie(tvShowId);
+  }
 }

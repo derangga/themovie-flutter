@@ -9,6 +9,8 @@ class DraggableDetail extends StatelessWidget {
   final String? title, releaseDate, voteAverage, genre, overview, similarTitle;
   final Widget castAndCrew, similarMovie;
   final bool showCast, showSimilarMovie;
+  final VoidCallback? onTrailerPressed;
+  final GestureTapCallback? onFavoritePressed;
 
   DraggableDetail({
     this.title,
@@ -21,6 +23,8 @@ class DraggableDetail extends StatelessWidget {
     this.showSimilarMovie = false,
     required this.castAndCrew,
     required this.similarMovie,
+    this.onTrailerPressed,
+    this.onFavoritePressed,
   });
 
   @override
@@ -164,17 +168,16 @@ class DraggableDetail extends StatelessWidget {
               ],
             ),
             color: ColorTheme.light_brown,
-            onPressed: () {},
+            onPressed: onTrailerPressed,
           ),
         ),
         SizedBox(
           width: 8.0,
         ),
         Expanded(
-          child: Container(
-            height: 46.0,
-            child: GestureDetector(
-              onTap: () {},
+          child: InkWell(
+            child: Container(
+              height: 46.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -191,6 +194,7 @@ class DraggableDetail extends StatelessWidget {
                 ],
               ),
             ),
+            onTap: onFavoritePressed,
           ),
         )
       ],

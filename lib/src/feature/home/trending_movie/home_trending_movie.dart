@@ -167,7 +167,6 @@ class _HomeTrendingMovieSectionState extends BaseStateWidget<
             child: CacheImageView(
               '${UrlConstant.IMAGE_URL}${movie.backdropPath}',
               fit: BoxFit.cover,
-              height: 260.0,
               placeholder: (context, url) => AssetImageView(
                 path: Drawable.NO_IMAGE,
                 fit: BoxFit.cover,
