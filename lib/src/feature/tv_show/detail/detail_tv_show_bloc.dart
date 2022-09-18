@@ -1,15 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/usecase/tv_show/get_detail_tv_show_usecase.dart';
 import '../../../core/base/base_bloc.dart';
 import '../../../core/base/base_event_state.dart';
-import '../../../domain/tv_show_repository.dart';
 import '../../../data/model/detail_tv_show_content.dart';
+import '../../../data/remote/tv_show_remote_source.dart';
+import '../../../navigation/tv_show/tv_show_navigation.dart';
+import '../../../usecase/tv_show/get_detail_tv_show_usecase.dart';
 
 part 'detail_tv_show_event_state.dart';
 
 class DetailTvShowBloc extends BaseBloc<DetailTvShowEvent, DetailTvShowState> {
-  final TvShowRepository _repository;
-  DetailTvShowBloc(this._repository) : super(LoadingState()) {
+  final TvShowRemoteSource _remoteSouce;
+  final TvShowNavigation _navigation;
+  DetailTvShowBloc(
+    this._remoteSouce,
+    this._navigation,
+  ) : super(LoadingState()) {
     on<DetailTvShowEvent>(_fetchDetailTvShow);
   }
 
@@ -30,6 +36,14 @@ class DetailTvShowBloc extends BaseBloc<DetailTvShowEvent, DetailTvShowState> {
     }
   }
 
+  void goToTrailerTvShow(BuildContext context, int tvShowId) {
+    _navigation.goToTrailerTvShow(context, tvShowId);
+  }
+
+  void goToDetailTvShow(BuildContext context, int tvShowId) {
+    _navigation.goToDetailTvShow(context, tvShowId);
+  }
+
   GetDetailTvShowUseCase get _getDetailTvShow =>
-      GetDetailTvShowUseCase(_repository);
+      GetDetailTvShowUseCase(_remoteSouce);
 }

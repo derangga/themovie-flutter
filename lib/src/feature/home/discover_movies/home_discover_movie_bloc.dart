@@ -1,13 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_bloc.dart';
-import 'package:themovie_flutter/src/domain/movie_repository.dart';
-import 'package:themovie_flutter/src/feature/home/home_event_state.dart';
-import 'package:themovie_flutter/src/usecase/movie/get_discover_movies_usecase.dart';
+
+import '../../../core/base/base_bloc.dart';
+import '../../../data/remote/movie_remote_source.dart';
+import '../../../navigation/movie/movie_navigation.dart';
+import '../../../usecase/movie/get_discover_movies_usecase.dart';
+import '../home_event_state.dart';
 
 class HomeDiscoverMovieBloc extends BaseBloc<HomeEvent, HomeState> {
-  final MovieRepository _repository;
-
-  HomeDiscoverMovieBloc(this._repository) : super(LoadingState()) {
+  final MovieRemoteSource _remoteSource;
+  final MovieNavigation _navigation;
+  HomeDiscoverMovieBloc(
+    this._remoteSource,
+    this._navigation,
+  ) : super(LoadingState()) {
     on<HomeEvent>(_fetchDiscoverMovie);
   }
 
@@ -31,5 +37,13 @@ class HomeDiscoverMovieBloc extends BaseBloc<HomeEvent, HomeState> {
   }
 
   GetDiscoverMovieUseCase get _getDiscoverMovie =>
-      GetDiscoverMovieUseCase(_repository);
+      GetDiscoverMovieUseCase(_remoteSource);
+
+  void goToDiscoverMovie(BuildContext context) {
+    _navigation.goToDiscoverMovie(context);
+  }
+
+  void goToDetailMovie(BuildContext context, int movieId) {
+    _navigation.goToDetailMovie(context, movieId);
+  }
 }

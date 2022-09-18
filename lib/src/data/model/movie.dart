@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 
 class MovieDTO {
@@ -48,7 +47,7 @@ class MovieDTO {
   }
 }
 
-class Movie extends Equatable {
+class Movie {
   final bool adult;
   final String backdropPath;
   final int id;
@@ -63,37 +62,21 @@ class Movie extends Equatable {
   final String voteAverage;
   final int voteCount;
 
-  Movie(
-      {required this.adult,
-      required this.backdropPath,
-      required this.id,
-      required this.originalLanguage,
-      required this.originalTitle,
-      required this.overview,
-      required this.popularity,
-      required this.posterPath,
-      required this.releaseDate,
-      required this.title,
-      required this.video,
-      required this.voteAverage,
-      required this.voteCount});
-
-  @override
-  List<Object> get props => [
-        adult,
-        backdropPath,
-        id,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        title,
-        video,
-        voteAverage,
-        voteCount
-      ];
+  Movie({
+    required this.adult,
+    required this.backdropPath,
+    required this.id,
+    required this.originalLanguage,
+    required this.originalTitle,
+    required this.overview,
+    required this.popularity,
+    required this.posterPath,
+    required this.releaseDate,
+    required this.title,
+    required this.video,
+    required this.voteAverage,
+    required this.voteCount,
+  });
 }
 
 class MovieEntity extends Table {

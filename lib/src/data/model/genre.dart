@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 
 typedef ArrayParser<T> = T Function(List<dynamic>? jsonArray);
@@ -46,7 +45,7 @@ class GenreDTO {
   }
 }
 
-class Genre extends Equatable {
+class Genre {
   final int id;
   final String name;
 
@@ -54,9 +53,6 @@ class Genre extends Equatable {
     required this.id,
     required this.name,
   });
-
-  @override
-  List<Object?> get props => [id, name];
 }
 
 class GenreMovieEntity extends Table {

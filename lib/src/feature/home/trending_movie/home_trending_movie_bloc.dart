@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:themovie_flutter/src/core/base/base_bloc.dart';
 import 'package:themovie_flutter/src/data/remote/trending_remote_source.dart';
@@ -5,10 +6,15 @@ import 'package:themovie_flutter/src/feature/home/home_event_state.dart';
 import 'package:themovie_flutter/src/usecase/trending/get_trending_movie_usecase.dart';
 import 'package:themovie_flutter/src/usecase/usecase.dart';
 
-class HomeTrendingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
-  final TrendingRemoteSouce _remoteSouce;
+import '../../../navigation/movie/movie_navigation.dart';
 
-  HomeTrendingMovieBloc(this._remoteSouce) : super(LoadingState()) {
+class HomeTrendingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
+  final TrendingRemoteSource _remoteSouce;
+  final MovieNavigation _navigation;
+  HomeTrendingMovieBloc(
+    this._remoteSouce,
+    this._navigation,
+  ) : super(LoadingState()) {
     on<HomeEvent>(_fetchTrendingMovie);
   }
 
@@ -39,4 +45,12 @@ class HomeTrendingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
 
   GetTrendingMovieUseCase get _getTrendingMovie =>
       GetTrendingMovieUseCase(_remoteSouce);
+
+  void goToTrendingMovie(BuildContext context) {
+    _navigation.goToTrendingMovie(context);
+  }
+
+  void goToDetailMovie(BuildContext context, int movieId) {
+    _navigation.goToDetailMovie(context, movieId);
+  }
 }

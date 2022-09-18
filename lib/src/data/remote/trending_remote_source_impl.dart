@@ -8,7 +8,7 @@ import 'package:themovie_flutter/src/data/remote/trending_remote_source.dart';
 import '../mapper/movie_mapper.dart';
 import '../mapper/tv_show_mapper.dart';
 
-class TrendingRemoteSourceImpl extends TrendingRemoteSouce {
+class TrendingRemoteSourceImpl extends TrendingRemoteSource {
   TrendingRemoteSourceImpl(Dio dio) : super(dio);
 
   @override

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_stateful.dart';
-import 'package:themovie_flutter/src/data/config/url_constant.dart';
-import 'package:themovie_flutter/src/data/model/movie.dart';
-import 'package:themovie_flutter/src/feature/home/discover_movies/home_discover_movie_bloc.dart';
-import 'package:themovie_flutter/src/feature/home/home_event_state.dart';
-import 'package:themovie_flutter/src/navigation/route_app.dart';
-import 'package:themovie_flutter/src/resources/color_theme.dart';
-import 'package:themovie_flutter/src/resources/drawable.dart';
-import 'package:themovie_flutter/src/widget/custom_widget/movie_image_view.dart';
-import 'package:themovie_flutter/src/widget/custom_widget/movie_see_all_view.dart';
-import 'package:themovie_flutter/src/widget/image/asset_image_view.dart';
-import 'package:themovie_flutter/src/widget/loading/image_block_loading_view.dart';
-import 'package:themovie_flutter/src/widget/text/text_view.dart';
-import '../../../utils/extension/context_utils.dart';
+
+import '../../../core/base/base_multi_bloc_widget.dart';
+import '../../../data/config/url_constant.dart';
+import '../../../data/model/movie.dart';
+import '../../../resources/color_theme.dart';
+import '../../../resources/drawable.dart';
+import '../../../widget/custom_widget/movie_image_view.dart';
+import '../../../widget/custom_widget/movie_see_all_view.dart';
+import '../../../widget/image/asset_image_view.dart';
+import '../../../widget/loading/image_block_loading_view.dart';
+import '../../../widget/text/text_view.dart';
+import '../home_event_state.dart';
+import 'home_discover_movie_bloc.dart';
 
 class HomeDiscoverMovieSection extends StatefulWidget {
   final onDiscoverMovieSectionError;
@@ -27,10 +26,15 @@ class HomeDiscoverMovieSection extends StatefulWidget {
       _HomeDiscoverMovieSectionState();
 }
 
-class _HomeDiscoverMovieSectionState extends BaseStateWidget<
+class _HomeDiscoverMovieSectionState extends BaseMultiBlocWidget<
     HomeDiscoverMovieBloc, HomeState, HomeDiscoverMovieSection> {
+  void initState() {
+    super.initState();
+    bloc.add(GetDiscoverMovieEvent());
+  }
+
   @override
-  Widget mapStateToWidget(HomeState state) {
+  Widget mapStateHandler(HomeState state) {
     if (state is SuccessGetMovieState) {
       return createUpcomingMovies(state.movies);
     } else if (state is FailedGetMovieState) {
@@ -42,22 +46,17 @@ class _HomeDiscoverMovieSectionState extends BaseStateWidget<
   }
 
   @override
-  void setupOnInitState() {
-    bloc.add(GetDiscoverMovieEvent());
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeDiscoverMovieBloc, HomeState>(
-      builder: (context, state) => mapStateToWidget(state),
+      builder: (context, state) => mapStateHandler(state),
     );
   }
 
-  @override
-  void dispose() {
-    bloc.add(InitialEvent());
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   bloc.add(InitialEvent());
+  //   super.dispose();
+  // }
 
   Widget createUpcomingMovies(List<Movie> movies) {
     return Column(
@@ -111,10 +110,7 @@ class _HomeDiscoverMovieSectionState extends BaseStateWidget<
           fit: BoxFit.cover,
         ),
         onTap: () {
-          context.navigatePushNamed(
-            RouteApp.DETAIL_MOVIE_SCREEN,
-            arguments: movies[position].id,
-          );
+          bloc.goToDetailMovie(context, movies[position].id);
         },
       );
     } else {
@@ -131,7 +127,7 @@ class _HomeDiscoverMovieSectionState extends BaseStateWidget<
         textSize: 14.0,
         textColor: ColorTheme.light_brown,
         onTap: () {
-          context.navigatePushNamed(RouteApp.DISCOVER_MOVIE_SCREEN);
+          bloc.goToDiscoverMovie(context);
         },
       );
     }

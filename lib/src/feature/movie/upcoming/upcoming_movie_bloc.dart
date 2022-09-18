@@ -1,20 +1,27 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_event_state.dart';
-import 'package:themovie_flutter/src/data/config/failure.dart';
-import 'package:themovie_flutter/src/data/model/movie.dart';
-import 'package:themovie_flutter/src/domain/movie_repository.dart';
-import 'package:themovie_flutter/src/usecase/movie/get_upcoming_movie_usecase.dart';
-import 'package:themovie_flutter/src/utils/bloc_throttle.dart';
+
+import '../../../core/base/base_bloc.dart';
+import '../../../core/base/base_event_state.dart';
+import '../../../data/config/failure.dart';
+import '../../../data/model/movie.dart';
+import '../../../data/remote/movie_remote_source.dart';
+import '../../../navigation/movie/movie_navigation.dart';
+import '../../../usecase/movie/get_upcoming_movie_usecase.dart';
+import '../../../utils/bloc_throttle.dart';
 
 part 'upcoming_movie_event_state.dart';
 
 class UpcomingMovieBloc
     extends BaseBloc<UpcomingMovieEvent, UpcomingMovieState> {
-  final MovieRepository _repository;
+  final MovieRemoteSource _remoteSource;
+  final MovieNavigation _movieNavigation;
   int _page = 1;
-  UpcomingMovieBloc(this._repository) : super(UpcomingMovieState()) {
+  UpcomingMovieBloc(
+    this._remoteSource,
+    this._movieNavigation,
+  ) : super(UpcomingMovieState()) {
     on<UpcomingMovieEvent>(
       _fetchDiscoverMovie,
       transformer: throttleDroppable(Duration(milliseconds: 500)),
@@ -22,7 +29,7 @@ class UpcomingMovieBloc
   }
 
   GetUpcomingMovieUseCase get _getUpcomingMovie =>
-      GetUpcomingMovieUseCase(_repository);
+      GetUpcomingMovieUseCase(_remoteSource);
 
   Future<void> _fetchDiscoverMovie(
     UpcomingMovieEvent event,
@@ -91,5 +98,9 @@ class UpcomingMovieBloc
   bool isOnLoadingOrFailed() {
     return state.status == UpcomingMovieStatus.LOADING ||
         state.status == UpcomingMovieStatus.FAILED;
+  }
+
+  void goToDetailMovie(BuildContext context, int movieId) {
+    _movieNavigation.goToDetailMovie(context, movieId);
   }
 }

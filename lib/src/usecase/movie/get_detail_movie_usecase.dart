@@ -1,15 +1,16 @@
-import 'package:themovie_flutter/src/data/config/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:themovie_flutter/src/data/model/detail_movie_content.dart';
-import 'package:themovie_flutter/src/domain/movie_repository.dart';
-import 'package:themovie_flutter/src/usecase/movie/get_cast_and_crew_movie_usecase.dart';
-import 'package:themovie_flutter/src/usecase/movie/get_movie_by_id_usecase.dart';
-import 'package:themovie_flutter/src/usecase/movie/get_similar_movie_usecase.dart';
-import 'package:themovie_flutter/src/usecase/usecase.dart';
-import 'package:themovie_flutter/src/utils/date_helper.dart';
+
+import '../../data/config/failure.dart';
+import '../../data/model/detail_movie_content.dart';
+import '../../data/remote/movie_remote_source.dart';
+import '../../utils/date_helper.dart';
+import '../usecase.dart';
+import 'get_cast_and_crew_movie_usecase.dart';
+import 'get_movie_by_id_usecase.dart';
+import 'get_similar_movie_usecase.dart';
 
 class GetDetailMovieUseCase implements UseCase<DetailMovieContent, int> {
-  final MovieRepository _repository;
+  final MovieRemoteSource _repository;
 
   GetDetailMovieUseCase(this._repository);
 

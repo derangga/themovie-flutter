@@ -5,8 +5,8 @@ import 'package:themovie_flutter/src/data/config/failure.dart';
 import 'package:themovie_flutter/src/data/model/movie.dart';
 import 'package:themovie_flutter/src/data/model/tv_show.dart';
 
-abstract class TrendingRemoteSouce extends BaseRemote {
-  TrendingRemoteSouce(Dio dio) : super(dio);
+abstract class TrendingRemoteSource extends BaseRemote {
+  TrendingRemoteSource(Dio dio) : super(dio);
 
   Future<Either<Failure, List<Movie>>> getTrendingMovie();
   Future<Either<Failure, List<TvShow>>> getTrendingTv();

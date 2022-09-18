@@ -1,12 +1,12 @@
-import 'package:themovie_flutter/src/data/config/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:themovie_flutter/src/data/model/videos.dart';
-import 'package:themovie_flutter/src/usecase/usecase.dart';
 
-import '../../domain/tv_show_repository.dart';
+import '../../data/config/failure.dart';
+import '../../data/model/videos.dart';
+import '../../data/remote/tv_show_remote_source.dart';
+import '../usecase.dart';
 
 class GetTrailerTvShowUseCase extends UseCase<List<Video>, int> {
-  final TvShowRepository _repository;
+  final TvShowRemoteSource _repository;
 
   GetTrailerTvShowUseCase(this._repository);
 

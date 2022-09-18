@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/navigation/route_app.dart';
-import 'package:themovie_flutter/src/resources/drawable.dart';
-import 'package:themovie_flutter/src/widget/app_scaffold.dart';
-import 'package:themovie_flutter/src/widget/button/button_view.dart';
-import 'package:themovie_flutter/src/widget/container/linear_container_view.dart';
-import 'package:themovie_flutter/src/widget/custom_widget/movie_card_view.dart';
-import 'package:themovie_flutter/src/widget/dark_app_bar.dart';
-import 'package:themovie_flutter/src/widget/loading/circular_loading_view.dart';
 import '../../../data/config/url_constant.dart';
-import '../../../core/base/base_stateful.dart';
+import '../../../core/base/base_bloc_widget.dart';
 import '../../../data/model/tv_show.dart';
 import '../../../resources/color_theme.dart';
+import '../../../resources/drawable.dart';
+import '../../../widget/app_scaffold.dart';
+import '../../../widget/button/button_view.dart';
+import '../../../widget/container/linear_container_view.dart';
+import '../../../widget/custom_widget/movie_card_view.dart';
+import '../../../widget/dark_app_bar.dart';
+import '../../../widget/loading/circular_loading_view.dart';
 import '../../../widget/text/text_view.dart';
 import '../../../widget/footer_progress.dart';
 import '../../../utils/extension/string_utils.dart';
-import '../../../utils/extension/context_utils.dart';
 import 'discover_tv_show_bloc.dart';
 
 class DiscoverTvShowScreen extends StatefulWidget {
@@ -23,7 +21,7 @@ class DiscoverTvShowScreen extends StatefulWidget {
   _DiscoverTvShowScreenState createState() => _DiscoverTvShowScreenState();
 }
 
-class _DiscoverTvShowScreenState extends BaseStateWidget<DiscoverTvShowBloc,
+class _DiscoverTvShowScreenState extends BaseBlocWidget<DiscoverTvShowBloc,
     DiscoverTvShowState, DiscoverTvShowScreen> {
   Color gradientStart = Colors.transparent;
   Color gradientEnd = ColorTheme.primaryDark;
@@ -31,9 +29,9 @@ class _DiscoverTvShowScreenState extends BaseStateWidget<DiscoverTvShowBloc,
   final _scrollThreshold = 200.0;
 
   @override
-  void setupOnInitState() {
+  void initState() {
+    super.initState();
     _scrollController.addListener(_onScroll);
-    getMovies(true);
   }
 
   @override
@@ -59,7 +57,7 @@ class _DiscoverTvShowScreenState extends BaseStateWidget<DiscoverTvShowBloc,
   }
 
   @override
-  Widget mapStateToWidget(DiscoverTvShowState state) {
+  Widget mapStateHandler(DiscoverTvShowState state) {
     if (state.status == DiscoverTvShowStatus.SUCCESS ||
         state.status == DiscoverTvShowStatus.LOADING) {
       return tvShowList(state.tvShows, state.hasReachedMax);
@@ -83,26 +81,30 @@ class _DiscoverTvShowScreenState extends BaseStateWidget<DiscoverTvShowBloc,
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      appBar: DarkAppBar(
-        title: Text('Discover TV Shows'),
-        leading: Container(
-          margin: EdgeInsets.symmetric(vertical: 8),
-          decoration: ShapeDecoration(
-              shape: CircleBorder(), color: ColorTheme.primaryDark),
-          child: IconButton(
-              icon: Icon(Icons.arrow_back_ios_rounded),
-              onPressed: () => Navigator.pop(context)),
+    return SafeArea(
+        child: BlocProvider(
+      create: (context) => bloc..add(GetFirstPageTvShowEvent()),
+      child: AppScaffold(
+        appBar: DarkAppBar(
+          title: Text('Discover TV Shows'),
+          leading: Container(
+            margin: EdgeInsets.symmetric(vertical: 8),
+            decoration: ShapeDecoration(
+                shape: CircleBorder(), color: ColorTheme.primaryDark),
+            child: IconButton(
+                icon: Icon(Icons.arrow_back_ios_rounded),
+                onPressed: () => Navigator.pop(context)),
+          ),
+        ),
+        body: Container(
+          child: BlocBuilder<DiscoverTvShowBloc, DiscoverTvShowState>(
+            builder: (blocCtx, state) {
+              return mapStateHandler(state);
+            },
+          ),
         ),
       ),
-      body: Container(
-        child: BlocBuilder<DiscoverTvShowBloc, DiscoverTvShowState>(
-          builder: (blocCtx, state) {
-            return mapStateToWidget(state);
-          },
-        ),
-      ),
-    );
+    ));
   }
 
   Widget initialErrorView() {
@@ -176,10 +178,7 @@ class _DiscoverTvShowScreenState extends BaseStateWidget<DiscoverTvShowBloc,
       placeholder: Drawable.NO_IMAGE,
       errorPlaceholder: Drawable.NO_IMAGE,
       onTap: () {
-        context.navigatePushNamed(
-          RouteApp.DETAIL_TV_SCREEN,
-          arguments: tvShow.id,
-        );
+        bloc.goToDetailMovie(context, tvShow.id);
       },
     );
   }

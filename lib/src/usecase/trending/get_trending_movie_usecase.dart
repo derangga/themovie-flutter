@@ -5,7 +5,7 @@ import 'package:themovie_flutter/src/data/remote/trending_remote_source.dart';
 import 'package:themovie_flutter/src/usecase/usecase.dart';
 
 class GetTrendingMovieUseCase extends UseCase<List<Movie>, NoParams> {
-  final TrendingRemoteSouce _remoteSource;
+  final TrendingRemoteSource _remoteSource;
 
   GetTrendingMovieUseCase(this._remoteSource);
 

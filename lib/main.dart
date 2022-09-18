@@ -7,11 +7,11 @@ import 'package:themovie_flutter/src/resources/color_theme.dart';
 import 'src/app.dart';
 
 void main() async {
-  AppModule.setup();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(statusBarColor: ColorTheme.primaryDark),
   );
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
   await FlutterConfig.loadEnvVariables();
+  Injection.setup();
   runApp(MyApp());
 }

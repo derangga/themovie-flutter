@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_stateful.dart';
-import 'package:themovie_flutter/src/data/config/url_constant.dart';
-import 'package:themovie_flutter/src/data/model/movie.dart';
-import 'package:themovie_flutter/src/feature/movie/trending/trending_movie_bloc.dart';
-import 'package:themovie_flutter/src/navigation/route_app.dart';
-import 'package:themovie_flutter/src/resources/color_theme.dart';
-import 'package:themovie_flutter/src/resources/drawable.dart';
-import 'package:themovie_flutter/src/widget/app_scaffold.dart';
-import 'package:themovie_flutter/src/widget/button/button_view.dart';
-import 'package:themovie_flutter/src/widget/container/linear_container_view.dart';
-import 'package:themovie_flutter/src/widget/custom_widget/movie_card_view.dart';
-import 'package:themovie_flutter/src/widget/dark_app_bar.dart';
-import 'package:themovie_flutter/src/widget/loading/circular_loading_view.dart';
-import 'package:themovie_flutter/src/widget/text/text_view.dart';
-import '../../../utils/extension/context_utils.dart';
+
+import '../../../core/base/base_bloc_widget.dart';
+import '../../../data/config/url_constant.dart';
+import '../../../data/model/movie.dart';
+import '../../../resources/color_theme.dart';
+import '../../../resources/drawable.dart';
+import '../../../widget/app_scaffold.dart';
+import '../../../widget/button/button_view.dart';
+import '../../../widget/container/linear_container_view.dart';
+import '../../../widget/custom_widget/movie_card_view.dart';
+import '../../../widget/dark_app_bar.dart';
+import '../../../widget/loading/circular_loading_view.dart';
+import '../../../widget/text/text_view.dart';
+import 'trending_movie_bloc.dart';
 
 class TrendingMovieScreen extends StatefulWidget {
   const TrendingMovieScreen({Key? key}) : super(key: key);
@@ -23,39 +22,10 @@ class TrendingMovieScreen extends StatefulWidget {
   _TrendingMovieScreennState createState() => _TrendingMovieScreennState();
 }
 
-class _TrendingMovieScreennState extends BaseStateWidget<TrendingMovieBloc,
+class _TrendingMovieScreennState extends BaseBlocWidget<TrendingMovieBloc,
     TrendingMovieState, TrendingMovieScreen> {
   @override
-  void setupOnInitState() {
-    bloc.add(GetTrendingMovieEvent());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AppScaffold(
-      appBar: DarkAppBar(
-        title: Text('Trending Movies'),
-        leading: Container(
-          margin: EdgeInsets.symmetric(vertical: 8),
-          decoration: ShapeDecoration(
-              shape: CircleBorder(), color: ColorTheme.primaryDark),
-          child: IconButton(
-              icon: Icon(Icons.arrow_back_ios_rounded),
-              onPressed: () => Navigator.pop(context)),
-        ),
-      ),
-      body: Container(
-        child: BlocBuilder<TrendingMovieBloc, TrendingMovieState>(
-          builder: (blocContext, state) {
-            return mapStateToWidget(state);
-          },
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget mapStateToWidget(TrendingMovieState state) {
+  Widget mapStateHandler(TrendingMovieState state) {
     if (state is SuccessGetMovieState) {
       return createMovieList(state.movies);
     } else if (state is FailedGetMovieState) {
@@ -65,6 +35,34 @@ class _TrendingMovieScreennState extends BaseStateWidget<TrendingMovieBloc,
         child: CircularLoadingView(),
       );
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: BlocProvider(
+      create: (context) => bloc..add(GetTrendingMovieEvent()),
+      child: AppScaffold(
+        appBar: DarkAppBar(
+          title: Text('Trending Movies'),
+          leading: Container(
+            margin: EdgeInsets.symmetric(vertical: 8),
+            decoration: ShapeDecoration(
+                shape: CircleBorder(), color: ColorTheme.primaryDark),
+            child: IconButton(
+                icon: Icon(Icons.arrow_back_ios_rounded),
+                onPressed: () => Navigator.pop(context)),
+          ),
+        ),
+        body: Container(
+          child: BlocBuilder<TrendingMovieBloc, TrendingMovieState>(
+            builder: (blocContext, state) {
+              return mapStateHandler(state);
+            },
+          ),
+        ),
+      ),
+    ));
   }
 
   Widget createErrorView() {
@@ -126,10 +124,7 @@ class _TrendingMovieScreennState extends BaseStateWidget<TrendingMovieBloc,
       placeholder: Drawable.NO_IMAGE,
       errorPlaceholder: Drawable.NO_IMAGE,
       onTap: () {
-        context.navigatePushNamed(
-          RouteApp.DETAIL_MOVIE_SCREEN,
-          arguments: movie.id,
-        );
+        bloc.goToDetailMovie(context, movie.id);
       },
     );
   }

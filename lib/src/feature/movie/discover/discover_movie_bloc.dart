@@ -1,20 +1,26 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:themovie_flutter/src/data/remote/movie_remote_source.dart';
+import 'package:themovie_flutter/src/navigation/movie/movie_navigation.dart';
 import '../../../data/config/failure.dart';
 import '../../../utils/bloc_throttle.dart';
 import '../../../core/base/base_event_state.dart';
 import '../../../data/model/movie.dart';
-import '../../../domain/movie_repository.dart';
 import '../../../core/base/base_bloc.dart';
 
 part 'discover_movie_event_state.dart';
 
 class DiscoverMovieBloc
     extends BaseBloc<DiscoverMovieEvent, DiscoverMovieState> {
-  final MovieRepository _repository;
+  final MovieRemoteSource _remoteSource;
+  final MovieNavigation _movieNavigation;
   int _page = 1;
 
-  DiscoverMovieBloc(this._repository) : super(DiscoverMovieState()) {
+  DiscoverMovieBloc(
+    this._remoteSource,
+    this._movieNavigation,
+  ) : super(DiscoverMovieState()) {
     on<DiscoverMovieEvent>(
       _fetchDiscoverMovie,
       transformer: throttleDroppable(Duration(milliseconds: 500)),
@@ -30,11 +36,11 @@ class DiscoverMovieBloc
     if (event is GetFirstPageMovieEvent) {
       _page = event.page;
       emit(DiscoverMovieState());
-      final result = await _repository.getDiscoverMovie(_page);
+      final result = await _remoteSource.getDiscoverMovie(_page);
       _onGetFirstPage(emit, result);
     } else if (event is GetNextPageMovieEvent) {
       emit(state.copyWith(status: DiscoverMoviesStatus.LOADING));
-      final result = await _repository.getDiscoverMovie(_page);
+      final result = await _remoteSource.getDiscoverMovie(_page);
       _onGetNextPage(emit, result);
     }
   }
@@ -88,5 +94,9 @@ class DiscoverMovieBloc
   bool isOnLoadingOrFailed() {
     return state.status == DiscoverMoviesStatus.LOADING ||
         state.status == DiscoverMoviesStatus.FAILED;
+  }
+
+  void goToDetailMovie(BuildContext context, int movieId) {
+    _movieNavigation.goToDetailMovie(context, movieId);
   }
 }

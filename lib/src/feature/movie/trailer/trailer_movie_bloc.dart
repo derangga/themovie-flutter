@@ -1,21 +1,26 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_event_state.dart';
-import 'package:themovie_flutter/src/domain/movie_repository.dart';
-import 'package:themovie_flutter/src/usecase/movie/get_trailer_movie_usecase.dart';
 
+import '../../../core/base/base_bloc.dart';
+import '../../../core/base/base_event_state.dart';
 import '../../../data/model/videos.dart';
+import '../../../data/remote/movie_remote_source.dart';
+import '../../../navigation/video/video_navigation.dart';
+import '../../../usecase/movie/get_trailer_movie_usecase.dart';
 
 part 'trailer_movie_event_state.dart';
 
 class TrailerMovieBloc extends BaseBloc<TrailerMovieEvent, TrailerMovieState> {
-  final MovieRepository _repository;
-  TrailerMovieBloc(this._repository) : super(LoadingState()) {
+  final MovieRemoteSource _remoteSource;
+  final VideoNavigation _videoNavigation;
+
+  TrailerMovieBloc(this._remoteSource, this._videoNavigation)
+      : super(LoadingState()) {
     on<TrailerMovieEvent>(_fetchTrailer);
   }
 
   GetTrailerMovieUseCase get _getTrailerUseCase =>
-      GetTrailerMovieUseCase(_repository);
+      GetTrailerMovieUseCase(_remoteSource);
 
   Future<void> _fetchTrailer(
       TrailerMovieEvent event, Emitter<TrailerMovieState> emit) async {
@@ -30,5 +35,13 @@ class TrailerMovieBloc extends BaseBloc<TrailerMovieEvent, TrailerMovieState> {
         emit(SuccessGetTrailerMovieState(response));
       });
     }
+  }
+
+  void goToVideoPlayerScreen(
+    BuildContext context,
+    String videoId,
+    String videoKey,
+  ) {
+    _videoNavigation.goToVideoPlayer(context, videoId, videoKey);
   }
 }

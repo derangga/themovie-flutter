@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:themovie_flutter/src/data/config/failure.dart';
-import 'package:themovie_flutter/src/data/model/detail_tv_show.dart';
-import 'package:themovie_flutter/src/domain/tv_show_repository.dart';
+import '../../data/config/failure.dart';
+import '../../data/model/detail_tv_show.dart';
+import '../../data/remote/tv_show_remote_source.dart';
 
 class GetTvShowByIdUseCase {
-  final TvShowRepository _repository;
+  final TvShowRemoteSource _repository;
 
   GetTvShowByIdUseCase(this._repository);
 
