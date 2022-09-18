@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_stateful.dart';
-import 'package:themovie_flutter/src/data/config/url_constant.dart';
-import 'package:themovie_flutter/src/data/model/movie.dart';
-import 'package:themovie_flutter/src/feature/home/home_event_state.dart';
-import 'package:themovie_flutter/src/feature/home/trending_movie/home_trending_movie_bloc.dart';
-import 'package:themovie_flutter/src/navigation/route_app.dart';
-import 'package:themovie_flutter/src/resources/color_theme.dart';
-import 'package:themovie_flutter/src/resources/drawable.dart';
-import 'package:themovie_flutter/src/widget/button/button_view.dart';
-import 'package:themovie_flutter/src/widget/carousel/carousel_controller.dart';
-import 'package:themovie_flutter/src/widget/carousel/carousel_options.dart';
-import 'package:themovie_flutter/src/widget/carousel/carousel_slider.dart';
-import 'package:themovie_flutter/src/widget/container/rounded_container_view.dart';
-import 'package:themovie_flutter/src/widget/image/asset_image_view.dart';
-import 'package:themovie_flutter/src/widget/image/image_view.dart';
-import 'package:themovie_flutter/src/widget/text/text_view.dart';
-import '../../../utils/extension/context_utils.dart';
+import '../../../core/base/base_multi_bloc_widget.dart';
+import '../../../data/config/url_constant.dart';
+import '../../../data/model/movie.dart';
+import '../../../resources/color_theme.dart';
+import '../../../resources/drawable.dart';
+import '../../../widget/button/button_view.dart';
+import '../../../widget/carousel/carousel_controller.dart';
+import '../../../widget/carousel/carousel_options.dart';
+import '../../../widget/carousel/carousel_slider.dart';
+import '../../../widget/container/rounded_container_view.dart';
+import '../../../widget/image/asset_image_view.dart';
+import '../../../widget/image/image_view.dart';
+import '../../../widget/text/text_view.dart';
+import '../home_event_state.dart';
+import 'home_trending_movie_bloc.dart';
 
 class HomeTrendingMovieSection extends StatefulWidget {
   final Function onTrendingSectionError;
@@ -30,15 +28,20 @@ class HomeTrendingMovieSection extends StatefulWidget {
       _HomeTrendingMovieSectionState();
 }
 
-class _HomeTrendingMovieSectionState extends BaseStateWidget<
+class _HomeTrendingMovieSectionState extends BaseMultiBlocWidget<
     HomeTrendingMovieBloc, HomeState, HomeTrendingMovieSection> {
   int _current = 0;
   final Color gradientStart = Colors.transparent;
   final Color gradientEnd = Colors.black;
   final CarouselController _controller = CarouselController();
 
+  void initState() {
+    super.initState();
+    bloc.add(GetTrendingMovieEvent());
+  }
+
   @override
-  Widget mapStateToWidget(HomeState state) {
+  Widget mapStateHandler(HomeState state) {
     if (state is SuccessGetMovieState) {
       return createCarousel(state.movies);
     } else if (state is FailedGetMovieState) {
@@ -50,22 +53,17 @@ class _HomeTrendingMovieSectionState extends BaseStateWidget<
   }
 
   @override
-  void setupOnInitState() {
-    bloc.add(GetTrendingMovieEvent());
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeTrendingMovieBloc, HomeState>(
-      builder: (context, state) => mapStateToWidget(state),
+      builder: (context, state) => mapStateHandler(state),
     );
   }
 
-  @override
-  void dispose() {
-    bloc.add(InitialEvent());
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   bloc.add(InitialEvent());
+  //   super.dispose();
+  // }
 
   Widget createCarousel(List<Movie> movies) {
     return Stack(
@@ -86,10 +84,7 @@ class _HomeTrendingMovieSectionState extends BaseStateWidget<
           itemBuilder: (context, itemIdx, pageViewIdx) {
             return GestureDetector(
               onTap: () {
-                context.navigatePushNamed(
-                  RouteApp.DETAIL_MOVIE_SCREEN,
-                  arguments: movies[itemIdx].id,
-                );
+                bloc.goToDetailMovie(context, movies[itemIdx].id);
               },
               child: imageBlock(movies[itemIdx]),
             );
@@ -130,7 +125,7 @@ class _HomeTrendingMovieSectionState extends BaseStateWidget<
               textColor: Colors.black,
             ),
             onPressed: () {
-              context.navigatePushNamed(RouteApp.TRENDING_MOVIE_SCREEN);
+              bloc.goToTrendingMovie(context);
             },
           ),
         )

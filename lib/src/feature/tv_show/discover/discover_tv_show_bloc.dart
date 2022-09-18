@@ -1,20 +1,26 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:themovie_flutter/src/data/remote/tv_show_remote_source.dart';
+import 'package:themovie_flutter/src/navigation/tv_show/tv_show_navigation.dart';
 import '../../../data/config/failure.dart';
 import '../../../utils/bloc_throttle.dart';
 import '../../../core/base/base_bloc.dart';
 import '../../../core/base/base_event_state.dart';
-import '../../../domain/tv_show_repository.dart';
 import '../../../data/model/tv_show.dart';
 
 part 'discover_tv_show_event_state.dart';
 
 class DiscoverTvShowBloc
     extends BaseBloc<DiscoverTvShowEvent, DiscoverTvShowState> {
-  final TvShowRepository _repository;
+  final TvShowRemoteSource _remoteSource;
+  final TvShowNavigation _navigation;
   int _page = 1;
 
-  DiscoverTvShowBloc(this._repository) : super(DiscoverTvShowState()) {
+  DiscoverTvShowBloc(
+    this._remoteSource,
+    this._navigation,
+  ) : super(DiscoverTvShowState()) {
     on<DiscoverTvShowEvent>(
       _fetchDiscoverTvShow,
       transformer: throttleDroppable(Duration(milliseconds: 500)),
@@ -31,13 +37,13 @@ class DiscoverTvShowBloc
       _page = event.page;
       emit(DiscoverTvShowState());
 
-      final result = await _repository.getDiscoverTvShow(_page);
+      final result = await _remoteSource.getDiscoverTvShow(_page);
 
       _onGetFirstPage(emit, result);
     } else if (event is GetNextPageTvShowEvent) {
       emit(state.copyWith(status: DiscoverTvShowStatus.LOADING));
 
-      final result = await _repository.getDiscoverTvShow(_page);
+      final result = await _remoteSource.getDiscoverTvShow(_page);
 
       _onGetNextPage(emit, result);
     }
@@ -87,6 +93,10 @@ class DiscoverTvShowBloc
         ));
       }
     });
+  }
+
+  void goToDetailMovie(BuildContext context, int tvShowId) {
+    _navigation.goToDetailTvShow(context, tvShowId);
   }
 
   bool isOnLoadingOrFailed() {

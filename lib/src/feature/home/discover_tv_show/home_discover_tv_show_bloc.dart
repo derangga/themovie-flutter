@@ -1,13 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_bloc.dart';
-import 'package:themovie_flutter/src/domain/tv_show_repository.dart';
-import 'package:themovie_flutter/src/feature/home/home_event_state.dart';
-import 'package:themovie_flutter/src/usecase/tv_show/get_discover_tv_show_usecase.dart';
+
+import '../../../core/base/base_bloc.dart';
+import '../../../data/remote/tv_show_remote_source.dart';
+import '../../../navigation/tv_show/tv_show_navigation.dart';
+import '../../../usecase/tv_show/get_discover_tv_show_usecase.dart';
+import '../home_event_state.dart';
 
 class HomeDiscoverTvShowBloc extends BaseBloc<HomeEvent, HomeState> {
-  final TvShowRepository _repository;
+  final TvShowRemoteSource _remoteSource;
+  final TvShowNavigation _navigation;
 
-  HomeDiscoverTvShowBloc(this._repository) : super(LoadingState()) {
+  HomeDiscoverTvShowBloc(
+    this._remoteSource,
+    this._navigation,
+  ) : super(LoadingState()) {
     on<HomeEvent>(_fetchDiscoverTvShow);
   }
 
@@ -31,5 +38,13 @@ class HomeDiscoverTvShowBloc extends BaseBloc<HomeEvent, HomeState> {
   }
 
   GetDiscoverTvShowUseCase get _getDiscoverTvShow =>
-      GetDiscoverTvShowUseCase(_repository);
+      GetDiscoverTvShowUseCase(_remoteSource);
+
+  void goToDiscoverTvShow(BuildContext context) {
+    _navigation.goToDiscoverTvShow(context);
+  }
+
+  void goToDetailTvShow(BuildContext context, int tvShowId) {
+    _navigation.goToDetailTvShow(context, tvShowId);
+  }
 }

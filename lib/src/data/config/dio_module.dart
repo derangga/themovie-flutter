@@ -17,9 +17,10 @@ class DioModule with DioMixin implements Dio {
 class DioOptions extends BaseOptions {
   DioOptions()
       : super(
-            baseUrl: "${FlutterConfig.get('API_GATWAY')}",
-            contentType: Headers.jsonContentType,
-            connectTimeout: 60000,
-            sendTimeout: 60000,
-            receiveTimeout: 60000);
+          baseUrl: "${FlutterConfig.get('API_GATWAY')}",
+          contentType: Headers.jsonContentType,
+          connectTimeout: 60000,
+          sendTimeout: 60000,
+          receiveTimeout: 60000,
+        );
 }

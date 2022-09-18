@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-
 class CastAndCrewDTO {
   List<CastDTO>? castDto;
   int? id;
@@ -46,7 +44,7 @@ class CastDTO {
   }
 }
 
-class Cast extends Equatable {
+class Cast {
   final int id;
   final String name;
   final String originalName;
@@ -55,23 +53,13 @@ class Cast extends Equatable {
   final String character;
   final String creditId;
 
-  Cast(
-      {required this.id,
-      required this.name,
-      required this.originalName,
-      required this.popularity,
-      required this.profilePath,
-      required this.character,
-      required this.creditId});
-
-  @override
-  List<Object> get props => [
-        id,
-        name,
-        originalName,
-        popularity,
-        profilePath,
-        character,
-        creditId,
-      ];
+  Cast({
+    required this.id,
+    required this.name,
+    required this.originalName,
+    required this.popularity,
+    required this.profilePath,
+    required this.character,
+    required this.creditId,
+  });
 }

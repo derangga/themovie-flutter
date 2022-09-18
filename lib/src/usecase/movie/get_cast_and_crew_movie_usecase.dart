@@ -1,11 +1,12 @@
-import 'package:themovie_flutter/src/data/config/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:themovie_flutter/src/data/model/cast_and_crew.dart';
-import 'package:themovie_flutter/src/domain/movie_repository.dart';
-import 'package:themovie_flutter/src/usecase/usecase.dart';
+
+import '../../data/config/failure.dart';
+import '../../data/model/cast_and_crew.dart';
+import '../../data/remote/movie_remote_source.dart';
+import '../usecase.dart';
 
 class GetCastAndCrewMovieUseCase implements UseCase<List<Cast>, int> {
-  final MovieRepository _repository;
+  final MovieRemoteSource _repository;
 
   GetCastAndCrewMovieUseCase(this._repository);
 

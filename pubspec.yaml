@@ -23,7 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  kiwi: ^4.0.2
   flutter_config: ^2.0.0
   dartz: ^0.10.1
   moor_flutter: ^4.0.0
@@ -31,11 +30,9 @@ dependencies:
   bloc_concurrency: ^0.2.0
   stream_transform: ^2.0.0
   dio: ^4.0.4
-  equatable: ^2.0.3
-  fluttertoast: ^8.0.8
-  logger: ^1.1.0
   intl: ^0.17.0
   cached_network_image: ^3.2.0
+  get_it: ^7.2.0
 
   # Video Player
   youtube_player_iframe: ^2.2.2

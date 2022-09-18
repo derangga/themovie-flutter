@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_stateful.dart';
-import 'package:themovie_flutter/src/data/config/url_constant.dart';
-import 'package:themovie_flutter/src/data/model/cast_and_crew.dart';
-import 'package:themovie_flutter/src/data/model/detail_movie_content.dart';
-import 'package:themovie_flutter/src/data/model/genre.dart';
-import 'package:themovie_flutter/src/data/model/movie.dart';
-import 'package:themovie_flutter/src/navigation/route_app.dart';
-import 'package:themovie_flutter/src/resources/color_theme.dart';
-import 'package:themovie_flutter/src/resources/drawable.dart';
-import 'package:themovie_flutter/src/widget/app_scaffold.dart';
-import 'package:themovie_flutter/src/widget/draggable_detail.dart';
-import 'package:themovie_flutter/src/widget/image/asset_image_view.dart';
-import 'package:themovie_flutter/src/widget/image/image_view.dart';
-import 'package:themovie_flutter/src/widget/loading/detail_loading_view.dart';
-import 'package:themovie_flutter/src/widget/portrait_content.dart';
-import 'package:themovie_flutter/src/widget/text/text_view.dart';
-import '../../../utils/extension/context_utils.dart';
+import '../../../core/base/base_bloc_widget.dart';
+import '../../../data/config/url_constant.dart';
+import '../../../data/model/cast_and_crew.dart';
+import '../../../data/model/detail_movie_content.dart';
+import '../../../data/model/genre.dart';
+import '../../../data/model/movie.dart';
+import '../../../resources/color_theme.dart';
+import '../../../resources/drawable.dart';
+import '../../../widget/app_scaffold.dart';
+import '../../../widget/draggable_detail.dart';
+import '../../../widget/image/asset_image_view.dart';
+import '../../../widget/image/image_view.dart';
+import '../../../widget/loading/detail_loading_view.dart';
+import '../../../widget/portrait_content.dart';
+import '../../../widget/text/text_view.dart';
 import 'detail_movie_bloc.dart';
 
 class DetailMovieScreen extends StatefulWidget {
@@ -26,14 +24,14 @@ class DetailMovieScreen extends StatefulWidget {
   _DetailMovieScreenState createState() => _DetailMovieScreenState();
 }
 
-class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
+class _DetailMovieScreenState extends BaseBlocWidget<DetailMovieBloc,
     DetailMovieState, DetailMovieScreen> {
   late Size _size;
   Color gradientStart = Colors.transparent;
   Color gradientEnd = Colors.black;
 
   @override
-  Widget mapStateToWidget(DetailMovieState state) {
+  Widget mapStateHandler(DetailMovieState state) {
     if (state is SuccessGetDetailMovie) {
       return _detailMovieView(state.content);
     } else if (state is ErrorGetDetailMovie) {
@@ -44,17 +42,15 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
   }
 
   @override
-  void setupOnInitState() {
-    bloc.add(GetDetailMovieEvent(widget.movieId));
-  }
-
-  @override
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
     return SafeArea(
-      child: AppScaffold(
-        body: BlocBuilder<DetailMovieBloc, DetailMovieState>(
-          builder: (ctx, state) => mapStateToWidget(state),
+      child: BlocProvider(
+        create: (context) => bloc..add(GetDetailMovieEvent(widget.movieId)),
+        child: AppScaffold(
+          body: BlocBuilder<DetailMovieBloc, DetailMovieState>(
+            builder: (ctx, state) => mapStateHandler(state),
+          ),
         ),
       ),
     );
@@ -119,10 +115,7 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
           similarTitle: 'Similar Movies',
           similarMovie: _similarMovie(content.similarMovie),
           onTrailerPressed: () {
-            context.navigatePushNamed(
-              RouteApp.TRAILER_MOVIE_SCREEN,
-              arguments: widget.movieId,
-            );
+            bloc.goToTrailerScreen(context, widget.movieId);
           },
         ),
       ],
@@ -197,7 +190,7 @@ class _DetailMovieScreenState extends BaseStateWidget<DetailMovieBloc,
           ),
           onTap: () {
             final movieId = movies[position].id;
-            bloc.add(GetDetailMovieEvent(movieId));
+            bloc.goToDetailMovieScreen(context, movieId);
           },
         ),
       ),

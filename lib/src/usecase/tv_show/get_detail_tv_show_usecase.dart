@@ -1,14 +1,15 @@
-import 'package:themovie_flutter/src/data/config/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:themovie_flutter/src/data/model/detail_tv_show_content.dart';
-import 'package:themovie_flutter/src/domain/tv_show_repository.dart';
-import 'package:themovie_flutter/src/usecase/tv_show/get_cast_and_crew_tv_show_usecase.dart';
-import 'package:themovie_flutter/src/usecase/tv_show/get_similar_tv_show_uasecase.dart';
-import 'package:themovie_flutter/src/usecase/tv_show/get_tv_show_by_id_usecase.dart';
-import 'package:themovie_flutter/src/usecase/usecase.dart';
+
+import '../../data/config/failure.dart';
+import '../../data/model/detail_tv_show_content.dart';
+import '../../data/remote/tv_show_remote_source.dart';
+import '../usecase.dart';
+import 'get_cast_and_crew_tv_show_usecase.dart';
+import 'get_similar_tv_show_uasecase.dart';
+import 'get_tv_show_by_id_usecase.dart';
 
 class GetDetailTvShowUseCase implements UseCase<DetailTvShowContent, int> {
-  final TvShowRepository _repository;
+  final TvShowRemoteSource _repository;
 
   GetDetailTvShowUseCase(this._repository);
 

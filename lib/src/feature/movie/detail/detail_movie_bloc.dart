@@ -1,16 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:themovie_flutter/src/data/remote/movie_remote_source.dart';
+import 'package:themovie_flutter/src/navigation/movie/movie_navigation.dart';
 import 'package:themovie_flutter/src/usecase/movie/get_detail_movie_usecase.dart';
 import '../../../core/base/base_event_state.dart';
 import '../../../data/model/detail_movie_content.dart';
 import '../../../core/base/base_bloc.dart';
-import '../../../domain/movie_repository.dart';
 
 part 'detail_movie_event_state.dart';
 
 class DetailMovieBloc extends BaseBloc<DetailMovieEvent, DetailMovieState> {
-  final MovieRepository _repository;
+  final MovieRemoteSource _remoteSource;
+  final MovieNavigation _movieNavigation;
 
-  DetailMovieBloc(this._repository) : super(LoadingState()) {
+  DetailMovieBloc(this._remoteSource, this._movieNavigation)
+      : super(LoadingState()) {
     on<DetailMovieEvent>(_fetchDetailMovie);
   }
 
@@ -31,6 +35,14 @@ class DetailMovieBloc extends BaseBloc<DetailMovieEvent, DetailMovieState> {
     }
   }
 
+  void goToTrailerScreen(BuildContext context, int movieId) {
+    _movieNavigation.goToTrailerMovie(context, movieId);
+  }
+
+  void goToDetailMovieScreen(BuildContext context, int movieId) {
+    _movieNavigation.goToDetailMovie(context, movieId);
+  }
+
   GetDetailMovieUseCase get _getDetailMovie =>
-      GetDetailMovieUseCase(_repository);
+      GetDetailMovieUseCase(_remoteSource);
 }

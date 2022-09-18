@@ -1,13 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_bloc.dart';
-import 'package:themovie_flutter/src/domain/movie_repository.dart';
-import 'package:themovie_flutter/src/usecase/movie/get_upcoming_movie_usecase.dart';
 
+import '../../../core/base/base_bloc.dart';
+import '../../../data/remote/movie_remote_source.dart';
+import '../../../navigation/movie/movie_navigation.dart';
+import '../../../usecase/movie/get_upcoming_movie_usecase.dart';
 import '../home_event_state.dart';
 
 class HomeUpcomingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
-  final MovieRepository _repository;
-  HomeUpcomingMovieBloc(this._repository) : super(LoadingState()) {
+  final MovieRemoteSource _remoteSource;
+  final MovieNavigation _navigation;
+  HomeUpcomingMovieBloc(
+    this._remoteSource,
+    this._navigation,
+  ) : super(LoadingState()) {
     on<HomeEvent>(_fetchUpcomingMovie);
   }
 
@@ -31,5 +37,13 @@ class HomeUpcomingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
   }
 
   GetUpcomingMovieUseCase get _getUpcomingMovie =>
-      GetUpcomingMovieUseCase(_repository);
+      GetUpcomingMovieUseCase(_remoteSource);
+
+  void goToUpcomingMovie(BuildContext context) {
+    _navigation.goToUpcomingMovie(context);
+  }
+
+  void goToDetailMovie(BuildContext context, int movieId) {
+    _navigation.goToDetailMovie(context, movieId);
+  }
 }

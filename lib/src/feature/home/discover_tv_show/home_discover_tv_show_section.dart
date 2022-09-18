@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_stateful.dart';
-import 'package:themovie_flutter/src/data/config/url_constant.dart';
-import 'package:themovie_flutter/src/data/model/tv_show.dart';
-import 'package:themovie_flutter/src/feature/home/discover_tv_show/home_discover_tv_show_bloc.dart';
-import 'package:themovie_flutter/src/feature/home/home_event_state.dart';
-import 'package:themovie_flutter/src/navigation/route_app.dart';
-import 'package:themovie_flutter/src/resources/color_theme.dart';
-import 'package:themovie_flutter/src/resources/drawable.dart';
-import 'package:themovie_flutter/src/widget/custom_widget/movie_image_view.dart';
-import 'package:themovie_flutter/src/widget/custom_widget/movie_see_all_view.dart';
-import 'package:themovie_flutter/src/widget/image/asset_image_view.dart';
-import 'package:themovie_flutter/src/widget/loading/image_block_loading_view.dart';
-import 'package:themovie_flutter/src/widget/text/text_view.dart';
-import '../../../utils/extension/context_utils.dart';
+
+import '../../../core/base/base_multi_bloc_widget.dart';
+import '../../../data/config/url_constant.dart';
+import '../../../data/model/tv_show.dart';
+import '../../../resources/color_theme.dart';
+import '../../../resources/drawable.dart';
+import '../../../widget/custom_widget/movie_image_view.dart';
+import '../../../widget/custom_widget/movie_see_all_view.dart';
+import '../../../widget/image/asset_image_view.dart';
+import '../../../widget/loading/image_block_loading_view.dart';
+import '../../../widget/text/text_view.dart';
+import '../home_event_state.dart';
+import 'home_discover_tv_show_bloc.dart';
 
 class HomeDiscoverTvShowSection extends StatefulWidget {
   final Function onDiscoverTvShowSectionError;
@@ -27,10 +26,15 @@ class HomeDiscoverTvShowSection extends StatefulWidget {
       _HomeDiscoverTvShowSectionState();
 }
 
-class _HomeDiscoverTvShowSectionState extends BaseStateWidget<
+class _HomeDiscoverTvShowSectionState extends BaseMultiBlocWidget<
     HomeDiscoverTvShowBloc, HomeState, HomeDiscoverTvShowSection> {
+  void initState() {
+    super.initState();
+    bloc.add(GetDiscoverTvShowEvent());
+  }
+
   @override
-  Widget mapStateToWidget(HomeState state) {
+  Widget mapStateHandler(HomeState state) {
     if (state is SuccessGetTvShowState) {
       return createDiscoverTvShow(state.tvShows);
     } else if (state is FailedGetTvShowState) {
@@ -42,22 +46,17 @@ class _HomeDiscoverTvShowSectionState extends BaseStateWidget<
   }
 
   @override
-  void setupOnInitState() {
-    bloc.add(GetDiscoverTvShowEvent());
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeDiscoverTvShowBloc, HomeState>(
-      builder: (context, state) => mapStateToWidget(state),
+      builder: (context, state) => mapStateHandler(state),
     );
   }
 
-  @override
-  void dispose() {
-    bloc.add(InitialEvent());
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   bloc.add(InitialEvent());
+  //   super.dispose();
+  // }
 
   Widget createDiscoverTvShow(List<TvShow> tvShows) {
     return Column(
@@ -112,10 +111,7 @@ class _HomeDiscoverTvShowSectionState extends BaseStateWidget<
           fit: BoxFit.cover,
         ),
         onTap: () {
-          context.navigatePushNamed(
-            RouteApp.DETAIL_TV_SCREEN,
-            arguments: tvShows[position].id,
-          );
+          bloc.goToDetailTvShow(context, tvShows[position].id);
         },
       );
     } else {
@@ -132,7 +128,7 @@ class _HomeDiscoverTvShowSectionState extends BaseStateWidget<
         textSize: 14.0,
         textColor: ColorTheme.light_brown,
         onTap: () {
-          context.navigatePushNamed(RouteApp.DISCOVER_TV_SCREEN);
+          bloc.goToDiscoverTvShow(context);
         },
       );
     }

@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/data/config/url_constant.dart';
-import 'package:themovie_flutter/src/navigation/route_app.dart';
-import 'package:themovie_flutter/src/navigation/screen_args/video_player_arguments.dart';
-import 'package:themovie_flutter/src/resources/drawable.dart';
-import 'package:themovie_flutter/src/widget/app_scaffold.dart';
-import 'package:themovie_flutter/src/widget/custom_widget/movie_trailer_view.dart';
-import 'package:themovie_flutter/src/widget/dark_app_bar.dart';
-import 'package:themovie_flutter/src/widget/image/asset_image_view.dart';
-import 'package:themovie_flutter/src/widget/loading/circular_loading_view.dart';
-import '../../../core/base/base_stateful.dart';
+import '../../../core/base/base_bloc_widget.dart';
+import '../../../data/config/url_constant.dart';
 import '../../../data/model/videos.dart';
 import '../../../resources/color_theme.dart';
+import '../../../resources/drawable.dart';
+import '../../../widget/app_scaffold.dart';
 import '../../../widget/button/button_view.dart';
 import '../../../widget/container/linear_container_view.dart';
+import '../../../widget/custom_widget/movie_trailer_view.dart';
+import '../../../widget/dark_app_bar.dart';
+import '../../../widget/image/asset_image_view.dart';
+import '../../../widget/loading/circular_loading_view.dart';
 import '../../../widget/text/text_view.dart';
-import '../../../utils/extension/context_utils.dart';
 import 'trailer_tv_show_bloc.dart';
 
 class TrailerTvShowScreen extends StatefulWidget {
@@ -25,15 +22,10 @@ class TrailerTvShowScreen extends StatefulWidget {
   _TrailerTvShowScreenState createState() => _TrailerTvShowScreenState();
 }
 
-class _TrailerTvShowScreenState extends BaseStateWidget<TrailerTvShowBloc,
+class _TrailerTvShowScreenState extends BaseBlocWidget<TrailerTvShowBloc,
     TrailerTvShowState, TrailerTvShowScreen> {
   @override
-  void setupOnInitState() {
-    bloc.add(GetTrailerTvShowEvent(widget.tvShowId));
-  }
-
-  @override
-  Widget mapStateToWidget(TrailerTvShowState state) {
+  Widget mapStateHandler(TrailerTvShowState state) {
     if (state is SuccessGetTrailerTvShowState) {
       return trailerList(state.videos);
     } else if (state is ErrorGetTrailerTvShowState) {
@@ -44,22 +36,26 @@ class _TrailerTvShowScreenState extends BaseStateWidget<TrailerTvShowBloc,
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      appBar: DarkAppBar(
-        title: Text('Trailer'),
-        leading: Container(
-          margin: EdgeInsets.symmetric(vertical: 8),
-          decoration: ShapeDecoration(
-              shape: CircleBorder(), color: ColorTheme.primaryDark),
-          child: IconButton(
-              icon: Icon(Icons.arrow_back_ios_rounded),
-              onPressed: () => Navigator.pop(context)),
+    return SafeArea(
+        child: BlocProvider(
+      create: (context) => bloc..add(GetTrailerTvShowEvent(widget.tvShowId)),
+      child: AppScaffold(
+        appBar: DarkAppBar(
+          title: Text('Trailer'),
+          leading: Container(
+            margin: EdgeInsets.symmetric(vertical: 8),
+            decoration: ShapeDecoration(
+                shape: CircleBorder(), color: ColorTheme.primaryDark),
+            child: IconButton(
+                icon: Icon(Icons.arrow_back_ios_rounded),
+                onPressed: () => Navigator.pop(context)),
+          ),
+        ),
+        body: BlocBuilder<TrailerTvShowBloc, TrailerTvShowState>(
+          builder: (context, state) => mapStateHandler(state),
         ),
       ),
-      body: BlocBuilder<TrailerTvShowBloc, TrailerTvShowState>(
-        builder: (context, state) => mapStateToWidget(state),
-      ),
-    );
+    ));
   }
 
   Widget loading() {
@@ -101,11 +97,7 @@ class _TrailerTvShowScreenState extends BaseStateWidget<TrailerTvShowBloc,
   }
 
   void onTrailerClicked(Video video) {
-    final params = VideoPlayerArguments(video.id, video.key);
-    context.navigatePushNamed(
-      RouteApp.VIDEO_PLAYER_SCREEN,
-      arguments: params,
-    );
+    bloc.goToVideoPlayer(context, video.id, video.key);
   }
 
   EdgeInsetsGeometry? marginVertical(int position, int length) {

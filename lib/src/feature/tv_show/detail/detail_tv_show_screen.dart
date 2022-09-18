@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/data/model/genre.dart';
-import 'package:themovie_flutter/src/navigation/route_app.dart';
-import 'package:themovie_flutter/src/widget/app_scaffold.dart';
-import 'package:themovie_flutter/src/widget/button/button_view.dart';
-import 'package:themovie_flutter/src/widget/container/linear_container_view.dart';
-import 'package:themovie_flutter/src/widget/draggable_detail.dart';
-import 'package:themovie_flutter/src/widget/image/asset_image_view.dart';
-import 'package:themovie_flutter/src/widget/image/image_view.dart';
-import 'package:themovie_flutter/src/widget/loading/detail_loading_view.dart';
+import '../../../data/model/genre.dart';
 import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
+import '../../../widget/app_scaffold.dart';
+import '../../../widget/button/button_view.dart';
+import '../../../widget/container/linear_container_view.dart';
+import '../../../widget/draggable_detail.dart';
+import '../../../widget/image/asset_image_view.dart';
+import '../../../widget/image/image_view.dart';
+import '../../../widget/loading/detail_loading_view.dart';
 import '../../../widget/portrait_content.dart';
 import '../../../widget/text/text_view.dart';
-import '../../../core/base/base_stateful.dart';
+import '../../../core/base/base_bloc_widget.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/cast_and_crew.dart';
 import '../../../data/model/detail_tv_show_content.dart';
 import '../../../data/model/tv_show.dart';
-import '../../../utils/extension/context_utils.dart';
 import 'detail_tv_show_bloc.dart';
 
 class DetailTvShowScreen extends StatefulWidget {
@@ -28,19 +26,14 @@ class DetailTvShowScreen extends StatefulWidget {
   _DetailTvShowScreenState createState() => _DetailTvShowScreenState();
 }
 
-class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
+class _DetailTvShowScreenState extends BaseBlocWidget<DetailTvShowBloc,
     DetailTvShowState, DetailTvShowScreen> {
   late Size _size;
   Color gradientStart = Colors.transparent;
   Color gradientEnd = Colors.black;
 
   @override
-  void setupOnInitState() {
-    bloc.add(GetDetailTvShowEvent(widget.tvShowId));
-  }
-
-  @override
-  Widget mapStateToWidget(DetailTvShowState state) {
+  Widget mapStateHandler(DetailTvShowState state) {
     if (state is SuccessGetDetailTvShowState) {
       return _detailTvView(state.detailTvShowContent);
     } else if (state is ErrorGetDetailTvShowState) {
@@ -54,9 +47,12 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
     return SafeArea(
-      child: AppScaffold(
-        body: BlocBuilder<DetailTvShowBloc, DetailTvShowState>(
-          builder: (ctx, state) => mapStateToWidget(state),
+      child: BlocProvider(
+        create: (context) => bloc..add(GetDetailTvShowEvent(widget.tvShowId)),
+        child: AppScaffold(
+          body: BlocBuilder<DetailTvShowBloc, DetailTvShowState>(
+            builder: (ctx, state) => mapStateHandler(state),
+          ),
         ),
       ),
     );
@@ -153,10 +149,7 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
           showSimilarMovie: content.similarTvShow.isNotEmpty,
           similarMovie: _similarTvShow(content.similarTvShow),
           onTrailerPressed: () {
-            context.navigatePushNamed(
-              RouteApp.TRAILER_TV_SHOW_SCREEN,
-              arguments: widget.tvShowId,
-            );
+            bloc.goToTrailerTvShow(context, widget.tvShowId);
           },
         )
       ],
@@ -232,8 +225,8 @@ class _DetailTvShowScreenState extends BaseStateWidget<DetailTvShowBloc,
             ],
           ),
           onTap: () {
-            final movieId = tvShows[position].id;
-            bloc.add(GetDetailTvShowEvent(movieId));
+            final tvShowId = tvShows[position].id;
+            bloc.goToDetailTvShow(context, tvShowId);
           },
         ),
       ),

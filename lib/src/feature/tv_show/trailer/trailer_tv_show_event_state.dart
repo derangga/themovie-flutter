@@ -7,8 +7,6 @@ class GetTrailerTvShowEvent extends TrailerTvShowEvent {
   GetTrailerTvShowEvent(this.tvShowId);
 }
 
-// ####################################################
-
 abstract class TrailerTvShowState extends BlocState {}
 
 class LoadingState extends TrailerTvShowState {}
