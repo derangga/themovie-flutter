@@ -36,29 +36,27 @@ class _HomeScreenState extends BaseBlocWidget<HomeBloc, HomeState, HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<HomeTrendingMovieBloc>(
-            create: (ctx) => getIt.get<HomeTrendingMovieBloc>(),
-          ),
-          BlocProvider<HomeUpcomingMovieBloc>(
-            create: (ctx) => getIt.get<HomeUpcomingMovieBloc>(),
-          ),
-          BlocProvider<HomeDiscoverTvShowBloc>(
-            create: (ctx) => getIt.get<HomeDiscoverTvShowBloc>(),
-          ),
-          BlocProvider<HomeDiscoverMovieBloc>(
-            create: (ctx) => getIt.get<HomeDiscoverMovieBloc>(),
-          ),
-          BlocProvider<HomeBloc>(
-            create: (ctx) => getIt.get<HomeBloc>(),
-          ),
-        ],
-        child: AppScaffold(
-          body: BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) => mapStateHandler(state),
-          ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeTrendingMovieBloc>(
+          create: (ctx) => getIt.get<HomeTrendingMovieBloc>(),
+        ),
+        BlocProvider<HomeUpcomingMovieBloc>(
+          create: (ctx) => getIt.get<HomeUpcomingMovieBloc>(),
+        ),
+        BlocProvider<HomeDiscoverTvShowBloc>(
+          create: (ctx) => getIt.get<HomeDiscoverTvShowBloc>(),
+        ),
+        BlocProvider<HomeDiscoverMovieBloc>(
+          create: (ctx) => getIt.get<HomeDiscoverMovieBloc>(),
+        ),
+        BlocProvider<HomeBloc>(
+          create: (ctx) => getIt.get<HomeBloc>(),
+        ),
+      ],
+      child: AppScaffold(
+        body: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) => mapStateHandler(state),
         ),
       ),
     );
