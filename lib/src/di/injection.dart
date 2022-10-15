@@ -25,6 +25,7 @@ import '../data/local/db/app_database.dart';
 import '../data/local/db/movie_favorite_dao.dart';
 import '../data/local/movie_local_source.dart';
 import '../data/local/movie_local_source_impl.dart';
+import '../data/service/http_request_service.dart';
 import '../feature/home/discover_tv_show/home_discover_tv_show_bloc.dart';
 import '../feature/home/home_bloc.dart';
 import '../feature/home/trending_movie/home_trending_movie_bloc.dart';
@@ -51,6 +52,9 @@ class Injection {
       getIt(),
       getIt(),
     ));
+    getIt.registerFactory<HttpRequestService>(
+      () => HttpRequestService(getIt()),
+    );
 
     getIt.registerSingleton<AppDatabase>(AppDatabase());
     getIt.registerSingleton<MovieFavoriteDao>(MovieFavoriteDao(getIt()));

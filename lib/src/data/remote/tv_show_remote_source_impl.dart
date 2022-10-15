@@ -9,16 +9,18 @@ import '../model/tv_show.dart';
 import '../model/detail_tv_show.dart';
 import '../model/cast_and_crew.dart';
 import '../model/videos.dart';
+import '../service/http_request_service.dart';
 import 'endpoint.dart';
 
 class TvShowRemoteSourceImpl extends TvShowRemoteSource {
-  TvShowRemoteSourceImpl(Dio dio) : super(dio);
+  final HttpRequestService service;
+  TvShowRemoteSourceImpl(this.service);
 
   @override
   Future<Either<Failure, List<TvShow>>> getDiscoverTvShow(int page) async {
     String url =
-        "${Endpoint.DISCOVER_TV_SHOW}?api_key=$token&sort_by=popularity.desc&page=$page";
-    final result = await get<List<TvShow>>(url, converter: (response) {
+        "${Endpoint.DISCOVER_TV_SHOW}?api_key=${service.token}&sort_by=popularity.desc&page=$page";
+    final result = await service.get<List<TvShow>>(url, converter: (response) {
       final List<TvShow> tvShows = List.empty(growable: true);
       if (response['results'] != null) {
         response['results'].forEach((v) {
@@ -33,8 +35,8 @@ class TvShowRemoteSourceImpl extends TvShowRemoteSource {
   @override
   Future<Either<Failure, DetailTvShow>> getTvShowById(int tvShowId) async {
     String url =
-        "${Endpoint.DETAIL_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}?api_key=$token";
-    final result = await get<DetailTvShow>(url,
+        "${Endpoint.DETAIL_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}?api_key=${service.token}";
+    final result = await service.get<DetailTvShow>(url,
         converter: (response) => DetailTvShowDTO.fromJson(response).toModel());
     return result;
   }
@@ -42,8 +44,8 @@ class TvShowRemoteSourceImpl extends TvShowRemoteSource {
   @override
   Future<Either<Failure, List<Cast>>> getCastAndCrew(int tvShowId) async {
     String url =
-        "${Endpoint.CREDITS_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}?api_key=$token";
-    final result = await get<List<Cast>>(url, converter: (response) {
+        "${Endpoint.CREDITS_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}?api_key=${service.token}";
+    final result = await service.get<List<Cast>>(url, converter: (response) {
       final List<Cast> casts = List.empty(growable: true);
       if (response['cast'] != null) {
         response['cast'].forEach((v) {
@@ -58,8 +60,8 @@ class TvShowRemoteSourceImpl extends TvShowRemoteSource {
   @override
   Future<Either<Failure, List<TvShow>>> getSimilarTvShow(int? tvShowId) async {
     String url =
-        "${Endpoint.SIMILAR_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}?api_key=$token";
-    final result = await get<List<TvShow>>(url, converter: (response) {
+        "${Endpoint.SIMILAR_TV_SHOW.replaceAll(Endpoint.TV_ID, '$tvShowId')}?api_key=${service.token}";
+    final result = await service.get<List<TvShow>>(url, converter: (response) {
       final List<TvShow> tvShows = List.empty(growable: true);
       if (response['results'] != null) {
         response['results'].forEach((v) {
@@ -74,8 +76,8 @@ class TvShowRemoteSourceImpl extends TvShowRemoteSource {
   @override
   Future<Either<Failure, List<Video>>> getTvShowTrailer(int tvShowId) async {
     String url =
-        "${Endpoint.TRAILER_TV_SHOW.replaceAll(Endpoint.TV_ID, "$tvShowId")}?api_key=$token";
-    final result = await get<List<Video>>(url, converter: (response) {
+        "${Endpoint.TRAILER_TV_SHOW.replaceAll(Endpoint.TV_ID, "$tvShowId")}?api_key=${service.token}";
+    final result = await service.get<List<Video>>(url, converter: (response) {
       final List<Video> videos = List.empty(growable: true);
       if (response['results'] != null) {
         response['results'].forEach((v) {
@@ -90,8 +92,8 @@ class TvShowRemoteSourceImpl extends TvShowRemoteSource {
   @override
   Future<Either<Failure, List<Video>>> getTrailerMovie(int tvShowId) async {
     String url =
-        '${Endpoint.TRAILER_TV_SHOW.replaceAll(Endpoint.TV_ID, "$tvShowId")}?api_key=$token';
-    final result = await get<List<Video>>(
+        '${Endpoint.TRAILER_TV_SHOW.replaceAll(Endpoint.TV_ID, "$tvShowId")}?api_key=${service.token}';
+    final result = await service.get<List<Video>>(
       url,
       converter: (response) {
         final List<Video> videos = [];

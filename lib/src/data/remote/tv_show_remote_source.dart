@@ -1,15 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-import '../base/base_remote.dart';
 import '../config/failure.dart';
 import '../model/cast_and_crew.dart';
 import '../model/detail_tv_show.dart';
 import '../model/tv_show.dart';
 import '../model/videos.dart';
 
-abstract class TvShowRemoteSource extends BaseRemote {
-  TvShowRemoteSource(Dio dio) : super(dio);
-
+abstract class TvShowRemoteSource {
   Future<Either<Failure, List<TvShow>>> getDiscoverTvShow(int page);
 
   Future<Either<Failure, DetailTvShow>> getTvShowById(int tvShowId);
