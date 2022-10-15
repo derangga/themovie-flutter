@@ -2,9 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/config/failure.dart';
+import '../../../data/remote/config/failure.dart';
 import '../../../data/model/movie.dart';
-import '../../../data/remote/movie_remote_source.dart';
+import '../../../data/remote/source/movie_remote_source.dart';
 import '../../../navigation/movie/movie_navigation.dart';
 import '../../../usecase/movie/get_upcoming_movie_usecase.dart';
 import '../../../utils/bloc_throttle.dart';

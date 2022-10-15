@@ -1,16 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:themovie_flutter/src/data/model/videos.dart';
-import '../model/cast_and_crew.dart';
-import '../model/genre.dart';
+import '../../model/cast_and_crew.dart';
+import '../../model/genre.dart';
 import '../config/failure.dart';
-import '../model/movie.dart';
-import '../model/detail_movie.dart';
-import '../mapper/movie_mapper.dart';
-import '../mapper/genre_mapper.dart';
-import '../mapper/cast_and_crew_mapper.dart';
-import '../mapper/video_mapper.dart';
+import '../../model/movie.dart';
+import '../../model/detail_movie.dart';
+import '../../mapper/movie_mapper.dart';
+import '../../mapper/genre_mapper.dart';
+import '../../mapper/cast_and_crew_mapper.dart';
+import '../../mapper/video_mapper.dart';
 import '../service/http_request_service.dart';
-import 'endpoint.dart';
+import '../endpoint.dart';
 import 'movie_remote_source.dart';
 
 class MovieRemoteSourceImpl extends MovieRemoteSource {

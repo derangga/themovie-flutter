@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import '../../data/config/failure.dart';
+import '../../data/remote/config/failure.dart';
 import '../../data/model/genre.dart';
-import '../../data/remote/movie_remote_source.dart';
+import '../../data/remote/source/movie_remote_source.dart';
 import '../usecase.dart';
 
 class GetGenreMovieUsecase implements UseCase<List<Genre>, NoParams> {

@@ -1,16 +1,15 @@
-import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 import '../config/failure.dart';
-import '../remote/tv_show_remote_source.dart';
-import '../mapper/tv_show_mapper.dart';
-import '../mapper/cast_and_crew_mapper.dart';
-import '../mapper/video_mapper.dart';
-import '../model/tv_show.dart';
-import '../model/detail_tv_show.dart';
-import '../model/cast_and_crew.dart';
-import '../model/videos.dart';
+import '../../mapper/tv_show_mapper.dart';
+import '../../mapper/cast_and_crew_mapper.dart';
+import '../../mapper/video_mapper.dart';
+import '../../model/tv_show.dart';
+import '../../model/detail_tv_show.dart';
+import '../../model/cast_and_crew.dart';
+import '../../model/videos.dart';
 import '../service/http_request_service.dart';
-import 'endpoint.dart';
+import '../endpoint.dart';
+import 'tv_show_remote_source.dart';
 
 class TvShowRemoteSourceImpl extends TvShowRemoteSource {
   final HttpRequestService service;

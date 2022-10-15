@@ -1,8 +1,9 @@
-import 'package:themovie_flutter/src/data/config/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:themovie_flutter/src/data/model/movie.dart';
-import 'package:themovie_flutter/src/data/remote/trending_remote_source.dart';
-import 'package:themovie_flutter/src/usecase/usecase.dart';
+
+import '../../data/model/movie.dart';
+import '../../data/remote/config/failure.dart';
+import '../../data/remote/source/trending_remote_source.dart';
+import '../usecase.dart';
 
 class GetTrendingMovieUseCase extends UseCase<List<Movie>, NoParams> {
   final TrendingRemoteSource _remoteSource;

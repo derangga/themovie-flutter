@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class TvShowNavigation {
-  void goToDiscoverTvShow(BuildContext context);
-  void goToDetailTvShow<T>(BuildContext context, int tvShowId);
-  void goToTrailerTvShow(BuildContext context, int tvShowId);
+  Future<dynamic> goToDiscoverTvShow(BuildContext context);
+  Future<dynamic> goToDetailTvShow<T>(BuildContext context, int tvShowId);
+  Future<dynamic> goToTrailerTvShow(BuildContext context, int tvShowId);
 }

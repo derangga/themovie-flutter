@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/base/api_state.dart';
 import '../../../data/model/movie.dart';
-import '../../../data/remote/trending_remote_source.dart';
+import '../../../data/remote/source/trending_remote_source.dart';
 import '../../../navigation/movie/movie_navigation.dart';
 import '../../../usecase/trending/get_trending_movie_usecase.dart';
 import '../../../usecase/usecase.dart';
