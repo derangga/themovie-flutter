@@ -1,5 +1,5 @@
+import 'package:themovie_flutter/src/data/local/db/app_database.dart';
 import 'package:themovie_flutter/src/data/model/genre.dart';
-import 'package:themovie_flutter/src/utils/date_helper.dart';
 
 import '../wrapper/paging_dto.dart';
 import 'genre_mapper.dart';
@@ -28,11 +28,7 @@ extension TvShowDTOExtension on TvShowDTO? {
       originalLanguage: this?.originalLanguage ?? '',
       backdropPath: this?.backdropPath ?? '',
       posterPath: this?.posterPath ?? '',
-      firstAirDate: DateHelper.formatConverter(
-        this?.firstAirDate,
-        DateHelper.FORMAT_YYYY_MM_DD,
-        DateHelper.FORMAT_DD_MMM_COMMA_YYYY,
-      ),
+      firstAirDate: this?.firstAirDate ?? '',
       overview: this?.overview ?? '',
       voteAverage: this?.voteAverage ?? '',
       voteCount: this?.voteCount ?? 0,
@@ -40,21 +36,41 @@ extension TvShowDTOExtension on TvShowDTO? {
   }
 }
 
-extension TvShowExtension on TvShow? {
-  TvShow orEmpty() {
-    return this ??
-        TvShow(
-          id: 0,
-          name: "",
-          originalName: "",
-          originalLanguage: "",
-          backdropPath: "",
-          posterPath: "",
-          firstAirDate: "",
-          overview: "",
-          voteAverage: "",
-          voteCount: 0,
-        );
+extension TvShowExtension on TvShow {
+  TvShowFavoriteEntityData toEntity() {
+    return TvShowFavoriteEntityData(
+      id: id,
+      backdropPath: backdropPath,
+      firstAirDate: firstAirDate,
+      name: name,
+      originalLanguage: originalLanguage,
+      originalName: originalName,
+      overview: overview,
+      posterPath: posterPath,
+      voteAverage: voteAverage,
+      voteCount: voteCount,
+    );
+  }
+}
+
+extension TvShowFavoriteEntityExtension on TvShowFavoriteEntityData? {
+  TvShow? toModel() {
+    if (this != null) {
+      return TvShow(
+        id: this?.id ?? 0,
+        name: this?.name ?? '',
+        originalName: this?.originalName ?? '',
+        originalLanguage: this?.originalLanguage ?? '',
+        backdropPath: this?.backdropPath ?? '',
+        posterPath: this?.posterPath ?? '',
+        firstAirDate: this?.firstAirDate ?? '',
+        overview: this?.overview ?? '',
+        voteAverage: this?.voteAverage ?? '',
+        voteCount: this?.voteCount ?? 0,
+      );
+    } else {
+      return null;
+    }
   }
 }
 

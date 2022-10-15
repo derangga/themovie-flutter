@@ -3,6 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:themovie_flutter/src/data/config/dio_module.dart';
 import 'package:themovie_flutter/src/data/config/loging_interceptor.dart';
+import 'package:themovie_flutter/src/data/local/db/tv_show_favorite_dao.dart';
+import 'package:themovie_flutter/src/data/local/tv_show_local_source.dart';
+import 'package:themovie_flutter/src/data/local/tv_show_local_source_impl.dart';
 import 'package:themovie_flutter/src/data/remote/movie_remote_source.dart';
 import 'package:themovie_flutter/src/data/remote/movie_remote_source_impl.dart';
 import 'package:themovie_flutter/src/data/remote/trending_remote_source.dart';
@@ -18,6 +21,10 @@ import 'package:themovie_flutter/src/navigation/movie/movie_navigation_impl.dart
 import 'package:themovie_flutter/src/navigation/tv_show/tv_show_navigation.dart';
 import 'package:themovie_flutter/src/navigation/tv_show/tv_show_navigation_impl.dart';
 
+import '../data/local/db/app_database.dart';
+import '../data/local/db/movie_favorite_dao.dart';
+import '../data/local/movie_local_source.dart';
+import '../data/local/movie_local_source_impl.dart';
 import '../feature/home/discover_tv_show/home_discover_tv_show_bloc.dart';
 import '../feature/home/home_bloc.dart';
 import '../feature/home/trending_movie/home_trending_movie_bloc.dart';
@@ -45,6 +52,16 @@ class Injection {
       getIt(),
     ));
 
+    getIt.registerSingleton<AppDatabase>(AppDatabase());
+    getIt.registerSingleton<MovieFavoriteDao>(MovieFavoriteDao(getIt()));
+    getIt.registerSingleton<TvShowFavoriteDao>(TvShowFavoriteDao(getIt()));
+    getIt.registerFactory<MovieLocalSource>(
+      () => MovieLocalSourceImpl(getIt()),
+    );
+    getIt.registerFactory<TvShowLocalSource>(
+      () => TvShowLocalSourceImpl(getIt()),
+    );
+
     /// network source
     getIt.registerFactory<MovieRemoteSource>(
       () => MovieRemoteSourceImpl(getIt()),
@@ -66,13 +83,21 @@ class Injection {
       () => DiscoverMovieBloc(getIt(), getIt()),
     );
     getIt.registerFactory<DetailMovieBloc>(
-      () => DetailMovieBloc(getIt(), getIt()),
+      () => DetailMovieBloc(
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
     );
     getIt.registerFactory<DiscoverTvShowBloc>(
       () => DiscoverTvShowBloc(getIt(), getIt()),
     );
     getIt.registerFactory<DetailTvShowBloc>(
-      () => DetailTvShowBloc(getIt(), getIt()),
+      () => DetailTvShowBloc(
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
     );
     getIt.registerFactory(
       () => UpcomingMovieBloc(getIt(), getIt()),

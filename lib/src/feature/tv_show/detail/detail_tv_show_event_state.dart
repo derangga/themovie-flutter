@@ -7,16 +7,32 @@ class GetDetailTvShowEvent extends DetailTvShowEvent {
   GetDetailTvShowEvent(this.tvShowId);
 }
 
-abstract class DetailTvShowState extends BlocState {}
+class AddOrRemoveFavoriteEvent extends DetailTvShowEvent {}
 
-class LoadingState extends DetailTvShowState {}
+class DetailTvShowState extends BlocState {
+  final DetailTvShowContent? content;
+  final bool isAlreadyFavorite;
+  final ApiState apiState;
+  final String? errorMessage;
 
-class SuccessGetDetailTvShowState extends DetailTvShowState {
-  final DetailTvShowContent detailTvShowContent;
-  SuccessGetDetailTvShowState(this.detailTvShowContent);
-}
+  DetailTvShowState({
+    this.content,
+    this.apiState = ApiState.LOADING,
+    this.isAlreadyFavorite = false,
+    this.errorMessage,
+  });
 
-class ErrorGetDetailTvShowState extends DetailTvShowState {
-  final String message;
-  ErrorGetDetailTvShowState(this.message);
+  DetailTvShowState copyWith({
+    content,
+    isMovieFavorite,
+    apiState,
+    errorMessage,
+  }) {
+    return DetailTvShowState(
+      content: content ?? this.content,
+      isAlreadyFavorite: isMovieFavorite ?? this.isAlreadyFavorite,
+      apiState: apiState ?? this.apiState,
+      errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
 }

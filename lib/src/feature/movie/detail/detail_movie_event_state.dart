@@ -1,17 +1,30 @@
 part of 'detail_movie_bloc.dart';
 
-abstract class DetailMovieState implements BlocState {}
+class DetailMovieState extends BlocState {
+  final DetailMovieContent? content;
+  final bool isMovieFavorite;
+  final ApiState apiState;
+  final String? errorMessage;
+  DetailMovieState({
+    this.content,
+    this.isMovieFavorite = false,
+    this.apiState = ApiState.LOADING,
+    this.errorMessage,
+  });
 
-class LoadingState extends DetailMovieState {}
-
-class SuccessGetDetailMovie extends DetailMovieState {
-  final DetailMovieContent content;
-  SuccessGetDetailMovie(this.content);
-}
-
-class ErrorGetDetailMovie extends DetailMovieState {
-  final String? message;
-  ErrorGetDetailMovie(this.message);
+  DetailMovieState copyWith({
+    content,
+    isMovieFavorite,
+    apiState,
+    errorMessage,
+  }) {
+    return DetailMovieState(
+      content: content ?? this.content,
+      isMovieFavorite: isMovieFavorite ?? this.isMovieFavorite,
+      apiState: apiState ?? this.apiState,
+      errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
 }
 
 abstract class DetailMovieEvent implements BlocEvent {}
@@ -20,3 +33,5 @@ class GetDetailMovieEvent extends DetailMovieEvent {
   final int movieId;
   GetDetailMovieEvent(this.movieId);
 }
+
+class AddOrRemoveFavoriteEvent extends DetailMovieEvent {}

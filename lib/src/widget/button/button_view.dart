@@ -28,7 +28,7 @@ class ButtonView extends StatelessWidget {
       padding: padding,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: color,
+          backgroundColor: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
           ),

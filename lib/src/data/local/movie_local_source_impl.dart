@@ -1,32 +1,46 @@
-import '../local/db/movie_dao.dart';
-import '../local/db/movie_db.dart';
+import 'package:themovie_flutter/src/data/local/db/movie_favorite_dao.dart';
+
 import '../local/movie_local_source.dart';
 import '../model/movie.dart';
 import '../mapper/movie_mapper.dart';
 
 class MovieLocalSourceImpl extends MovieLocalSource {
-  final MovieDao _movieDao;
+  final MovieFavoriteDao _movieDao;
 
   MovieLocalSourceImpl(this._movieDao);
 
   @override
-  Future deleteMovie(MovieEntityData movie) async {
-    await _movieDao.deleteMovie(movie);
+  Future<int> deleteMovie(Movie movie) async {
+    final entity = movie.toEntity();
+    return await _movieDao.deleteMovie(entity);
   }
 
   @override
   Future<List<Movie>> getAllMovie() async {
     var data = await _movieDao.getAllMovie();
-    return data.map((e) => e.toModel()).toList();
+    return data.map((e) => e.toModel() ?? Movie.empty()).toList();
   }
 
   @override
-  Future insertMovie(MovieEntityData movie) async {
-    await _movieDao.insertMovie(movie);
+  Future<int> insertMovie(Movie movie) async {
+    final entity = movie.toEntity();
+    return await _movieDao.insertMovie(entity);
   }
 
   @override
-  Future deleteAllMovie() async {
-    await _movieDao.deleteAllMovie();
+  Future<int> deleteAllMovie() async {
+    return await _movieDao.deleteAllMovie();
+  }
+
+  @override
+  Future<Movie?> getMovieFavoriteById(int movieId) async {
+    final favoriteMovieEntity = await _movieDao.getMovieFavoriteById(movieId);
+    return favoriteMovieEntity.toModel();
+  }
+
+  @override
+  Future<bool> isAlreadyFavorite(int movieId) async {
+    final entity = await getMovieFavoriteById(movieId);
+    return entity != null;
   }
 }

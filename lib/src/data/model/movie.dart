@@ -1,5 +1,3 @@
-import 'package:moor_flutter/moor_flutter.dart';
-
 class MovieDTO {
   bool? adult;
   String? backdropPath;
@@ -77,20 +75,22 @@ class Movie {
     required this.voteAverage,
     required this.voteCount,
   });
-}
 
-class MovieEntity extends Table {
-  BoolColumn? get adult => boolean()();
-  TextColumn? get backdropPath => text()();
-  IntColumn? get id => integer()();
-  TextColumn? get originalLanguage => text()();
-  TextColumn? get originalTitle => text()();
-  TextColumn? get overview => text()();
-  RealColumn? get popularity => real()();
-  TextColumn? get posterPath => text()();
-  TextColumn? get releaseDate => text()();
-  TextColumn? get title => text()();
-  BoolColumn? get video => boolean()();
-  TextColumn? get voteAverage => text()();
-  IntColumn? get voteCount => integer()();
+  static Movie empty() {
+    return Movie(
+      adult: false,
+      backdropPath: '',
+      id: 0,
+      originalLanguage: '',
+      originalTitle: '',
+      overview: '',
+      popularity: 0,
+      posterPath: '',
+      releaseDate: '',
+      title: '',
+      video: false,
+      voteAverage: '',
+      voteCount: 0,
+    );
+  }
 }
