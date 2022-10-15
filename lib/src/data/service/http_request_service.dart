@@ -5,11 +5,11 @@ import '../config/failure.dart';
 
 typedef ResponseConverter<T> = T Function(dynamic response);
 
-abstract class BaseRemote {
+class HttpRequestService {
   final Dio _dio;
   final String? token = FlutterConfig.get('TMDB_SECRET_KEY');
 
-  BaseRemote(this._dio);
+  HttpRequestService(this._dio);
 
   Future<Either<Failure, T>> get<T>(String endpoint,
       {Map<String, String>? headers,

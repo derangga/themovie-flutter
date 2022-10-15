@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:themovie_flutter/src/data/model/videos.dart';
 import '../model/cast_and_crew.dart';
 import '../model/genre.dart';
@@ -10,17 +9,19 @@ import '../mapper/movie_mapper.dart';
 import '../mapper/genre_mapper.dart';
 import '../mapper/cast_and_crew_mapper.dart';
 import '../mapper/video_mapper.dart';
+import '../service/http_request_service.dart';
 import 'endpoint.dart';
 import 'movie_remote_source.dart';
 
 class MovieRemoteSourceImpl extends MovieRemoteSource {
-  MovieRemoteSourceImpl(Dio dio) : super(dio);
+  final HttpRequestService service;
+  MovieRemoteSourceImpl(this.service);
 
   @override
   Future<Either<Failure, DetailMovie>> getMovieById(int movieId) async {
     String url =
-        "${Endpoint.DETAIL_MOVIE.replaceAll(Endpoint.MOVIE_ID, '$movieId')}?api_key=$token";
-    final result = await get<DetailMovie>(
+        "${Endpoint.DETAIL_MOVIE.replaceAll(Endpoint.MOVIE_ID, '$movieId')}?api_key=${service.token}";
+    final result = await service.get<DetailMovie>(
       url,
       converter: (json) => DetailMovieDTO.fromJson(json).toModel(),
     );
@@ -30,8 +31,8 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   @override
   Future<Either<Failure, List<Movie>>> getDiscoverMovie(int page) async {
     String url =
-        '${Endpoint.DISCOVER_MOVIE}?api_key=$token&sort_by=popularity.desc&page=$page';
-    final result = await get<List<Movie>>(
+        '${Endpoint.DISCOVER_MOVIE}?api_key=${service.token}&sort_by=popularity.desc&page=$page';
+    final result = await service.get<List<Movie>>(
       url,
       converter: (response) {
         final List<Movie> movies = [];
@@ -50,8 +51,9 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
 
   @override
   Future<Either<Failure, List<Genre>>> getGenreMovie() async {
-    String url = '${Endpoint.GENRE_MOVIE}?api_key=$token&language=en-US';
-    final result = await get<List<Genre>>(
+    String url =
+        '${Endpoint.GENRE_MOVIE}?api_key=${service.token}&language=en-US';
+    final result = await service.get<List<Genre>>(
       url,
       converter: (response) => GenresDTO.fromJson(response).toModel(),
     );
@@ -61,8 +63,8 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   @override
   Future<Either<Failure, List<Cast>>> getCastAndCrew(int movieId) async {
     String url =
-        '${Endpoint.CREDITS_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=$token';
-    final result = await get<List<Cast>>(
+        '${Endpoint.CREDITS_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=${service.token}';
+    final result = await service.get<List<Cast>>(
       url,
       converter: (response) {
         final List<Cast> casts = [];
@@ -82,8 +84,8 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   @override
   Future<Either<Failure, List<Movie>>> getSimilarMovie(int movieId) async {
     String url =
-        '${Endpoint.SIMILIAR_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=$token&sort_by=popularity.desc';
-    final result = await get<List<Movie>>(
+        '${Endpoint.SIMILIAR_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=${service.token}&sort_by=popularity.desc';
+    final result = await service.get<List<Movie>>(
       url,
       converter: (response) {
         final List<Movie> movies = [];
@@ -103,8 +105,8 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   @override
   Future<Either<Failure, List<Movie>>> getUpcomingMovie(int page) async {
     String url =
-        '${Endpoint.UPCOMING_MOVIE}?api_key=$token&language=en-US&page=$page';
-    final result = await get<List<Movie>>(
+        '${Endpoint.UPCOMING_MOVIE}?api_key=${service.token}&language=en-US&page=$page';
+    final result = await service.get<List<Movie>>(
       url,
       converter: (response) {
         final List<Movie> movies = [];
@@ -124,8 +126,8 @@ class MovieRemoteSourceImpl extends MovieRemoteSource {
   @override
   Future<Either<Failure, List<Video>>> getTrailerMovie(int movieId) async {
     String url =
-        '${Endpoint.TRAILER_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=$token';
-    final result = await get<List<Video>>(
+        '${Endpoint.TRAILER_MOVIE.replaceAll(Endpoint.MOVIE_ID, "$movieId")}?api_key=${service.token}';
+    final result = await service.get<List<Video>>(
       url,
       converter: (response) {
         final List<Video> videos = [];
