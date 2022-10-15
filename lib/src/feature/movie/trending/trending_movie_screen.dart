@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/base/base_bloc_widget.dart';
+import '../../../core/base/base_cubit_widget.dart';
+import '../../../core/base/api_state.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/movie.dart';
 import '../../../resources/color_theme.dart';
@@ -22,18 +23,19 @@ class TrendingMovieScreen extends StatefulWidget {
   _TrendingMovieScreennState createState() => _TrendingMovieScreennState();
 }
 
-class _TrendingMovieScreennState extends BaseBlocWidget<TrendingMovieBloc,
+class _TrendingMovieScreennState extends BaseCubitWidget<TrendingMovieBloc,
     TrendingMovieState, TrendingMovieScreen> {
   @override
   Widget mapStateHandler(TrendingMovieState state) {
-    if (state is SuccessGetMovieState) {
-      return createMovieList(state.movies);
-    } else if (state is FailedGetMovieState) {
-      return createErrorView();
-    } else {
-      return Center(
-        child: CircularLoadingView(),
-      );
+    switch (state.apiState) {
+      case ApiState.SUCCESS:
+        return createMovieList(state.movies);
+      case ApiState.FAILED:
+        return createErrorView();
+      default:
+        return Center(
+          child: CircularLoadingView(),
+        );
     }
   }
 
@@ -41,7 +43,7 @@ class _TrendingMovieScreennState extends BaseBlocWidget<TrendingMovieBloc,
   Widget build(BuildContext context) {
     return SafeArea(
         child: BlocProvider(
-      create: (context) => bloc..add(GetTrendingMovieEvent()),
+      create: (context) => bloc..fetchTrendingMovie(),
       child: AppScaffold(
         appBar: DarkAppBar(
           title: Text('Trending Movies'),
@@ -89,7 +91,7 @@ class _TrendingMovieScreennState extends BaseBlocWidget<TrendingMovieBloc,
             ),
             color: Colors.redAccent,
             onPressed: () {
-              bloc.add(GetTrendingMovieEvent());
+              bloc.fetchTrendingMovie();
             },
           ),
         ],

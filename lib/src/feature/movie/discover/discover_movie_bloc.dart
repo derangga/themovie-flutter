@@ -5,14 +5,11 @@ import 'package:themovie_flutter/src/data/remote/movie_remote_source.dart';
 import 'package:themovie_flutter/src/navigation/movie/movie_navigation.dart';
 import '../../../data/config/failure.dart';
 import '../../../utils/bloc_throttle.dart';
-import '../../../core/base/base_event_state.dart';
 import '../../../data/model/movie.dart';
-import '../../../core/base/base_bloc.dart';
 
 part 'discover_movie_event_state.dart';
 
-class DiscoverMovieBloc
-    extends BaseBloc<DiscoverMovieEvent, DiscoverMovieState> {
+class DiscoverMovieBloc extends Bloc<DiscoverMovieEvent, DiscoverMovieState> {
   final MovieRemoteSource _remoteSource;
   final MovieNavigation _movieNavigation;
   int _page = 1;

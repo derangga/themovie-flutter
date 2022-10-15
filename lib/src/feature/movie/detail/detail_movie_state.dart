@@ -1,6 +1,6 @@
 part of 'detail_movie_bloc.dart';
 
-class DetailMovieState extends BlocState {
+class DetailMovieState {
   final DetailMovieContent? content;
   final bool isMovieFavorite;
   final ApiState apiState;
@@ -13,10 +13,10 @@ class DetailMovieState extends BlocState {
   });
 
   DetailMovieState copyWith({
-    content,
-    isMovieFavorite,
-    apiState,
-    errorMessage,
+    DetailMovieContent? content,
+    bool? isMovieFavorite,
+    ApiState? apiState,
+    String? errorMessage,
   }) {
     return DetailMovieState(
       content: content ?? this.content,
@@ -26,12 +26,3 @@ class DetailMovieState extends BlocState {
     );
   }
 }
-
-abstract class DetailMovieEvent implements BlocEvent {}
-
-class GetDetailMovieEvent extends DetailMovieEvent {
-  final int movieId;
-  GetDetailMovieEvent(this.movieId);
-}
-
-class AddOrRemoveFavoriteEvent extends DetailMovieEvent {}

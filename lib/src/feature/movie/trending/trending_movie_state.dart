@@ -1,23 +1,24 @@
-part of 'trailer_tv_show_bloc.dart';
+part of 'trending_movie_bloc.dart';
 
-class TrailerTvShowState {
-  final List<Video> videos;
+/// State
+class TrendingMovieState {
+  final List<Movie> movies;
   final ApiState apiState;
   final String? errorMessage;
 
-  TrailerTvShowState({
-    this.videos = const [],
+  TrendingMovieState({
+    this.movies = const [],
     this.apiState = ApiState.LOADING,
     this.errorMessage,
   });
 
-  TrailerTvShowState copyWith({
-    List<Video>? videos,
+  TrendingMovieState copyWith({
+    List<Movie>? movies,
     ApiState? apiState,
     String? errorMessage,
   }) {
-    return TrailerTvShowState(
-      videos: videos ?? this.videos,
+    return TrendingMovieState(
+      movies: movies ?? this.movies,
       apiState: apiState ?? this.apiState,
       errorMessage: errorMessage ?? this.errorMessage,
     );

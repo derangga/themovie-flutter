@@ -1,40 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:themovie_flutter/src/core/base/api_state.dart';
 
-import '../../../core/base/base_bloc.dart';
 import '../../../data/remote/tv_show_remote_source.dart';
 import '../../../navigation/tv_show/tv_show_navigation.dart';
 import '../../../usecase/tv_show/get_discover_tv_show_usecase.dart';
-import '../home_event_state.dart';
+import 'home_discover_tv_show_state.dart';
 
-class HomeDiscoverTvShowBloc extends BaseBloc<HomeEvent, HomeState> {
+class HomeDiscoverTvShowBloc extends Cubit<HomeDiscoverTvShowState> {
   final TvShowRemoteSource _remoteSource;
   final TvShowNavigation _navigation;
 
   HomeDiscoverTvShowBloc(
     this._remoteSource,
     this._navigation,
-  ) : super(LoadingState()) {
-    on<HomeEvent>(_fetchDiscoverTvShow);
-  }
+  ) : super(HomeDiscoverTvShowState());
 
-  Future<void> _fetchDiscoverTvShow(
-    HomeEvent event,
-    Emitter<HomeState> emit,
-  ) async {
-    if (event is GetDiscoverTvShowEvent) {
-      emit(LoadingState());
+  Future<void> fetchDiscoverTvShow() async {
+    emit(state.copyWith(apiState: ApiState.LOADING));
 
-      final result = await _getDiscoverTvShow(1);
+    final result = await _getDiscoverTvShow(1);
 
-      result.fold((failure) {
-        emit(FailedGetTvShowState(failure.message));
-      }, (response) {
-        emit(SuccessGetTvShowState(response));
-      });
-    } else if (event is InitialEvent) {
-      emit(LoadingState());
-    }
+    result.fold((failure) {
+      emit(state.copyWith(
+        apiState: ApiState.FAILED,
+        errorMessage: failure.message,
+      ));
+    }, (tvShowsResponse) {
+      emit(state.copyWith(
+        apiState: ApiState.SUCCESS,
+        tvShows: tvShowsResponse,
+      ));
+    });
   }
 
   GetDiscoverTvShowUseCase get _getDiscoverTvShow =>

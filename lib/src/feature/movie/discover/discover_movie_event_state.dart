@@ -2,7 +2,7 @@ part of 'discover_movie_bloc.dart';
 
 /// Event
 
-abstract class DiscoverMovieEvent implements BlocEvent {}
+abstract class DiscoverMovieEvent {}
 
 class GetFirstPageMovieEvent extends DiscoverMovieEvent {
   final int page = 1;
@@ -16,7 +16,7 @@ class RetryNextPageEvent extends DiscoverMovieEvent {}
 
 enum DiscoverMoviesStatus { INITIAL, LOADING, SUCCESS, FAILED }
 
-class DiscoverMovieState extends BlocState {
+class DiscoverMovieState {
   final DiscoverMoviesStatus status;
   final List<Movie> movies;
   final bool hasReachedMax;

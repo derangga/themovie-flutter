@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../core/base/base_bloc_widget.dart';
+import 'package:themovie_flutter/src/core/base/base_cubit_widget.dart';
 import '../../di/injection.dart';
 import '../../widget/app_scaffold.dart';
 import '../../widget/custom_widget/no_connection_view.dart';
@@ -9,7 +9,7 @@ import 'discover_movies/home_discover_movie_section.dart';
 import 'discover_tv_show/home_discover_tv_show_bloc.dart';
 import 'discover_tv_show/home_discover_tv_show_section.dart';
 import 'home_bloc.dart';
-import 'home_event_state.dart';
+import 'home_state.dart';
 import 'trending_movie/home_trending_movie.dart';
 import 'trending_movie/home_trending_movie_bloc.dart';
 import 'upcoming_movie/home_upcoming_movie_bloc.dart';
@@ -22,15 +22,17 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends BaseBlocWidget<HomeBloc, HomeState, HomeScreen> {
+class _HomeScreenState
+    extends BaseCubitWidget<HomeBloc, HomeState, HomeScreen> {
   int errorSection = 0;
 
   @override
   Widget mapStateHandler(HomeState state) {
-    if (state is ShowHomeErrorState) {
-      return createNoConnection();
-    } else {
-      return createHomeSection();
+    switch (state) {
+      case HomeState.LOADING:
+        return createHomeSection();
+      case HomeState.ERROR:
+        return createNoConnection();
     }
   }
 
@@ -89,7 +91,7 @@ class _HomeScreenState extends BaseBlocWidget<HomeBloc, HomeState, HomeScreen> {
       errorText: 'There is some problem with your request',
       onPressed: () {
         errorSection = 0;
-        bloc.add(InitialEvent());
+        bloc.showLoadingState();
       },
     );
   }
@@ -97,7 +99,7 @@ class _HomeScreenState extends BaseBlocWidget<HomeBloc, HomeState, HomeScreen> {
   void handleErrorView() {
     errorSection++;
     if (errorSection > 1) {
-      bloc.add(ErrorHomeEvent());
+      bloc.showErrorState();
     }
   }
 }

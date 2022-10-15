@@ -1,6 +1,6 @@
 part of 'discover_tv_show_bloc.dart';
 
-abstract class DiscoverTvShowEvent extends BlocEvent {}
+abstract class DiscoverTvShowEvent {}
 
 class GetFirstPageTvShowEvent extends DiscoverTvShowEvent {
   final int page = 1;
@@ -14,7 +14,7 @@ class RetryNextPageEvent extends DiscoverTvShowEvent {}
 
 enum DiscoverTvShowStatus { INITIAL, LOADING, SUCCESS, FAILED }
 
-class DiscoverTvShowState extends BlocState {
+class DiscoverTvShowState {
   final DiscoverTvShowStatus status;
   final List<TvShow> tvShows;
   final bool hasReachedMax;

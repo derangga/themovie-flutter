@@ -2,8 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/base/base_bloc.dart';
-import '../../../core/base/base_event_state.dart';
 import '../../../data/config/failure.dart';
 import '../../../data/model/movie.dart';
 import '../../../data/remote/movie_remote_source.dart';
@@ -13,8 +11,7 @@ import '../../../utils/bloc_throttle.dart';
 
 part 'upcoming_movie_event_state.dart';
 
-class UpcomingMovieBloc
-    extends BaseBloc<UpcomingMovieEvent, UpcomingMovieState> {
+class UpcomingMovieBloc extends Bloc<UpcomingMovieEvent, UpcomingMovieState> {
   final MovieRemoteSource _remoteSource;
   final MovieNavigation _movieNavigation;
   int _page = 1;

@@ -1,0 +1,1 @@
+enum HomeState { LOADING, ERROR }

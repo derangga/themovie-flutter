@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/base/base_multi_bloc_widget.dart';
+import '../../../core/base/api_state.dart';
+import '../../../core/base/base_multi_cubit_widget.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/tv_show.dart';
 import '../../../resources/color_theme.dart';
@@ -11,8 +12,8 @@ import '../../../widget/custom_widget/movie_see_all_view.dart';
 import '../../../widget/image/asset_image_view.dart';
 import '../../../widget/loading/image_block_loading_view.dart';
 import '../../../widget/text/text_view.dart';
-import '../home_event_state.dart';
 import 'home_discover_tv_show_bloc.dart';
+import 'home_discover_tv_show_state.dart';
 
 class HomeDiscoverTvShowSection extends StatefulWidget {
   final Function onDiscoverTvShowSectionError;
@@ -26,37 +27,32 @@ class HomeDiscoverTvShowSection extends StatefulWidget {
       _HomeDiscoverTvShowSectionState();
 }
 
-class _HomeDiscoverTvShowSectionState extends BaseMultiBlocWidget<
-    HomeDiscoverTvShowBloc, HomeState, HomeDiscoverTvShowSection> {
-  void initState() {
-    super.initState();
-    bloc.add(GetDiscoverTvShowEvent());
-  }
-
+class _HomeDiscoverTvShowSectionState extends BaseMultiCubitWidget<
+    HomeDiscoverTvShowBloc,
+    HomeDiscoverTvShowState,
+    HomeDiscoverTvShowSection> {
   @override
-  Widget mapStateHandler(HomeState state) {
-    if (state is SuccessGetTvShowState) {
-      return createDiscoverTvShow(state.tvShows);
-    } else if (state is FailedGetTvShowState) {
-      widget.onDiscoverTvShowSectionError();
-      return createLoading();
-    } else {
-      return createLoading();
+  Widget mapStateHandler(HomeDiscoverTvShowState state) {
+    switch (state.apiState) {
+      case ApiState.SUCCESS:
+        return createDiscoverTvShow(state.tvShows);
+      case ApiState.FAILED:
+        widget.onDiscoverTvShowSectionError();
+        return Container();
+      default:
+        return createLoading();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeDiscoverTvShowBloc, HomeState>(
-      builder: (context, state) => mapStateHandler(state),
+    return BlocProvider.value(
+      value: bloc..fetchDiscoverTvShow(),
+      child: BlocBuilder<HomeDiscoverTvShowBloc, HomeDiscoverTvShowState>(
+        builder: (context, state) => mapStateHandler(state),
+      ),
     );
   }
-
-  // @override
-  // void dispose() {
-  //   bloc.add(InitialEvent());
-  //   super.dispose();
-  // }
 
   Widget createDiscoverTvShow(List<TvShow> tvShows) {
     return Column(

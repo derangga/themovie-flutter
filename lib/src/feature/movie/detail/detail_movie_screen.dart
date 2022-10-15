@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/base_event_state.dart';
-import '../../../core/base/base_bloc_widget.dart';
+import 'package:themovie_flutter/src/core/base/api_state.dart';
+import '../../../core/base/base_cubit_widget.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/cast_and_crew.dart';
 import '../../../data/model/detail_movie_content.dart';
@@ -26,7 +26,7 @@ class DetailMovieScreen extends StatefulWidget {
   _DetailMovieScreenState createState() => _DetailMovieScreenState();
 }
 
-class _DetailMovieScreenState extends BaseBlocWidget<DetailMovieBloc,
+class _DetailMovieScreenState extends BaseCubitWidget<DetailMovieBloc,
     DetailMovieState, DetailMovieScreen> {
   late Size _size;
   Color gradientStart = Colors.transparent;
@@ -49,7 +49,7 @@ class _DetailMovieScreenState extends BaseBlocWidget<DetailMovieBloc,
     _size = MediaQuery.of(context).size;
     return SafeArea(
       child: BlocProvider(
-        create: (context) => bloc..add(GetDetailMovieEvent(widget.movieId)),
+        create: (context) => bloc..fetchDetailMovie(widget.movieId),
         child: AppScaffold(
           body: BlocBuilder<DetailMovieBloc, DetailMovieState>(
             builder: (ctx, state) => mapStateHandler(state),
@@ -122,7 +122,7 @@ class _DetailMovieScreenState extends BaseBlocWidget<DetailMovieBloc,
             bloc.goToTrailerScreen(context, widget.movieId);
           },
           onFavoritePressed: () {
-            bloc.add(AddOrRemoveFavoriteEvent());
+            bloc.addOrRemoveMovieToFavorite();
           },
         ),
       ],

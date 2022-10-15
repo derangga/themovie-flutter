@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../core/base/base_bloc_widget.dart';
+import '../../../core/base/base_cubit_widget.dart';
+import '../../../core/base/api_state.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/videos.dart';
 import '../../../resources/color_theme.dart';
@@ -22,23 +23,25 @@ class TrailerTvShowScreen extends StatefulWidget {
   _TrailerTvShowScreenState createState() => _TrailerTvShowScreenState();
 }
 
-class _TrailerTvShowScreenState extends BaseBlocWidget<TrailerTvShowBloc,
+class _TrailerTvShowScreenState extends BaseCubitWidget<TrailerTvShowBloc,
     TrailerTvShowState, TrailerTvShowScreen> {
   @override
   Widget mapStateHandler(TrailerTvShowState state) {
-    if (state is SuccessGetTrailerTvShowState) {
-      return trailerList(state.videos);
-    } else if (state is ErrorGetTrailerTvShowState) {
-      return errorView();
+    switch (state.apiState) {
+      case ApiState.SUCCESS:
+        return trailerList(state.videos);
+      case ApiState.FAILED:
+        return errorView();
+      default:
+        return loading();
     }
-    return loading();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: BlocProvider(
-      create: (context) => bloc..add(GetTrailerTvShowEvent(widget.tvShowId)),
+      create: (context) => bloc..fetchTrailer(widget.tvShowId),
       child: AppScaffold(
         appBar: DarkAppBar(
           title: Text('Trailer'),
@@ -133,7 +136,7 @@ class _TrailerTvShowScreenState extends BaseBlocWidget<TrailerTvShowBloc,
             ),
             color: Colors.redAccent,
             onPressed: () {
-              bloc.add(GetTrailerTvShowEvent(widget.tvShowId));
+              bloc.fetchTrailer(widget.tvShowId);
             },
           ),
         ],

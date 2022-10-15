@@ -1,7 +1,7 @@
 part of 'upcoming_movie_bloc.dart';
 
 /// Event
-abstract class UpcomingMovieEvent extends BlocEvent {}
+abstract class UpcomingMovieEvent {}
 
 class GetFirstPageMovieEvent extends UpcomingMovieEvent {
   final int page = 1;
@@ -14,7 +14,7 @@ class RetryNextPageEvent extends UpcomingMovieEvent {}
 /// State
 enum UpcomingMovieStatus { INITIAL, LOADING, SUCCESS, FAILED }
 
-class UpcomingMovieState extends BlocState {
+class UpcomingMovieState {
   final UpcomingMovieStatus status;
   final List<Movie> movies;
   final bool hasReachedMax;

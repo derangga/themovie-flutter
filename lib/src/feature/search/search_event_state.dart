@@ -1,7 +1,7 @@
 part of 'search_bloc.dart';
 
-abstract class SearchEvent extends BlocEvent {}
+abstract class SearchEvent {}
 
-abstract class SearchState extends BlocState {}
+abstract class SearchState {}
 
 class InitialState extends SearchState {}

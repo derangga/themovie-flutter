@@ -1,7 +1,7 @@
 part of 'favorite_bloc.dart';
 
-abstract class FavoriteEvent extends BlocEvent {}
+abstract class FavoriteEvent {}
 
-abstract class FavoriteState extends BlocState {}
+abstract class FavoriteState {}
 
 class InitialState extends FavoriteState {}

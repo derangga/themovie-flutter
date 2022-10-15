@@ -1,39 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:themovie_flutter/src/core/base/api_state.dart';
 
-import '../../../core/base/base_bloc.dart';
 import '../../../data/remote/movie_remote_source.dart';
 import '../../../navigation/movie/movie_navigation.dart';
 import '../../../usecase/movie/get_upcoming_movie_usecase.dart';
-import '../home_event_state.dart';
+import 'home_upcoming_movie_state.dart';
 
-class HomeUpcomingMovieBloc extends BaseBloc<HomeEvent, HomeState> {
+class HomeUpcomingMovieBloc extends Cubit<HomeUpcomingMovieState> {
   final MovieRemoteSource _remoteSource;
   final MovieNavigation _navigation;
   HomeUpcomingMovieBloc(
     this._remoteSource,
     this._navigation,
-  ) : super(LoadingState()) {
-    on<HomeEvent>(_fetchUpcomingMovie);
-  }
+  ) : super(HomeUpcomingMovieState());
 
-  Future<void> _fetchUpcomingMovie(
-    HomeEvent event,
-    Emitter<HomeState> emit,
-  ) async {
-    if (event is GetUpcomingMovieEvent) {
-      emit(LoadingState());
+  Future<void> fetchUpcomingMovie() async {
+    emit(state.copyWith(apiState: ApiState.LOADING));
 
-      final result = await _getUpcomingMovie(1);
+    final result = await _getUpcomingMovie(1);
 
-      result.fold((failure) {
-        emit(FailedGetMovieState(failure.message));
-      }, (response) {
-        emit(SuccessGetMovieState(response));
-      });
-    } else if (event is InitialEvent) {
-      emit(LoadingState());
-    }
+    result.fold((failure) {
+      emit(state.copyWith(
+        apiState: ApiState.FAILED,
+        errorMessage: failure.message,
+      ));
+    }, (moviesResponse) {
+      emit(state.copyWith(
+        apiState: ApiState.SUCCESS,
+        movies: moviesResponse,
+      ));
+    });
   }
 
   GetUpcomingMovieUseCase get _getUpcomingMovie =>

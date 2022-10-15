@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../core/base/base_multi_bloc_widget.dart';
+import '../../../core/base/api_state.dart';
+import '../../../core/base/base_multi_cubit_widget.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/movie.dart';
 import '../../../resources/color_theme.dart';
@@ -13,8 +14,8 @@ import '../../../widget/container/rounded_container_view.dart';
 import '../../../widget/image/asset_image_view.dart';
 import '../../../widget/image/image_view.dart';
 import '../../../widget/text/text_view.dart';
-import '../home_event_state.dart';
 import 'home_trending_movie_bloc.dart';
+import 'home_trending_movie_state.dart';
 
 class HomeTrendingMovieSection extends StatefulWidget {
   final Function onTrendingSectionError;
@@ -28,44 +29,36 @@ class HomeTrendingMovieSection extends StatefulWidget {
       _HomeTrendingMovieSectionState();
 }
 
-class _HomeTrendingMovieSectionState extends BaseMultiBlocWidget<
-    HomeTrendingMovieBloc, HomeState, HomeTrendingMovieSection> {
-  int _current = 0;
+class _HomeTrendingMovieSectionState extends BaseMultiCubitWidget<
+    HomeTrendingMovieBloc, HomeTrendingMovieState, HomeTrendingMovieSection> {
   final Color gradientStart = Colors.transparent;
   final Color gradientEnd = Colors.black;
   final CarouselController _controller = CarouselController();
 
-  void initState() {
-    super.initState();
-    bloc.add(GetTrendingMovieEvent());
-  }
-
   @override
-  Widget mapStateHandler(HomeState state) {
-    if (state is SuccessGetMovieState) {
-      return createCarousel(state.movies);
-    } else if (state is FailedGetMovieState) {
-      widget.onTrendingSectionError();
-      return createLoading();
-    } else {
-      return createLoading();
+  Widget mapStateHandler(HomeTrendingMovieState state) {
+    switch (state.apiState) {
+      case ApiState.SUCCESS:
+        return createCarousel(state.movies, state.carouselPos);
+      case ApiState.FAILED:
+        widget.onTrendingSectionError();
+        return Container();
+      default:
+        return createLoading();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeTrendingMovieBloc, HomeState>(
-      builder: (context, state) => mapStateHandler(state),
+    return BlocProvider.value(
+      value: bloc..fetchTrendingMovie(),
+      child: BlocBuilder<HomeTrendingMovieBloc, HomeTrendingMovieState>(
+        builder: (context, state) => mapStateHandler(state),
+      ),
     );
   }
 
-  // @override
-  // void dispose() {
-  //   bloc.add(InitialEvent());
-  //   super.dispose();
-  // }
-
-  Widget createCarousel(List<Movie> movies) {
+  Widget createCarousel(List<Movie> movies, int carouselPos) {
     return Stack(
       children: [
         CarouselSlider.builder(
@@ -75,9 +68,7 @@ class _HomeTrendingMovieSectionState extends BaseMultiBlocWidget<
             viewportFraction: 1,
             autoPlay: true,
             onPageChanged: (index, reason) {
-              setState(() {
-                _current = index;
-              });
+              bloc.updateCarouselIndicator(index);
             },
           ),
           itemCount: movies.length,
@@ -106,7 +97,7 @@ class _HomeTrendingMovieSectionState extends BaseMultiBlocWidget<
                     color: (Theme.of(context).brightness == Brightness.dark
                             ? Colors.white
                             : Colors.black)
-                        .withOpacity(_current == entry.key ? 0.9 : 0.4),
+                        .withOpacity(carouselPos == entry.key ? 0.9 : 0.4),
                   ),
                 ),
               );
