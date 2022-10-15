@@ -43,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
           ],
           currentIndex: _selectedScreen,
           selectedItemColor: ColorTheme.light_brown,
-          unselectedItemColor: Colors.grey,
+          unselectedItemColor: Colors.white,
           onTap: _onMenuTapped,
         ),
       ),

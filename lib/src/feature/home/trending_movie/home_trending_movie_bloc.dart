@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/api_state.dart';
-import 'package:themovie_flutter/src/data/remote/trending_remote_source.dart';
-import 'package:themovie_flutter/src/usecase/trending/get_trending_movie_usecase.dart';
-import 'package:themovie_flutter/src/usecase/usecase.dart';
 
+import '../../../core/base/api_state.dart';
+import '../../../data/remote/source/trending_remote_source.dart';
 import '../../../navigation/movie/movie_navigation.dart';
+import '../../../usecase/trending/get_trending_movie_usecase.dart';
+import '../../../usecase/usecase.dart';
 import 'home_trending_movie_state.dart';
 
 class HomeTrendingMovieBloc extends Cubit<HomeTrendingMovieState> {

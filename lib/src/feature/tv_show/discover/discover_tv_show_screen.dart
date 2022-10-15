@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../data/config/url_constant.dart';
+import '../../../data/remote/config/url_constant.dart';
 import '../../../core/base/base_bloc_widget.dart';
 import '../../../data/model/tv_show.dart';
 import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
+import '../../../utils/date_helper.dart';
 import '../../../widget/app_scaffold.dart';
 import '../../../widget/button/button_view.dart';
 import '../../../widget/container/linear_container_view.dart';
@@ -173,12 +174,16 @@ class _DiscoverTvShowScreenState extends BaseBlocWidget<DiscoverTvShowBloc,
       title: tvShow.originalName,
       overview: tvShow.overview,
       movieRating: tvShow.voteAverage,
-      dateRelease: tvShow.firstAirDate,
+      dateRelease: DateHelper.formatConverter(
+        tvShow.firstAirDate,
+        DateHelper.FORMAT_YYYY_MM_DD,
+        DateHelper.FORMAT_DD_MMM_COMMA_YYYY,
+      ),
       voteCount: tvShow.voteCount,
       placeholder: Drawable.NO_IMAGE,
       errorPlaceholder: Drawable.NO_IMAGE,
       onTap: () {
-        bloc.goToDetailMovie(context, tvShow.id);
+        bloc.goToDetailTvShow(context, tvShow.id);
       },
     );
   }

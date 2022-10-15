@@ -4,7 +4,7 @@ import 'package:themovie_flutter/src/data/local/tv_show_local_source.dart';
 import '../../../core/base/api_state.dart';
 import '../../../data/model/detail_tv_show_content.dart';
 import '../../../data/model/tv_show.dart';
-import '../../../data/remote/tv_show_remote_source.dart';
+import '../../../data/remote/source/tv_show_remote_source.dart';
 import '../../../navigation/tv_show/tv_show_navigation.dart';
 import '../../../usecase/tv_show/get_detail_tv_show_usecase.dart';
 
@@ -53,16 +53,17 @@ class DetailTvShowBloc extends Cubit<DetailTvShowState> {
     final detailTvShow = state.content?.detailTvShow;
     if (detailTvShow != null) {
       final tvShow = TvShow(
-          backdropPath: detailTvShow.backdropPath,
-          id: detailTvShow.id,
-          originalLanguage: detailTvShow.originalLanguage,
-          overview: detailTvShow.overview,
-          posterPath: detailTvShow.posterPath,
-          firstAirDate: detailTvShow.firstAirDate,
-          name: detailTvShow.name,
-          voteAverage: '${detailTvShow.voteAverage}',
-          voteCount: detailTvShow.voteCount,
-          originalName: detailTvShow.originalLanguage);
+        backdropPath: detailTvShow.backdropPath,
+        id: detailTvShow.id,
+        originalLanguage: detailTvShow.originalLanguage,
+        overview: detailTvShow.overview,
+        posterPath: detailTvShow.posterPath,
+        firstAirDate: detailTvShow.firstAirDate,
+        name: detailTvShow.name,
+        voteAverage: '${detailTvShow.voteAverage}',
+        voteCount: detailTvShow.voteCount,
+        originalName: detailTvShow.originalName,
+      );
       if (!state.isAlreadyFavorite) {
         await _localSource.insertTvShow(tvShow);
         emit(state.copyWith(isMovieFavorite: true));

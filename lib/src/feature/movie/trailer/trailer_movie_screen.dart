@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/base/base_cubit_widget.dart';
 import '../../../core/base/api_state.dart';
-import '../../../data/config/url_constant.dart';
+import '../../../data/remote/config/url_constant.dart';
 import '../../../data/model/videos.dart';
 import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';

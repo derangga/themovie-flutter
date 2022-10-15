@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import '../../data/config/failure.dart';
+import '../../data/remote/config/failure.dart';
 import '../../data/model/detail_tv_show_content.dart';
-import '../../data/remote/tv_show_remote_source.dart';
+import '../../data/remote/source/tv_show_remote_source.dart';
 import '../usecase.dart';
 import 'get_cast_and_crew_tv_show_usecase.dart';
 import 'get_similar_tv_show_uasecase.dart';

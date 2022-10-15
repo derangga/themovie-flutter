@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/data/remote/tv_show_remote_source.dart';
-import 'package:themovie_flutter/src/navigation/tv_show/tv_show_navigation.dart';
-import '../../../data/config/failure.dart';
+
+import '../../../data/remote/config/failure.dart';
+import '../../../data/remote/source/tv_show_remote_source.dart';
+import '../../../navigation/tv_show/tv_show_navigation.dart';
 import '../../../utils/bloc_throttle.dart';
 import '../../../data/model/tv_show.dart';
 
@@ -93,7 +94,7 @@ class DiscoverTvShowBloc
     });
   }
 
-  void goToDetailMovie(BuildContext context, int tvShowId) {
+  void goToDetailTvShow(BuildContext context, int tvShowId) {
     _navigation.goToDetailTvShow(context, tvShowId);
   }
 

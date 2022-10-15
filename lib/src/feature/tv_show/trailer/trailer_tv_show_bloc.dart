@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/core/base/api_state.dart';
+import '../../../core/base/api_state.dart';
 import '../../../data/model/videos.dart';
-import '../../../data/remote/tv_show_remote_source.dart';
+import '../../../data/remote/source/tv_show_remote_source.dart';
 import '../../../navigation/video/video_navigation.dart';
 import '../../../usecase/tv_show/get_trailer_tv_show_usecase.dart';
 

@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/base/base_cubit_widget.dart';
 import '../../../core/base/api_state.dart';
-import '../../../data/config/url_constant.dart';
+import '../../../data/remote/config/url_constant.dart';
 import '../../../data/model/movie.dart';
 import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
+import '../../../utils/date_helper.dart';
 import '../../../widget/app_scaffold.dart';
 import '../../../widget/button/button_view.dart';
 import '../../../widget/container/linear_container_view.dart';
@@ -121,7 +122,11 @@ class _TrendingMovieScreennState extends BaseCubitWidget<TrendingMovieBloc,
       title: movie.title,
       overview: movie.overview,
       movieRating: movie.voteAverage,
-      dateRelease: movie.releaseDate,
+      dateRelease: DateHelper.formatConverter(
+        movie.releaseDate,
+        DateHelper.FORMAT_YYYY_MM_DD,
+        DateHelper.FORMAT_DD_MMM_COMMA_YYYY,
+      ),
       voteCount: movie.voteCount,
       placeholder: Drawable.NO_IMAGE,
       errorPlaceholder: Drawable.NO_IMAGE,

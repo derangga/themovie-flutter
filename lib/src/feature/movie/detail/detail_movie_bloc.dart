@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:themovie_flutter/src/data/local/movie_local_source.dart';
-import 'package:themovie_flutter/src/data/model/movie.dart';
-import 'package:themovie_flutter/src/data/remote/movie_remote_source.dart';
-import 'package:themovie_flutter/src/navigation/movie/movie_navigation.dart';
-import 'package:themovie_flutter/src/usecase/movie/get_detail_movie_usecase.dart';
+
 import '../../../core/base/api_state.dart';
+import '../../../data/local/movie_local_source.dart';
 import '../../../data/model/detail_movie_content.dart';
+import '../../../data/model/movie.dart';
+import '../../../data/remote/source/movie_remote_source.dart';
+import '../../../navigation/movie/movie_navigation.dart';
+import '../../../usecase/movie/get_detail_movie_usecase.dart';
 import '../../../utils/extension/string_utils.dart';
 
 part 'detail_movie_state.dart';

@@ -5,6 +5,7 @@ import '../../../core/base/api_state.dart';
 import '../../../data/model/genre.dart';
 import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
+import '../../../utils/date_helper.dart';
 import '../../../widget/app_scaffold.dart';
 import '../../../widget/button/button_view.dart';
 import '../../../widget/container/linear_container_view.dart';
@@ -14,7 +15,7 @@ import '../../../widget/image/image_view.dart';
 import '../../../widget/loading/detail_loading_view.dart';
 import '../../../widget/portrait_content.dart';
 import '../../../widget/text/text_view.dart';
-import '../../../data/config/url_constant.dart';
+import '../../../data/remote/config/url_constant.dart';
 import '../../../data/model/cast_and_crew.dart';
 import '../../../data/model/detail_tv_show_content.dart';
 import '../../../data/model/tv_show.dart';
@@ -143,7 +144,11 @@ class _DetailTvShowScreenState extends BaseCubitWidget<DetailTvShowBloc,
         DraggableDetail(
           isMovieFavorite: isAlreadyFavorite,
           title: detailTvShow?.originalName,
-          releaseDate: detailTvShow?.firstAirDate,
+          releaseDate: DateHelper.formatConverter(
+            detailTvShow?.firstAirDate,
+            DateHelper.FORMAT_YYYY_MM_DD,
+            DateHelper.FORMAT_DD_MMM_COMMA_YYYY,
+          ),
           voteAverage: '${detailTvShow?.voteAverage}',
           genre: genreText(detailTvShow?.genres ?? []),
           overview: detailTvShow?.overview,

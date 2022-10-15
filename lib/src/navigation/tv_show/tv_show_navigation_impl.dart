@@ -4,8 +4,11 @@ import 'package:themovie_flutter/src/navigation/tv_show/tv_show_navigation.dart'
 
 class TvShowNavigationImpl extends TvShowNavigation {
   @override
-  void goToDetailTvShow<T>(BuildContext context, int tvShowId) {
-    Navigator.pushNamed(
+  Future<dynamic> goToDetailTvShow<T>(
+    BuildContext context,
+    int tvShowId,
+  ) async {
+    return await Navigator.pushNamed(
       context,
       RouteApp.DETAIL_TV_SCREEN,
       arguments: tvShowId,
@@ -13,12 +16,12 @@ class TvShowNavigationImpl extends TvShowNavigation {
   }
 
   @override
-  void goToDiscoverTvShow(BuildContext context) {
-    Navigator.pushNamed(context, RouteApp.DISCOVER_TV_SCREEN);
+  Future<dynamic> goToDiscoverTvShow(BuildContext context) async {
+    return await Navigator.pushNamed(context, RouteApp.DISCOVER_TV_SCREEN);
   }
 
   @override
-  void goToTrailerTvShow(BuildContext context, int tvShowId) {
-    Navigator.pushNamed(context, RouteApp.TRAILER_TV_SHOW_SCREEN);
+  Future<dynamic> goToTrailerTvShow(BuildContext context, int tvShowId) async {
+    return await Navigator.pushNamed(context, RouteApp.TRAILER_TV_SHOW_SCREEN);
   }
 }

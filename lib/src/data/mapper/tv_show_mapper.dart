@@ -39,16 +39,16 @@ extension TvShowDTOExtension on TvShowDTO? {
 extension TvShowExtension on TvShow {
   TvShowFavoriteEntityData toEntity() {
     return TvShowFavoriteEntityData(
-      id: id,
-      backdropPath: backdropPath,
-      firstAirDate: firstAirDate,
-      name: name,
-      originalLanguage: originalLanguage,
-      originalName: originalName,
-      overview: overview,
-      posterPath: posterPath,
-      voteAverage: voteAverage,
-      voteCount: voteCount,
+      id: this.id,
+      backdropPath: this.backdropPath,
+      firstAirDate: this.firstAirDate,
+      name: this.name,
+      originalLanguage: this.originalLanguage,
+      originalName: this.originalName,
+      overview: this.overview,
+      posterPath: this.posterPath,
+      voteAverage: this.voteAverage,
+      voteCount: this.voteCount,
     );
   }
 }

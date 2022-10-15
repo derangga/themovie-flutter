@@ -1,12 +1,12 @@
 import 'package:themovie_flutter/src/data/model/tv_show.dart';
 import 'package:themovie_flutter/src/data/model/movie.dart';
-import 'package:themovie_flutter/src/data/config/failure.dart';
+import 'package:themovie_flutter/src/data/remote/config/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:themovie_flutter/src/data/remote/endpoint.dart';
-import 'package:themovie_flutter/src/data/remote/trending_remote_source.dart';
-import '../mapper/movie_mapper.dart';
-import '../mapper/tv_show_mapper.dart';
+import '../../mapper/movie_mapper.dart';
+import '../../mapper/tv_show_mapper.dart';
 import '../service/http_request_service.dart';
+import 'trending_remote_source.dart';
 
 class TrendingRemoteSourceImpl extends TrendingRemoteSource {
   final HttpRequestService service;
