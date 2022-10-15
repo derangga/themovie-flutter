@@ -61,4 +61,19 @@ class TvShow {
     required this.voteAverage,
     required this.voteCount,
   });
+
+  static TvShow empty() {
+    return TvShow(
+      id: 0,
+      name: '',
+      originalName: '',
+      originalLanguage: '',
+      backdropPath: '',
+      posterPath: '',
+      firstAirDate: '',
+      overview: '',
+      voteAverage: '',
+      voteCount: 0,
+    );
+  }
 }

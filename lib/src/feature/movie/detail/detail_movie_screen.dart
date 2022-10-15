@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:themovie_flutter/src/core/base/base_event_state.dart';
 import '../../../core/base/base_bloc_widget.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/cast_and_crew.dart';
@@ -15,6 +16,7 @@ import '../../../widget/image/image_view.dart';
 import '../../../widget/loading/detail_loading_view.dart';
 import '../../../widget/portrait_content.dart';
 import '../../../widget/text/text_view.dart';
+import '../../../utils/extension/string_utils.dart';
 import 'detail_movie_bloc.dart';
 
 class DetailMovieScreen extends StatefulWidget {
@@ -32,12 +34,13 @@ class _DetailMovieScreenState extends BaseBlocWidget<DetailMovieBloc,
 
   @override
   Widget mapStateHandler(DetailMovieState state) {
-    if (state is SuccessGetDetailMovie) {
-      return _detailMovieView(state.content);
-    } else if (state is ErrorGetDetailMovie) {
-      return Container();
-    } else {
-      return DetailLoadingView();
+    switch (state.apiState) {
+      case ApiState.SUCCESS:
+        return _detailMovieView(state.content, state.isMovieFavorite);
+      case ApiState.FAILED:
+        return Container();
+      default:
+        return DetailLoadingView();
     }
   }
 
@@ -56,8 +59,8 @@ class _DetailMovieScreenState extends BaseBlocWidget<DetailMovieBloc,
     );
   }
 
-  Widget _detailMovieView(DetailMovieContent content) {
-    final detailMovie = content.detailMovie;
+  Widget _detailMovieView(DetailMovieContent? content, bool isMovieFavorite) {
+    final detailMovie = content?.detailMovie;
     return Stack(
       children: [
         Positioned(
@@ -79,7 +82,7 @@ class _DetailMovieScreenState extends BaseBlocWidget<DetailMovieBloc,
               },
               blendMode: BlendMode.darken,
               child: CacheImageView(
-                '${UrlConstant.IMAGE_URL}${detailMovie.posterPath}',
+                '${UrlConstant.IMAGE_URL}${detailMovie?.posterPath.orEmpty()}',
                 placeholder: (context, url) =>
                     AssetImageView(path: Drawable.NO_IMAGE),
                 errorPlaceholder: (context, url, error) =>
@@ -104,18 +107,22 @@ class _DetailMovieScreenState extends BaseBlocWidget<DetailMovieBloc,
           ),
         ),
         DraggableDetail(
-          title: detailMovie.originalTitle,
-          releaseDate: detailMovie.releaseDate,
-          voteAverage: '${detailMovie.voteAverage}',
-          genre: genreText(detailMovie.genres),
-          overview: detailMovie.overview,
-          showCast: content.castsMovie.isNotEmpty,
-          castAndCrew: _castAndCrew(content.castsMovie),
-          showSimilarMovie: content.similarMovie.isNotEmpty,
+          isMovieFavorite: isMovieFavorite,
+          title: detailMovie?.originalTitle,
+          releaseDate: detailMovie?.releaseDate,
+          voteAverage: '${detailMovie?.voteAverage}',
+          genre: genreText(detailMovie?.genres ?? []),
+          overview: detailMovie?.overview,
+          showCast: (content?.castsMovie ?? []).isNotEmpty,
+          castAndCrew: _castAndCrew(content?.castsMovie ?? []),
+          showSimilarMovie: (content?.similarMovie ?? []).isNotEmpty,
           similarTitle: 'Similar Movies',
-          similarMovie: _similarMovie(content.similarMovie),
+          similarMovie: _similarMovie(content?.similarMovie ?? []),
           onTrailerPressed: () {
             bloc.goToTrailerScreen(context, widget.movieId);
+          },
+          onFavoritePressed: () {
+            bloc.add(AddOrRemoveFavoriteEvent());
           },
         ),
       ],

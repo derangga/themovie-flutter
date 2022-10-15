@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'genre_dao.dart';
+part of 'movie_favorite_dao.dart';
 
 // **************************************************************************
 // DaoGenerator
 // **************************************************************************
 
-mixin _$GenreDaoMixin on DatabaseAccessor<GenreDb> {
-  $GenreMovieEntityTable get genreMovieEntity =>
-      attachedDatabase.genreMovieEntity;
+mixin _$MovieFavoriteDaoMixin on DatabaseAccessor<AppDatabase> {
+  $MovieFavoriteEntityTable get movieFavoriteEntity =>
+      attachedDatabase.movieFavoriteEntity;
 }

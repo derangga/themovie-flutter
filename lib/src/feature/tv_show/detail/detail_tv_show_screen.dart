@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/base/base_event_state.dart';
 import '../../../data/model/genre.dart';
 import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
@@ -17,6 +18,7 @@ import '../../../data/config/url_constant.dart';
 import '../../../data/model/cast_and_crew.dart';
 import '../../../data/model/detail_tv_show_content.dart';
 import '../../../data/model/tv_show.dart';
+import '../../../utils/extension/string_utils.dart';
 import 'detail_tv_show_bloc.dart';
 
 class DetailTvShowScreen extends StatefulWidget {
@@ -34,12 +36,13 @@ class _DetailTvShowScreenState extends BaseBlocWidget<DetailTvShowBloc,
 
   @override
   Widget mapStateHandler(DetailTvShowState state) {
-    if (state is SuccessGetDetailTvShowState) {
-      return _detailTvView(state.detailTvShowContent);
-    } else if (state is ErrorGetDetailTvShowState) {
-      return errorView();
-    } else {
-      return DetailLoadingView();
+    switch (state.apiState) {
+      case ApiState.SUCCESS:
+        return _detailTvView(state.content, state.isAlreadyFavorite);
+      case ApiState.FAILED:
+        return errorView();
+      default:
+        return DetailLoadingView();
     }
   }
 
@@ -90,8 +93,8 @@ class _DetailTvShowScreenState extends BaseBlocWidget<DetailTvShowBloc,
     );
   }
 
-  Widget _detailTvView(DetailTvShowContent content) {
-    final detailTvShow = content.detailTvShow;
+  Widget _detailTvView(DetailTvShowContent? content, bool isAlreadyFavorite) {
+    final detailTvShow = content?.detailTvShow;
     return Stack(
       children: [
         Positioned(
@@ -113,7 +116,7 @@ class _DetailTvShowScreenState extends BaseBlocWidget<DetailTvShowBloc,
               },
               blendMode: BlendMode.darken,
               child: CacheImageView(
-                '${UrlConstant.IMAGE_URL}${detailTvShow.posterPath}',
+                '${UrlConstant.IMAGE_URL}${detailTvShow?.posterPath.orEmpty()}',
                 placeholder: (context, url) =>
                     AssetImageView(path: Drawable.NO_IMAGE),
                 errorPlaceholder: (context, url, error) =>
@@ -138,18 +141,22 @@ class _DetailTvShowScreenState extends BaseBlocWidget<DetailTvShowBloc,
           ),
         ),
         DraggableDetail(
-          title: detailTvShow.originalName,
-          releaseDate: detailTvShow.firstAirDate,
-          voteAverage: '${detailTvShow.voteAverage}',
-          genre: genreText(detailTvShow.genres),
-          overview: detailTvShow.overview,
-          showCast: content.castsTvShow.isNotEmpty,
-          castAndCrew: _castAndCrew(content.castsTvShow),
+          isMovieFavorite: isAlreadyFavorite,
+          title: detailTvShow?.originalName,
+          releaseDate: detailTvShow?.firstAirDate,
+          voteAverage: '${detailTvShow?.voteAverage}',
+          genre: genreText(detailTvShow?.genres ?? []),
+          overview: detailTvShow?.overview,
+          showCast: (content?.castsTvShow ?? []).isNotEmpty,
+          castAndCrew: _castAndCrew(content?.castsTvShow ?? []),
           similarTitle: 'Similar Tv Show',
-          showSimilarMovie: content.similarTvShow.isNotEmpty,
-          similarMovie: _similarTvShow(content.similarTvShow),
+          showSimilarMovie: (content?.similarTvShow ?? []).isNotEmpty,
+          similarMovie: _similarTvShow(content?.similarTvShow ?? []),
           onTrailerPressed: () {
             bloc.goToTrailerTvShow(context, widget.tvShowId);
+          },
+          onFavoritePressed: () {
+            bloc.add(AddOrRemoveFavoriteEvent());
           },
         )
       ],

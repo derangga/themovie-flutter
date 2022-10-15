@@ -1,7 +1,7 @@
 import 'package:themovie_flutter/src/utils/date_helper.dart';
 
+import '../local/db/app_database.dart';
 import '../wrapper/paging_dto.dart';
-import '../local/db/movie_db.dart';
 import '../model/detail_movie.dart';
 import '../model/movie.dart';
 import 'genre_mapper.dart';
@@ -39,8 +39,8 @@ extension MovieDTOExtension on MovieDTO? {
         voteCount: this?.voteCount ?? 0);
   }
 
-  MovieEntityData toEntity() {
-    return MovieEntityData(
+  MovieFavoriteEntityData toEntity() {
+    return MovieFavoriteEntityData(
       adult: this?.adult ?? false,
       backdropPath: this?.backdropPath ?? '',
       id: this?.id ?? 0,
@@ -58,28 +58,32 @@ extension MovieDTOExtension on MovieDTO? {
   }
 }
 
-extension MovieEntityExtension on MovieEntityData? {
-  Movie toModel() {
-    return Movie(
-        adult: this?.adult ?? false,
-        backdropPath: this?.backdropPath ?? '',
-        id: this?.id ?? 0,
-        originalLanguage: this?.originalLanguage ?? '',
-        originalTitle: this?.originalTitle ?? '',
-        overview: this?.overview ?? '',
-        popularity: this?.popularity ?? 0,
-        posterPath: this?.posterPath ?? '',
-        releaseDate: this?.releaseDate ?? '',
-        title: this?.title ?? '',
-        video: this?.video ?? false,
-        voteAverage: this?.voteAverage ?? '',
-        voteCount: this?.voteCount ?? 0);
+extension MovieFavoriteEntityExtension on MovieFavoriteEntityData? {
+  Movie? toModel() {
+    if (this != null) {
+      return Movie(
+          adult: this?.adult ?? false,
+          backdropPath: this?.backdropPath ?? '',
+          id: this?.id ?? 0,
+          originalLanguage: this?.originalLanguage ?? '',
+          originalTitle: this?.originalTitle ?? '',
+          overview: this?.overview ?? '',
+          popularity: this?.popularity ?? 0,
+          posterPath: this?.posterPath ?? '',
+          releaseDate: this?.releaseDate ?? '',
+          title: this?.title ?? '',
+          video: this?.video ?? false,
+          voteAverage: this?.voteAverage ?? '',
+          voteCount: this?.voteCount ?? 0);
+    } else {
+      return null;
+    }
   }
 }
 
-extension MovieExtension on Movie {
-  MovieEntityData toEntity() {
-    return MovieEntityData(
+extension MovieFavoriteExtension on Movie {
+  MovieFavoriteEntityData toEntity() {
+    return MovieFavoriteEntityData(
       adult: this.adult,
       backdropPath: this.backdropPath,
       id: this.id,

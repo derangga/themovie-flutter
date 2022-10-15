@@ -1,12 +1,15 @@
 import '../model/movie.dart';
-import 'db/movie_db.dart';
 
 abstract class MovieLocalSource {
-  Future insertMovie(MovieEntityData movie);
+  Future<int> insertMovie(Movie movie);
 
-  Future deleteMovie(MovieEntityData movie);
+  Future<int> deleteMovie(Movie movie);
 
-  Future deleteAllMovie();
+  Future<int> deleteAllMovie();
 
   Future<List<Movie>> getAllMovie();
+
+  Future<Movie?> getMovieFavoriteById(int movieId);
+
+  Future<bool> isAlreadyFavorite(int movieId);
 }

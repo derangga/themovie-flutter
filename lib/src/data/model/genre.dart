@@ -1,5 +1,3 @@
-import 'package:moor_flutter/moor_flutter.dart';
-
 typedef ArrayParser<T> = T Function(List<dynamic>? jsonArray);
 typedef Parser<T> = T Function(dynamic json);
 
@@ -53,9 +51,4 @@ class Genre {
     required this.id,
     required this.name,
   });
-}
-
-class GenreMovieEntity extends Table {
-  IntColumn? get id => integer()();
-  TextColumn? get name => text()();
 }

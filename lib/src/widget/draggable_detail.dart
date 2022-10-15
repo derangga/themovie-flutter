@@ -8,7 +8,7 @@ import 'text/text_view.dart';
 class DraggableDetail extends StatelessWidget {
   final String? title, releaseDate, voteAverage, genre, overview, similarTitle;
   final Widget castAndCrew, similarMovie;
-  final bool showCast, showSimilarMovie;
+  final bool showCast, showSimilarMovie, isMovieFavorite;
   final VoidCallback? onTrailerPressed;
   final GestureTapCallback? onFavoritePressed;
 
@@ -23,6 +23,7 @@ class DraggableDetail extends StatelessWidget {
     this.showSimilarMovie = false,
     required this.castAndCrew,
     required this.similarMovie,
+    required this.isMovieFavorite,
     this.onTrailerPressed,
     this.onFavoritePressed,
   });
@@ -187,10 +188,7 @@ class DraggableDetail extends StatelessWidget {
                     textColor: ColorTheme.light_brown,
                   ),
                   SizedBox(width: 8.0),
-                  Icon(
-                    Icons.favorite_border_outlined,
-                    color: ColorTheme.light_brown,
-                  )
+                  favoriteIcon()
                 ],
               ),
             ),
@@ -250,6 +248,20 @@ class DraggableDetail extends StatelessWidget {
       );
     } else {
       return Container();
+    }
+  }
+
+  Widget favoriteIcon() {
+    if (isMovieFavorite) {
+      return Icon(
+        Icons.favorite_rounded,
+        color: ColorTheme.light_brown,
+      );
+    } else {
+      return Icon(
+        Icons.favorite_border_outlined,
+        color: ColorTheme.light_brown,
+      );
     }
   }
 }

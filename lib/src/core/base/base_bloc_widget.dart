@@ -15,6 +15,6 @@ abstract class BaseBlocWidget<B extends BaseBloc, BS extends BlocState,
   void mapStateBlocListener(BS state) {}
 
   void executeUiAfterBuild(FrameCallback frameCallback) {
-    WidgetsBinding.instance?.addPostFrameCallback(frameCallback);
+    WidgetsBinding.instance.addPostFrameCallback(frameCallback);
   }
 }
