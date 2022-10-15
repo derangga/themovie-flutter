@@ -1,22 +1,22 @@
-part of 'trailer_tv_show_bloc.dart';
+part of 'trailer_movie_bloc.dart';
 
-class TrailerTvShowState {
+class TrailerMovieState {
   final List<Video> videos;
   final ApiState apiState;
   final String? errorMessage;
 
-  TrailerTvShowState({
+  TrailerMovieState({
     this.videos = const [],
     this.apiState = ApiState.LOADING,
     this.errorMessage,
   });
 
-  TrailerTvShowState copyWith({
+  TrailerMovieState copyWith({
     List<Video>? videos,
     ApiState? apiState,
     String? errorMessage,
   }) {
-    return TrailerTvShowState(
+    return TrailerMovieState(
       videos: videos ?? this.videos,
       apiState: apiState ?? this.apiState,
       errorMessage: errorMessage ?? this.errorMessage,

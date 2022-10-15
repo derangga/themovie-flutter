@@ -5,15 +5,13 @@ import 'package:themovie_flutter/src/data/model/movie.dart';
 import 'package:themovie_flutter/src/data/remote/movie_remote_source.dart';
 import 'package:themovie_flutter/src/navigation/movie/movie_navigation.dart';
 import 'package:themovie_flutter/src/usecase/movie/get_detail_movie_usecase.dart';
-import '../../../core/base/base_event_state.dart';
-import '../../../data/model/detail_movie.dart';
+import '../../../core/base/api_state.dart';
 import '../../../data/model/detail_movie_content.dart';
-import '../../../core/base/base_bloc.dart';
 import '../../../utils/extension/string_utils.dart';
 
-part 'detail_movie_event_state.dart';
+part 'detail_movie_state.dart';
 
-class DetailMovieBloc extends BaseBloc<DetailMovieEvent, DetailMovieState> {
+class DetailMovieBloc extends Cubit<DetailMovieState> {
   final MovieRemoteSource _remoteSource;
   final MovieLocalSource _localSource;
   final MovieNavigation _movieNavigation;
@@ -22,32 +20,9 @@ class DetailMovieBloc extends BaseBloc<DetailMovieEvent, DetailMovieState> {
     this._remoteSource,
     this._localSource,
     this._movieNavigation,
-  ) : super(DetailMovieState()) {
-    on<DetailMovieEvent>(_mapEventToAction);
-  }
+  ) : super(DetailMovieState());
 
-  Future<void> _mapEventToAction(
-    DetailMovieEvent event,
-    Emitter<DetailMovieState> emit,
-  ) async {
-    if (event is GetDetailMovieEvent) {
-      await _fetchDetailMovie(emit, event.movieId);
-    } else if (event is AddOrRemoveFavoriteEvent) {
-      final detailMovie = state.content?.detailMovie;
-      if (detailMovie != null) {
-        await _addOrRemoveMovieToFavorite(
-          emit,
-          detailMovie,
-          state.isMovieFavorite,
-        );
-      }
-    }
-  }
-
-  Future<void> _fetchDetailMovie(
-    Emitter<DetailMovieState> emit,
-    int movieId,
-  ) async {
+  Future<void> fetchDetailMovie(int movieId) async {
     emit(state.copyWith(apiState: ApiState.LOADING));
 
     final result = await _getDetailMovie(movieId);
@@ -77,32 +52,31 @@ class DetailMovieBloc extends BaseBloc<DetailMovieEvent, DetailMovieState> {
     _movieNavigation.goToDetailMovie(context, movieId);
   }
 
-  Future<void> _addOrRemoveMovieToFavorite(
-    Emitter<DetailMovieState> emit,
-    DetailMovie detailMovie,
-    bool isAlreadyFavorite,
-  ) async {
-    final movie = Movie(
-      adult: detailMovie.adult,
-      backdropPath: detailMovie.backdropPath,
-      id: detailMovie.id,
-      originalLanguage: detailMovie.originalLanguage,
-      originalTitle: detailMovie.originalTitle,
-      overview: detailMovie.overview,
-      popularity: detailMovie.popularity,
-      posterPath: detailMovie.posterPath,
-      releaseDate: detailMovie.releaseDate,
-      title: detailMovie.title,
-      video: detailMovie.video,
-      voteAverage: '${detailMovie.voteAverage}',
-      voteCount: detailMovie.voteCount,
-    );
-    if (!isAlreadyFavorite) {
-      await _localSource.insertMovie(movie);
-      emit(state.copyWith(isMovieFavorite: true));
-    } else {
-      await _localSource.deleteMovie(movie);
-      emit(state.copyWith(isMovieFavorite: false));
+  Future<void> addOrRemoveMovieToFavorite() async {
+    final detailMovie = state.content?.detailMovie;
+    if (detailMovie != null) {
+      final movie = Movie(
+        adult: detailMovie.adult,
+        backdropPath: detailMovie.backdropPath,
+        id: detailMovie.id,
+        originalLanguage: detailMovie.originalLanguage,
+        originalTitle: detailMovie.originalTitle,
+        overview: detailMovie.overview,
+        popularity: detailMovie.popularity,
+        posterPath: detailMovie.posterPath,
+        releaseDate: detailMovie.releaseDate,
+        title: detailMovie.title,
+        video: detailMovie.video,
+        voteAverage: '${detailMovie.voteAverage}',
+        voteCount: detailMovie.voteCount,
+      );
+      if (!state.isMovieFavorite) {
+        await _localSource.insertMovie(movie);
+        emit(state.copyWith(isMovieFavorite: true));
+      } else {
+        await _localSource.deleteMovie(movie);
+        emit(state.copyWith(isMovieFavorite: false));
+      }
     }
   }
 

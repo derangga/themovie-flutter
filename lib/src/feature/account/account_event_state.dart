@@ -1,7 +1,7 @@
 part of './account_bloc.dart';
 
-abstract class AccountEvent extends BlocEvent {}
+abstract class AccountEvent {}
 
-abstract class AccountState extends BlocState {}
+abstract class AccountState {}
 
 class InitialState extends AccountState {}

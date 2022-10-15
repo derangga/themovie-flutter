@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/base/base_multi_bloc_widget.dart';
+import '../../../core/base/api_state.dart';
+import '../../../core/base/base_multi_cubit_widget.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/movie.dart';
 import '../../../resources/color_theme.dart';
@@ -11,8 +12,8 @@ import '../../../widget/custom_widget/movie_see_all_view.dart';
 import '../../../widget/image/asset_image_view.dart';
 import '../../../widget/loading/image_block_loading_view.dart';
 import '../../../widget/text/text_view.dart';
-import '../home_event_state.dart';
 import 'home_discover_movie_bloc.dart';
+import 'home_discover_movie_state.dart';
 
 class HomeDiscoverMovieSection extends StatefulWidget {
   final onDiscoverMovieSectionError;
@@ -26,37 +27,30 @@ class HomeDiscoverMovieSection extends StatefulWidget {
       _HomeDiscoverMovieSectionState();
 }
 
-class _HomeDiscoverMovieSectionState extends BaseMultiBlocWidget<
-    HomeDiscoverMovieBloc, HomeState, HomeDiscoverMovieSection> {
-  void initState() {
-    super.initState();
-    bloc.add(GetDiscoverMovieEvent());
-  }
-
+class _HomeDiscoverMovieSectionState extends BaseMultiCubitWidget<
+    HomeDiscoverMovieBloc, HomeDiscoverMovieState, HomeDiscoverMovieSection> {
   @override
-  Widget mapStateHandler(HomeState state) {
-    if (state is SuccessGetMovieState) {
-      return createUpcomingMovies(state.movies);
-    } else if (state is FailedGetMovieState) {
-      widget.onDiscoverMovieSectionError();
-      return createLoading();
-    } else {
-      return createLoading();
+  Widget mapStateHandler(HomeDiscoverMovieState state) {
+    switch (state.apiState) {
+      case ApiState.SUCCESS:
+        return createUpcomingMovies(state.movies);
+      case ApiState.FAILED:
+        widget.onDiscoverMovieSectionError();
+        return Container();
+      default:
+        return createLoading();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeDiscoverMovieBloc, HomeState>(
-      builder: (context, state) => mapStateHandler(state),
+    return BlocProvider.value(
+      value: bloc..fetchDiscoverMovie(),
+      child: BlocBuilder<HomeDiscoverMovieBloc, HomeDiscoverMovieState>(
+        builder: (context, state) => mapStateHandler(state),
+      ),
     );
   }
-
-  // @override
-  // void dispose() {
-  //   bloc.add(InitialEvent());
-  //   super.dispose();
-  // }
 
   Widget createUpcomingMovies(List<Movie> movies) {
     return Column(

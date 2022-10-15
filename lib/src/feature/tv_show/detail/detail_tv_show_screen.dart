@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../core/base/base_event_state.dart';
+import '../../../core/base/base_cubit_widget.dart';
+import '../../../core/base/api_state.dart';
 import '../../../data/model/genre.dart';
 import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
@@ -13,7 +14,6 @@ import '../../../widget/image/image_view.dart';
 import '../../../widget/loading/detail_loading_view.dart';
 import '../../../widget/portrait_content.dart';
 import '../../../widget/text/text_view.dart';
-import '../../../core/base/base_bloc_widget.dart';
 import '../../../data/config/url_constant.dart';
 import '../../../data/model/cast_and_crew.dart';
 import '../../../data/model/detail_tv_show_content.dart';
@@ -28,7 +28,7 @@ class DetailTvShowScreen extends StatefulWidget {
   _DetailTvShowScreenState createState() => _DetailTvShowScreenState();
 }
 
-class _DetailTvShowScreenState extends BaseBlocWidget<DetailTvShowBloc,
+class _DetailTvShowScreenState extends BaseCubitWidget<DetailTvShowBloc,
     DetailTvShowState, DetailTvShowScreen> {
   late Size _size;
   Color gradientStart = Colors.transparent;
@@ -51,7 +51,7 @@ class _DetailTvShowScreenState extends BaseBlocWidget<DetailTvShowBloc,
     _size = MediaQuery.of(context).size;
     return SafeArea(
       child: BlocProvider(
-        create: (context) => bloc..add(GetDetailTvShowEvent(widget.tvShowId)),
+        create: (context) => bloc..fetchDetailTvShow(widget.tvShowId),
         child: AppScaffold(
           body: BlocBuilder<DetailTvShowBloc, DetailTvShowState>(
             builder: (ctx, state) => mapStateHandler(state),
@@ -85,7 +85,7 @@ class _DetailTvShowScreenState extends BaseBlocWidget<DetailTvShowBloc,
             ),
             color: Colors.redAccent,
             onPressed: () {
-              bloc.add(GetDetailTvShowEvent(widget.tvShowId));
+              bloc.fetchDetailTvShow(widget.tvShowId);
             },
           ),
         ],
@@ -156,7 +156,7 @@ class _DetailTvShowScreenState extends BaseBlocWidget<DetailTvShowBloc,
             bloc.goToTrailerTvShow(context, widget.tvShowId);
           },
           onFavoritePressed: () {
-            bloc.add(AddOrRemoveFavoriteEvent());
+            bloc.addOrRemoveMovieToFavorite();
           },
         )
       ],

@@ -1,15 +1,6 @@
 part of 'detail_tv_show_bloc.dart';
 
-abstract class DetailTvShowEvent extends BlocEvent {}
-
-class GetDetailTvShowEvent extends DetailTvShowEvent {
-  final tvShowId;
-  GetDetailTvShowEvent(this.tvShowId);
-}
-
-class AddOrRemoveFavoriteEvent extends DetailTvShowEvent {}
-
-class DetailTvShowState extends BlocState {
+class DetailTvShowState {
   final DetailTvShowContent? content;
   final bool isAlreadyFavorite;
   final ApiState apiState;
@@ -23,10 +14,10 @@ class DetailTvShowState extends BlocState {
   });
 
   DetailTvShowState copyWith({
-    content,
-    isMovieFavorite,
-    apiState,
-    errorMessage,
+    DetailTvShowContent? content,
+    bool? isMovieFavorite,
+    ApiState? apiState,
+    String? errorMessage,
   }) {
     return DetailTvShowState(
       content: content ?? this.content,

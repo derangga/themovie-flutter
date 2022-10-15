@@ -5,14 +5,12 @@ import 'package:themovie_flutter/src/data/remote/tv_show_remote_source.dart';
 import 'package:themovie_flutter/src/navigation/tv_show/tv_show_navigation.dart';
 import '../../../data/config/failure.dart';
 import '../../../utils/bloc_throttle.dart';
-import '../../../core/base/base_bloc.dart';
-import '../../../core/base/base_event_state.dart';
 import '../../../data/model/tv_show.dart';
 
 part 'discover_tv_show_event_state.dart';
 
 class DiscoverTvShowBloc
-    extends BaseBloc<DiscoverTvShowEvent, DiscoverTvShowState> {
+    extends Bloc<DiscoverTvShowEvent, DiscoverTvShowState> {
   final TvShowRemoteSource _remoteSource;
   final TvShowNavigation _navigation;
   int _page = 1;

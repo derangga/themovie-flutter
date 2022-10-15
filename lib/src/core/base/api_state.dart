@@ -1,0 +1,1 @@
+enum ApiState { LOADING, SUCCESS, FAILED }
