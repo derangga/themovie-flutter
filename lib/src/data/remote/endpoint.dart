@@ -17,4 +17,6 @@ class Endpoint {
   static const TRAILER_TV_SHOW = 'tv/$TV_ID/videos';
   static const TRENDING_MOVIE = 'trending/movie/day';
   static const TRENDING_TV_SHOW = 'trending/tv/day';
+  static const SEARCH_MOVIE = 'search/movie';
+  static const SEARCH_TVSHOW = 'search/tv';
 }

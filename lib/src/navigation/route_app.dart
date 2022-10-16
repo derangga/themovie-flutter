@@ -11,4 +11,5 @@ class RouteApp {
   static const TRAILER_TV_SHOW_SCREEN = '/trailer_tv';
   static const TRAILER_MOVIE_SCREEN = '/trailer_movie';
   static const VIDEO_PLAYER_SCREEN = '/video_player';
+  static const SEARCH_SUGGESTION = '/search_suggestion';
 }

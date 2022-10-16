@@ -14,6 +14,8 @@ import '../data/remote/config/loging_interceptor.dart';
 import '../data/remote/service/http_request_service.dart';
 import '../data/remote/source/movie_remote_source.dart';
 import '../data/remote/source/movie_remote_source_impl.dart';
+import '../data/remote/source/search_remote_source.dart';
+import '../data/remote/source/search_remote_source_impl.dart';
 import '../data/remote/source/trending_remote_source.dart';
 import '../data/remote/source/trending_remote_source_impl.dart';
 import '../data/remote/source/tv_show_remote_source.dart';
@@ -29,11 +31,15 @@ import '../feature/movie/discover/discover_movie_bloc.dart';
 import '../feature/movie/trailer/trailer_movie_bloc.dart';
 import '../feature/movie/trending/trending_movie_bloc.dart';
 import '../feature/movie/upcoming/upcoming_movie_bloc.dart';
+import '../feature/search/search_bloc.dart';
+import '../feature/search/search_suggestion_bloc.dart';
 import '../feature/tv_show/detail/detail_tv_show_bloc.dart';
 import '../feature/tv_show/discover/discover_tv_show_bloc.dart';
 import '../feature/tv_show/trailer/trailer_tv_show_bloc.dart';
 import '../navigation/movie/movie_navigation.dart';
 import '../navigation/movie/movie_navigation_impl.dart';
+import '../navigation/search/search_navigation.dart';
+import '../navigation/search/search_navigation_impl.dart';
 import '../navigation/tv_show/tv_show_navigation.dart';
 import '../navigation/tv_show/tv_show_navigation_impl.dart';
 import '../navigation/video/video_navigation.dart';
@@ -77,11 +83,15 @@ class Injection {
     getIt.registerFactory<TrendingRemoteSource>(
       () => TrendingRemoteSourceImpl(getIt()),
     );
+    getIt.registerFactory<SearchRemoteSource>(
+      () => SearchRemoteSourceImpl(getIt()),
+    );
 
     /// navigation
     getIt.registerFactory<MovieNavigation>(() => MovieNavigationImpl());
     getIt.registerFactory<TvShowNavigation>(() => TvShowNavigationImpl());
     getIt.registerFactory<VideoNavigation>(() => VideoNavigationImpl());
+    getIt.registerFactory<SearchNavigation>(() => SearchNavigationImpl());
 
     /// bloc
     getIt.registerFactory<DiscoverMovieBloc>(
@@ -133,6 +143,12 @@ class Injection {
     );
     getIt.registerFactory<FavoriteBloc>(
       () => FavoriteBloc(getIt(), getIt(), getIt(), getIt()),
+    );
+    getIt.registerFactory<SearchBloc>(
+      () => SearchBloc(getIt(), getIt(), getIt(), getIt()),
+    );
+    getIt.registerFactory<SearchSuggestionBloc>(
+      () => SearchSuggestionBloc(getIt()),
     );
   }
 }
