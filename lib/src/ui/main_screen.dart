@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
-import 'package:themovie_flutter/src/feature/account/account_screen.dart';
 import 'package:themovie_flutter/src/feature/favorite/favorite_screen.dart';
 import 'package:themovie_flutter/src/feature/home/home_screen.dart';
 import 'package:themovie_flutter/src/feature/search/search_screen.dart';
@@ -54,12 +53,13 @@ class _MainScreenState extends State<MainScreen> {
         HomeScreen(),
         SearchScreen(),
         FavoriteScreen(),
-        AccountScreen(),
       ];
 
   void _onMenuTapped(int index) {
-    setState(() {
-      _selectedScreen = index;
-    });
+    if (_selectedScreen != index) {
+      setState(() {
+        _selectedScreen = index;
+      });
+    }
   }
 }

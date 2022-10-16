@@ -7,6 +7,7 @@ import 'package:themovie_flutter/src/feature/video/video_player_screen.dart';
 import 'package:themovie_flutter/src/navigation/screen_args/video_player_arguments.dart';
 import '../feature/movie/detail/detail_movie_screen.dart';
 import '../feature/movie/discover/discover_movie_screen.dart';
+import '../feature/search/search_suggestion_screen.dart';
 import '../feature/tv_show/detail/detail_tv_show_screen.dart';
 import '../feature/tv_show/discover/discover_tv_show_screen.dart';
 import '../navigation/route_app.dart';
@@ -70,6 +71,11 @@ class NavigationApp {
             settings.arguments as VideoPlayerArguments;
         return MaterialPageRoute(
           builder: (_) => VideoPlayerScreen(videoKey),
+        );
+      case RouteApp.SEARCH_SUGGESTION:
+        final searchType = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: ((_) => SearchSuggestionScreen(searchType)),
         );
 
       default:

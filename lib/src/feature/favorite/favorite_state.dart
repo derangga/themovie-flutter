@@ -13,11 +13,12 @@ class FavoriteState {
     this.showBotomSheet = false,
   });
 
-  FavoriteState copyWith(
-      {List<Movie>? movies,
-      List<TvShow>? tvShows,
-      FavoriteType? favoriteType,
-      bool? showBotomSheet}) {
+  FavoriteState copyWith({
+    List<Movie>? movies,
+    List<TvShow>? tvShows,
+    FavoriteType? favoriteType,
+    bool? showBotomSheet,
+  }) {
     return FavoriteState(
       movies: movies ?? this.movies,
       tvShows: tvShows ?? this.tvShows,
