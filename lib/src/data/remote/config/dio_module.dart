@@ -1,12 +1,11 @@
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DioModule with DioMixin implements Dio {
   DioModule(
     BaseOptions setup,
     Interceptor interceptor,
-    DefaultHttpClientAdapter adapter,
+    HttpClientAdapter adapter,
   ) {
     options = setup;
     interceptors.add(interceptor);
@@ -17,10 +16,10 @@ class DioModule with DioMixin implements Dio {
 class DioOptions extends BaseOptions {
   DioOptions()
       : super(
-          baseUrl: "${FlutterConfig.get('API_GATWAY')}",
+          baseUrl: "${dotenv.get('API_GATWAY')}",
           contentType: Headers.jsonContentType,
-          connectTimeout: 60000,
-          sendTimeout: 60000,
-          receiveTimeout: 60000,
+          connectTimeout: Duration(milliseconds: 60000),
+          sendTimeout: Duration(milliseconds: 60000),
+          receiveTimeout: Duration(milliseconds: 60000),
         );
 }

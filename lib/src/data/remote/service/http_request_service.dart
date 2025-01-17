@@ -1,13 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../config/failure.dart';
 
 typedef ResponseConverter<T> = T Function(dynamic response);
 
 class HttpRequestService {
   final Dio _dio;
-  final String? token = FlutterConfig.get('TMDB_SECRET_KEY');
+  // final String? token = FlutterConfig.get('TMDB_SECRET_KEY');
+  final String? token = dotenv.get('TMDB_SECRET_KEY');
 
   HttpRequestService(this._dio);
 
@@ -65,10 +66,10 @@ class HttpRequestService {
       var response = await call;
       var transform = converter(response.data);
       return Right(transform);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return Left(
         Failure(
-            dioError: e.type,
+            dioError: e,
             code: e.response?.statusCode,
             errorBody: e.response?.data),
       );

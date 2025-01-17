@@ -2,10 +2,7 @@
 
 part of 'movie_favorite_dao.dart';
 
-// **************************************************************************
-// DaoGenerator
-// **************************************************************************
-
+// ignore_for_file: type=lint
 mixin _$MovieFavoriteDaoMixin on DatabaseAccessor<AppDatabase> {
   $MovieFavoriteEntityTable get movieFavoriteEntity =>
       attachedDatabase.movieFavoriteEntity;

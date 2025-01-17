@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:themovie_flutter/src/feature/account/account_screen.dart';
 import 'package:themovie_flutter/src/resources/color_theme.dart';
 import 'package:themovie_flutter/src/feature/favorite/favorite_screen.dart';
 import 'package:themovie_flutter/src/feature/home/home_screen.dart';
@@ -49,11 +50,8 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  List<Widget> get listOfScreen => <Widget>[
-        HomeScreen(),
-        SearchScreen(),
-        FavoriteScreen(),
-      ];
+  List<Widget> get listOfScreen =>
+      <Widget>[HomeScreen(), SearchScreen(), FavoriteScreen(), AccountScreen()];
 
   void _onMenuTapped(int index) {
     if (_selectedScreen != index) {

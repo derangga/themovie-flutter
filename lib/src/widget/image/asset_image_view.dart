@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AssetImageView extends StatelessWidget {
-  final BorderRadius? rounded;
+  final BorderRadiusGeometry rounded;
   final String path;
   final double? width, height;
   final BoxFit? fit;

@@ -1,6 +1,6 @@
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:themovie_flutter/src/feature/video/video_player_bloc.dart';
 
 import '../data/local/db/app_database.dart';
 import '../data/local/db/movie_favorite_dao.dart';
@@ -52,8 +52,7 @@ class Injection {
     /// network setup
     getIt.registerSingleton<BaseOptions>(DioOptions());
     getIt.registerSingleton<Interceptor>(LoggingInterceptor());
-    getIt.registerSingleton<DefaultHttpClientAdapter>(
-        DefaultHttpClientAdapter());
+    getIt.registerSingleton<HttpClientAdapter>(HttpClientAdapter());
     getIt.registerSingleton<Dio>(DioModule(
       getIt(),
       getIt(),
@@ -150,5 +149,6 @@ class Injection {
     getIt.registerFactory<SearchSuggestionBloc>(
       () => SearchSuggestionBloc(getIt()),
     );
+    getIt.registerFactory<VideoPlayerBloc>(() => VideoPlayerBloc());
   }
 }
