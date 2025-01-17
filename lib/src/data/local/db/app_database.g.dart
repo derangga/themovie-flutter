@@ -2,11 +2,254 @@
 
 part of 'app_database.dart';
 
-// **************************************************************************
-// DriftDatabaseGenerator
-// **************************************************************************
-
 // ignore_for_file: type=lint
+class $MovieFavoriteEntityTable extends MovieFavoriteEntity
+    with TableInfo<$MovieFavoriteEntityTable, MovieFavoriteEntityData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MovieFavoriteEntityTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _adultMeta = const VerificationMeta('adult');
+  @override
+  late final GeneratedColumn<bool> adult = GeneratedColumn<bool>(
+      'adult', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("adult" IN (0, 1))'));
+  static const VerificationMeta _backdropPathMeta =
+      const VerificationMeta('backdropPath');
+  @override
+  late final GeneratedColumn<String> backdropPath = GeneratedColumn<String>(
+      'backdrop_path', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _originalLanguageMeta =
+      const VerificationMeta('originalLanguage');
+  @override
+  late final GeneratedColumn<String> originalLanguage = GeneratedColumn<String>(
+      'original_language', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _originalTitleMeta =
+      const VerificationMeta('originalTitle');
+  @override
+  late final GeneratedColumn<String> originalTitle = GeneratedColumn<String>(
+      'original_title', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _overviewMeta =
+      const VerificationMeta('overview');
+  @override
+  late final GeneratedColumn<String> overview = GeneratedColumn<String>(
+      'overview', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _popularityMeta =
+      const VerificationMeta('popularity');
+  @override
+  late final GeneratedColumn<double> popularity = GeneratedColumn<double>(
+      'popularity', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _posterPathMeta =
+      const VerificationMeta('posterPath');
+  @override
+  late final GeneratedColumn<String> posterPath = GeneratedColumn<String>(
+      'poster_path', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _releaseDateMeta =
+      const VerificationMeta('releaseDate');
+  @override
+  late final GeneratedColumn<String> releaseDate = GeneratedColumn<String>(
+      'release_date', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+      'title', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _videoMeta = const VerificationMeta('video');
+  @override
+  late final GeneratedColumn<bool> video = GeneratedColumn<bool>(
+      'video', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("video" IN (0, 1))'));
+  static const VerificationMeta _voteAverageMeta =
+      const VerificationMeta('voteAverage');
+  @override
+  late final GeneratedColumn<String> voteAverage = GeneratedColumn<String>(
+      'vote_average', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _voteCountMeta =
+      const VerificationMeta('voteCount');
+  @override
+  late final GeneratedColumn<int> voteCount = GeneratedColumn<int>(
+      'vote_count', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        adult,
+        backdropPath,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        title,
+        video,
+        voteAverage,
+        voteCount
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'movie_favorite_entity';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<MovieFavoriteEntityData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('adult')) {
+      context.handle(
+          _adultMeta, adult.isAcceptableOrUnknown(data['adult']!, _adultMeta));
+    } else if (isInserting) {
+      context.missing(_adultMeta);
+    }
+    if (data.containsKey('backdrop_path')) {
+      context.handle(
+          _backdropPathMeta,
+          backdropPath.isAcceptableOrUnknown(
+              data['backdrop_path']!, _backdropPathMeta));
+    } else if (isInserting) {
+      context.missing(_backdropPathMeta);
+    }
+    if (data.containsKey('original_language')) {
+      context.handle(
+          _originalLanguageMeta,
+          originalLanguage.isAcceptableOrUnknown(
+              data['original_language']!, _originalLanguageMeta));
+    } else if (isInserting) {
+      context.missing(_originalLanguageMeta);
+    }
+    if (data.containsKey('original_title')) {
+      context.handle(
+          _originalTitleMeta,
+          originalTitle.isAcceptableOrUnknown(
+              data['original_title']!, _originalTitleMeta));
+    } else if (isInserting) {
+      context.missing(_originalTitleMeta);
+    }
+    if (data.containsKey('overview')) {
+      context.handle(_overviewMeta,
+          overview.isAcceptableOrUnknown(data['overview']!, _overviewMeta));
+    } else if (isInserting) {
+      context.missing(_overviewMeta);
+    }
+    if (data.containsKey('popularity')) {
+      context.handle(
+          _popularityMeta,
+          popularity.isAcceptableOrUnknown(
+              data['popularity']!, _popularityMeta));
+    } else if (isInserting) {
+      context.missing(_popularityMeta);
+    }
+    if (data.containsKey('poster_path')) {
+      context.handle(
+          _posterPathMeta,
+          posterPath.isAcceptableOrUnknown(
+              data['poster_path']!, _posterPathMeta));
+    } else if (isInserting) {
+      context.missing(_posterPathMeta);
+    }
+    if (data.containsKey('release_date')) {
+      context.handle(
+          _releaseDateMeta,
+          releaseDate.isAcceptableOrUnknown(
+              data['release_date']!, _releaseDateMeta));
+    } else if (isInserting) {
+      context.missing(_releaseDateMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('video')) {
+      context.handle(
+          _videoMeta, video.isAcceptableOrUnknown(data['video']!, _videoMeta));
+    } else if (isInserting) {
+      context.missing(_videoMeta);
+    }
+    if (data.containsKey('vote_average')) {
+      context.handle(
+          _voteAverageMeta,
+          voteAverage.isAcceptableOrUnknown(
+              data['vote_average']!, _voteAverageMeta));
+    } else if (isInserting) {
+      context.missing(_voteAverageMeta);
+    }
+    if (data.containsKey('vote_count')) {
+      context.handle(_voteCountMeta,
+          voteCount.isAcceptableOrUnknown(data['vote_count']!, _voteCountMeta));
+    } else if (isInserting) {
+      context.missing(_voteCountMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MovieFavoriteEntityData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MovieFavoriteEntityData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      adult: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}adult'])!,
+      backdropPath: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}backdrop_path'])!,
+      originalLanguage: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}original_language'])!,
+      originalTitle: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}original_title'])!,
+      overview: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}overview'])!,
+      popularity: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}popularity'])!,
+      posterPath: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}poster_path'])!,
+      releaseDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}release_date'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      video: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}video'])!,
+      voteAverage: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}vote_average'])!,
+      voteCount: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}vote_count'])!,
+    );
+  }
+
+  @override
+  $MovieFavoriteEntityTable createAlias(String alias) {
+    return $MovieFavoriteEntityTable(attachedDatabase, alias);
+  }
+}
+
 class MovieFavoriteEntityData extends DataClass
     implements Insertable<MovieFavoriteEntityData> {
   final int id;
@@ -141,6 +384,34 @@ class MovieFavoriteEntityData extends DataClass
         voteAverage: voteAverage ?? this.voteAverage,
         voteCount: voteCount ?? this.voteCount,
       );
+  MovieFavoriteEntityData copyWithCompanion(MovieFavoriteEntityCompanion data) {
+    return MovieFavoriteEntityData(
+      id: data.id.present ? data.id.value : this.id,
+      adult: data.adult.present ? data.adult.value : this.adult,
+      backdropPath: data.backdropPath.present
+          ? data.backdropPath.value
+          : this.backdropPath,
+      originalLanguage: data.originalLanguage.present
+          ? data.originalLanguage.value
+          : this.originalLanguage,
+      originalTitle: data.originalTitle.present
+          ? data.originalTitle.value
+          : this.originalTitle,
+      overview: data.overview.present ? data.overview.value : this.overview,
+      popularity:
+          data.popularity.present ? data.popularity.value : this.popularity,
+      posterPath:
+          data.posterPath.present ? data.posterPath.value : this.posterPath,
+      releaseDate:
+          data.releaseDate.present ? data.releaseDate.value : this.releaseDate,
+      title: data.title.present ? data.title.value : this.title,
+      video: data.video.present ? data.video.value : this.video,
+      voteAverage:
+          data.voteAverage.present ? data.voteAverage.value : this.voteAverage,
+      voteCount: data.voteCount.present ? data.voteCount.value : this.voteCount,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('MovieFavoriteEntityData(')
@@ -380,82 +651,66 @@ class MovieFavoriteEntityCompanion
   }
 }
 
-class $MovieFavoriteEntityTable extends MovieFavoriteEntity
-    with TableInfo<$MovieFavoriteEntityTable, MovieFavoriteEntityData> {
+class $TvShowFavoriteEntityTable extends TvShowFavoriteEntity
+    with TableInfo<$TvShowFavoriteEntityTable, TvShowFavoriteEntityData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $MovieFavoriteEntityTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
+  $TvShowFavoriteEntityTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: false);
-  final VerificationMeta _adultMeta = const VerificationMeta('adult');
-  @override
-  late final GeneratedColumn<bool> adult = GeneratedColumn<bool>(
-      'adult', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: 'CHECK (adult IN (0, 1))');
-  final VerificationMeta _backdropPathMeta =
+  static const VerificationMeta _backdropPathMeta =
       const VerificationMeta('backdropPath');
   @override
   late final GeneratedColumn<String> backdropPath = GeneratedColumn<String>(
       'backdrop_path', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _originalLanguageMeta =
+  static const VerificationMeta _firstAirDateMeta =
+      const VerificationMeta('firstAirDate');
+  @override
+  late final GeneratedColumn<String> firstAirDate = GeneratedColumn<String>(
+      'first_air_date', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _originalLanguageMeta =
       const VerificationMeta('originalLanguage');
   @override
   late final GeneratedColumn<String> originalLanguage = GeneratedColumn<String>(
       'original_language', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _originalTitleMeta =
-      const VerificationMeta('originalTitle');
+  static const VerificationMeta _originalNameMeta =
+      const VerificationMeta('originalName');
   @override
-  late final GeneratedColumn<String> originalTitle = GeneratedColumn<String>(
-      'original_title', aliasedName, false,
+  late final GeneratedColumn<String> originalName = GeneratedColumn<String>(
+      'original_name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _overviewMeta = const VerificationMeta('overview');
+  static const VerificationMeta _overviewMeta =
+      const VerificationMeta('overview');
   @override
   late final GeneratedColumn<String> overview = GeneratedColumn<String>(
       'overview', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _popularityMeta = const VerificationMeta('popularity');
-  @override
-  late final GeneratedColumn<double> popularity = GeneratedColumn<double>(
-      'popularity', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
-  final VerificationMeta _posterPathMeta = const VerificationMeta('posterPath');
+  static const VerificationMeta _posterPathMeta =
+      const VerificationMeta('posterPath');
   @override
   late final GeneratedColumn<String> posterPath = GeneratedColumn<String>(
       'poster_path', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _releaseDateMeta =
-      const VerificationMeta('releaseDate');
-  @override
-  late final GeneratedColumn<String> releaseDate = GeneratedColumn<String>(
-      'release_date', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _titleMeta = const VerificationMeta('title');
-  @override
-  late final GeneratedColumn<String> title = GeneratedColumn<String>(
-      'title', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _videoMeta = const VerificationMeta('video');
-  @override
-  late final GeneratedColumn<bool> video = GeneratedColumn<bool>(
-      'video', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: true,
-      defaultConstraints: 'CHECK (video IN (0, 1))');
-  final VerificationMeta _voteAverageMeta =
+  static const VerificationMeta _voteAverageMeta =
       const VerificationMeta('voteAverage');
   @override
   late final GeneratedColumn<String> voteAverage = GeneratedColumn<String>(
       'vote_average', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _voteCountMeta = const VerificationMeta('voteCount');
+  static const VerificationMeta _voteCountMeta =
+      const VerificationMeta('voteCount');
   @override
   late final GeneratedColumn<int> voteCount = GeneratedColumn<int>(
       'vote_count', aliasedName, false,
@@ -463,37 +718,29 @@ class $MovieFavoriteEntityTable extends MovieFavoriteEntity
   @override
   List<GeneratedColumn> get $columns => [
         id,
-        adult,
         backdropPath,
+        firstAirDate,
+        name,
         originalLanguage,
-        originalTitle,
+        originalName,
         overview,
-        popularity,
         posterPath,
-        releaseDate,
-        title,
-        video,
         voteAverage,
         voteCount
       ];
   @override
-  String get aliasedName => _alias ?? 'movie_favorite_entity';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 'movie_favorite_entity';
+  String get actualTableName => $name;
+  static const String $name = 'tv_show_favorite_entity';
   @override
   VerificationContext validateIntegrity(
-      Insertable<MovieFavoriteEntityData> instance,
+      Insertable<TvShowFavoriteEntityData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('adult')) {
-      context.handle(
-          _adultMeta, adult.isAcceptableOrUnknown(data['adult']!, _adultMeta));
-    } else if (isInserting) {
-      context.missing(_adultMeta);
     }
     if (data.containsKey('backdrop_path')) {
       context.handle(
@@ -503,6 +750,20 @@ class $MovieFavoriteEntityTable extends MovieFavoriteEntity
     } else if (isInserting) {
       context.missing(_backdropPathMeta);
     }
+    if (data.containsKey('first_air_date')) {
+      context.handle(
+          _firstAirDateMeta,
+          firstAirDate.isAcceptableOrUnknown(
+              data['first_air_date']!, _firstAirDateMeta));
+    } else if (isInserting) {
+      context.missing(_firstAirDateMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
     if (data.containsKey('original_language')) {
       context.handle(
           _originalLanguageMeta,
@@ -511,27 +772,19 @@ class $MovieFavoriteEntityTable extends MovieFavoriteEntity
     } else if (isInserting) {
       context.missing(_originalLanguageMeta);
     }
-    if (data.containsKey('original_title')) {
+    if (data.containsKey('original_name')) {
       context.handle(
-          _originalTitleMeta,
-          originalTitle.isAcceptableOrUnknown(
-              data['original_title']!, _originalTitleMeta));
+          _originalNameMeta,
+          originalName.isAcceptableOrUnknown(
+              data['original_name']!, _originalNameMeta));
     } else if (isInserting) {
-      context.missing(_originalTitleMeta);
+      context.missing(_originalNameMeta);
     }
     if (data.containsKey('overview')) {
       context.handle(_overviewMeta,
           overview.isAcceptableOrUnknown(data['overview']!, _overviewMeta));
     } else if (isInserting) {
       context.missing(_overviewMeta);
-    }
-    if (data.containsKey('popularity')) {
-      context.handle(
-          _popularityMeta,
-          popularity.isAcceptableOrUnknown(
-              data['popularity']!, _popularityMeta));
-    } else if (isInserting) {
-      context.missing(_popularityMeta);
     }
     if (data.containsKey('poster_path')) {
       context.handle(
@@ -540,26 +793,6 @@ class $MovieFavoriteEntityTable extends MovieFavoriteEntity
               data['poster_path']!, _posterPathMeta));
     } else if (isInserting) {
       context.missing(_posterPathMeta);
-    }
-    if (data.containsKey('release_date')) {
-      context.handle(
-          _releaseDateMeta,
-          releaseDate.isAcceptableOrUnknown(
-              data['release_date']!, _releaseDateMeta));
-    } else if (isInserting) {
-      context.missing(_releaseDateMeta);
-    }
-    if (data.containsKey('title')) {
-      context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
-    } else if (isInserting) {
-      context.missing(_titleMeta);
-    }
-    if (data.containsKey('video')) {
-      context.handle(
-          _videoMeta, video.isAcceptableOrUnknown(data['video']!, _videoMeta));
-    } else if (isInserting) {
-      context.missing(_videoMeta);
     }
     if (data.containsKey('vote_average')) {
       context.handle(
@@ -581,42 +814,36 @@ class $MovieFavoriteEntityTable extends MovieFavoriteEntity
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  MovieFavoriteEntityData map(Map<String, dynamic> data,
+  TvShowFavoriteEntityData map(Map<String, dynamic> data,
       {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MovieFavoriteEntityData(
-      id: attachedDatabase.options.types
+    return TvShowFavoriteEntityData(
+      id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      adult: attachedDatabase.options.types
-          .read(DriftSqlType.bool, data['${effectivePrefix}adult'])!,
-      backdropPath: attachedDatabase.options.types
+      backdropPath: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}backdrop_path'])!,
-      originalLanguage: attachedDatabase.options.types.read(
+      firstAirDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}first_air_date'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      originalLanguage: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}original_language'])!,
-      originalTitle: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}original_title'])!,
-      overview: attachedDatabase.options.types
+      originalName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}original_name'])!,
+      overview: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}overview'])!,
-      popularity: attachedDatabase.options.types
-          .read(DriftSqlType.double, data['${effectivePrefix}popularity'])!,
-      posterPath: attachedDatabase.options.types
+      posterPath: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}poster_path'])!,
-      releaseDate: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}release_date'])!,
-      title: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
-      video: attachedDatabase.options.types
-          .read(DriftSqlType.bool, data['${effectivePrefix}video'])!,
-      voteAverage: attachedDatabase.options.types
+      voteAverage: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}vote_average'])!,
-      voteCount: attachedDatabase.options.types
+      voteCount: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}vote_count'])!,
     );
   }
 
   @override
-  $MovieFavoriteEntityTable createAlias(String alias) {
-    return $MovieFavoriteEntityTable(attachedDatabase, alias);
+  $TvShowFavoriteEntityTable createAlias(String alias) {
+    return $TvShowFavoriteEntityTable(attachedDatabase, alias);
   }
 }
 
@@ -730,6 +957,32 @@ class TvShowFavoriteEntityData extends DataClass
         voteAverage: voteAverage ?? this.voteAverage,
         voteCount: voteCount ?? this.voteCount,
       );
+  TvShowFavoriteEntityData copyWithCompanion(
+      TvShowFavoriteEntityCompanion data) {
+    return TvShowFavoriteEntityData(
+      id: data.id.present ? data.id.value : this.id,
+      backdropPath: data.backdropPath.present
+          ? data.backdropPath.value
+          : this.backdropPath,
+      firstAirDate: data.firstAirDate.present
+          ? data.firstAirDate.value
+          : this.firstAirDate,
+      name: data.name.present ? data.name.value : this.name,
+      originalLanguage: data.originalLanguage.present
+          ? data.originalLanguage.value
+          : this.originalLanguage,
+      originalName: data.originalName.present
+          ? data.originalName.value
+          : this.originalName,
+      overview: data.overview.present ? data.overview.value : this.overview,
+      posterPath:
+          data.posterPath.present ? data.posterPath.value : this.posterPath,
+      voteAverage:
+          data.voteAverage.present ? data.voteAverage.value : this.voteAverage,
+      voteCount: data.voteCount.present ? data.voteCount.value : this.voteCount,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('TvShowFavoriteEntityData(')
@@ -924,200 +1177,9 @@ class TvShowFavoriteEntityCompanion
   }
 }
 
-class $TvShowFavoriteEntityTable extends TvShowFavoriteEntity
-    with TableInfo<$TvShowFavoriteEntityTable, TvShowFavoriteEntityData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TvShowFavoriteEntityTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: false);
-  final VerificationMeta _backdropPathMeta =
-      const VerificationMeta('backdropPath');
-  @override
-  late final GeneratedColumn<String> backdropPath = GeneratedColumn<String>(
-      'backdrop_path', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _firstAirDateMeta =
-      const VerificationMeta('firstAirDate');
-  @override
-  late final GeneratedColumn<String> firstAirDate = GeneratedColumn<String>(
-      'first_air_date', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _originalLanguageMeta =
-      const VerificationMeta('originalLanguage');
-  @override
-  late final GeneratedColumn<String> originalLanguage = GeneratedColumn<String>(
-      'original_language', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _originalNameMeta =
-      const VerificationMeta('originalName');
-  @override
-  late final GeneratedColumn<String> originalName = GeneratedColumn<String>(
-      'original_name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _overviewMeta = const VerificationMeta('overview');
-  @override
-  late final GeneratedColumn<String> overview = GeneratedColumn<String>(
-      'overview', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _posterPathMeta = const VerificationMeta('posterPath');
-  @override
-  late final GeneratedColumn<String> posterPath = GeneratedColumn<String>(
-      'poster_path', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _voteAverageMeta =
-      const VerificationMeta('voteAverage');
-  @override
-  late final GeneratedColumn<String> voteAverage = GeneratedColumn<String>(
-      'vote_average', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  final VerificationMeta _voteCountMeta = const VerificationMeta('voteCount');
-  @override
-  late final GeneratedColumn<int> voteCount = GeneratedColumn<int>(
-      'vote_count', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        backdropPath,
-        firstAirDate,
-        name,
-        originalLanguage,
-        originalName,
-        overview,
-        posterPath,
-        voteAverage,
-        voteCount
-      ];
-  @override
-  String get aliasedName => _alias ?? 'tv_show_favorite_entity';
-  @override
-  String get actualTableName => 'tv_show_favorite_entity';
-  @override
-  VerificationContext validateIntegrity(
-      Insertable<TvShowFavoriteEntityData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('backdrop_path')) {
-      context.handle(
-          _backdropPathMeta,
-          backdropPath.isAcceptableOrUnknown(
-              data['backdrop_path']!, _backdropPathMeta));
-    } else if (isInserting) {
-      context.missing(_backdropPathMeta);
-    }
-    if (data.containsKey('first_air_date')) {
-      context.handle(
-          _firstAirDateMeta,
-          firstAirDate.isAcceptableOrUnknown(
-              data['first_air_date']!, _firstAirDateMeta));
-    } else if (isInserting) {
-      context.missing(_firstAirDateMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('original_language')) {
-      context.handle(
-          _originalLanguageMeta,
-          originalLanguage.isAcceptableOrUnknown(
-              data['original_language']!, _originalLanguageMeta));
-    } else if (isInserting) {
-      context.missing(_originalLanguageMeta);
-    }
-    if (data.containsKey('original_name')) {
-      context.handle(
-          _originalNameMeta,
-          originalName.isAcceptableOrUnknown(
-              data['original_name']!, _originalNameMeta));
-    } else if (isInserting) {
-      context.missing(_originalNameMeta);
-    }
-    if (data.containsKey('overview')) {
-      context.handle(_overviewMeta,
-          overview.isAcceptableOrUnknown(data['overview']!, _overviewMeta));
-    } else if (isInserting) {
-      context.missing(_overviewMeta);
-    }
-    if (data.containsKey('poster_path')) {
-      context.handle(
-          _posterPathMeta,
-          posterPath.isAcceptableOrUnknown(
-              data['poster_path']!, _posterPathMeta));
-    } else if (isInserting) {
-      context.missing(_posterPathMeta);
-    }
-    if (data.containsKey('vote_average')) {
-      context.handle(
-          _voteAverageMeta,
-          voteAverage.isAcceptableOrUnknown(
-              data['vote_average']!, _voteAverageMeta));
-    } else if (isInserting) {
-      context.missing(_voteAverageMeta);
-    }
-    if (data.containsKey('vote_count')) {
-      context.handle(_voteCountMeta,
-          voteCount.isAcceptableOrUnknown(data['vote_count']!, _voteCountMeta));
-    } else if (isInserting) {
-      context.missing(_voteCountMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  TvShowFavoriteEntityData map(Map<String, dynamic> data,
-      {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TvShowFavoriteEntityData(
-      id: attachedDatabase.options.types
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      backdropPath: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}backdrop_path'])!,
-      firstAirDate: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}first_air_date'])!,
-      name: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      originalLanguage: attachedDatabase.options.types.read(
-          DriftSqlType.string, data['${effectivePrefix}original_language'])!,
-      originalName: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}original_name'])!,
-      overview: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}overview'])!,
-      posterPath: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}poster_path'])!,
-      voteAverage: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}vote_average'])!,
-      voteCount: attachedDatabase.options.types
-          .read(DriftSqlType.int, data['${effectivePrefix}vote_count'])!,
-    );
-  }
-
-  @override
-  $TvShowFavoriteEntityTable createAlias(String alias) {
-    return $TvShowFavoriteEntityTable(attachedDatabase, alias);
-  }
-}
-
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
+  $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $MovieFavoriteEntityTable movieFavoriteEntity =
       $MovieFavoriteEntityTable(this);
   late final $TvShowFavoriteEntityTable tvShowFavoriteEntity =
@@ -1127,9 +1189,568 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final TvShowFavoriteDao tvShowFavoriteDao =
       TvShowFavoriteDao(this as AppDatabase);
   @override
-  Iterable<TableInfo<Table, dynamic>> get allTables =>
+  Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
       [movieFavoriteEntity, tvShowFavoriteEntity];
+}
+
+typedef $$MovieFavoriteEntityTableCreateCompanionBuilder
+    = MovieFavoriteEntityCompanion Function({
+  Value<int> id,
+  required bool adult,
+  required String backdropPath,
+  required String originalLanguage,
+  required String originalTitle,
+  required String overview,
+  required double popularity,
+  required String posterPath,
+  required String releaseDate,
+  required String title,
+  required bool video,
+  required String voteAverage,
+  required int voteCount,
+});
+typedef $$MovieFavoriteEntityTableUpdateCompanionBuilder
+    = MovieFavoriteEntityCompanion Function({
+  Value<int> id,
+  Value<bool> adult,
+  Value<String> backdropPath,
+  Value<String> originalLanguage,
+  Value<String> originalTitle,
+  Value<String> overview,
+  Value<double> popularity,
+  Value<String> posterPath,
+  Value<String> releaseDate,
+  Value<String> title,
+  Value<bool> video,
+  Value<String> voteAverage,
+  Value<int> voteCount,
+});
+
+class $$MovieFavoriteEntityTableFilterComposer
+    extends Composer<_$AppDatabase, $MovieFavoriteEntityTable> {
+  $$MovieFavoriteEntityTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get adult => $composableBuilder(
+      column: $table.adult, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get backdropPath => $composableBuilder(
+      column: $table.backdropPath, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get originalLanguage => $composableBuilder(
+      column: $table.originalLanguage,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get originalTitle => $composableBuilder(
+      column: $table.originalTitle, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get overview => $composableBuilder(
+      column: $table.overview, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<double> get popularity => $composableBuilder(
+      column: $table.popularity, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get posterPath => $composableBuilder(
+      column: $table.posterPath, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get releaseDate => $composableBuilder(
+      column: $table.releaseDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get video => $composableBuilder(
+      column: $table.video, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get voteAverage => $composableBuilder(
+      column: $table.voteAverage, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get voteCount => $composableBuilder(
+      column: $table.voteCount, builder: (column) => ColumnFilters(column));
+}
+
+class $$MovieFavoriteEntityTableOrderingComposer
+    extends Composer<_$AppDatabase, $MovieFavoriteEntityTable> {
+  $$MovieFavoriteEntityTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get adult => $composableBuilder(
+      column: $table.adult, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get backdropPath => $composableBuilder(
+      column: $table.backdropPath,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get originalLanguage => $composableBuilder(
+      column: $table.originalLanguage,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get originalTitle => $composableBuilder(
+      column: $table.originalTitle,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get overview => $composableBuilder(
+      column: $table.overview, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<double> get popularity => $composableBuilder(
+      column: $table.popularity, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get posterPath => $composableBuilder(
+      column: $table.posterPath, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get releaseDate => $composableBuilder(
+      column: $table.releaseDate, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get video => $composableBuilder(
+      column: $table.video, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get voteAverage => $composableBuilder(
+      column: $table.voteAverage, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get voteCount => $composableBuilder(
+      column: $table.voteCount, builder: (column) => ColumnOrderings(column));
+}
+
+class $$MovieFavoriteEntityTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MovieFavoriteEntityTable> {
+  $$MovieFavoriteEntityTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<bool> get adult =>
+      $composableBuilder(column: $table.adult, builder: (column) => column);
+
+  GeneratedColumn<String> get backdropPath => $composableBuilder(
+      column: $table.backdropPath, builder: (column) => column);
+
+  GeneratedColumn<String> get originalLanguage => $composableBuilder(
+      column: $table.originalLanguage, builder: (column) => column);
+
+  GeneratedColumn<String> get originalTitle => $composableBuilder(
+      column: $table.originalTitle, builder: (column) => column);
+
+  GeneratedColumn<String> get overview =>
+      $composableBuilder(column: $table.overview, builder: (column) => column);
+
+  GeneratedColumn<double> get popularity => $composableBuilder(
+      column: $table.popularity, builder: (column) => column);
+
+  GeneratedColumn<String> get posterPath => $composableBuilder(
+      column: $table.posterPath, builder: (column) => column);
+
+  GeneratedColumn<String> get releaseDate => $composableBuilder(
+      column: $table.releaseDate, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<bool> get video =>
+      $composableBuilder(column: $table.video, builder: (column) => column);
+
+  GeneratedColumn<String> get voteAverage => $composableBuilder(
+      column: $table.voteAverage, builder: (column) => column);
+
+  GeneratedColumn<int> get voteCount =>
+      $composableBuilder(column: $table.voteCount, builder: (column) => column);
+}
+
+class $$MovieFavoriteEntityTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $MovieFavoriteEntityTable,
+    MovieFavoriteEntityData,
+    $$MovieFavoriteEntityTableFilterComposer,
+    $$MovieFavoriteEntityTableOrderingComposer,
+    $$MovieFavoriteEntityTableAnnotationComposer,
+    $$MovieFavoriteEntityTableCreateCompanionBuilder,
+    $$MovieFavoriteEntityTableUpdateCompanionBuilder,
+    (
+      MovieFavoriteEntityData,
+      BaseReferences<_$AppDatabase, $MovieFavoriteEntityTable,
+          MovieFavoriteEntityData>
+    ),
+    MovieFavoriteEntityData,
+    PrefetchHooks Function()> {
+  $$MovieFavoriteEntityTableTableManager(
+      _$AppDatabase db, $MovieFavoriteEntityTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MovieFavoriteEntityTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MovieFavoriteEntityTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MovieFavoriteEntityTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<bool> adult = const Value.absent(),
+            Value<String> backdropPath = const Value.absent(),
+            Value<String> originalLanguage = const Value.absent(),
+            Value<String> originalTitle = const Value.absent(),
+            Value<String> overview = const Value.absent(),
+            Value<double> popularity = const Value.absent(),
+            Value<String> posterPath = const Value.absent(),
+            Value<String> releaseDate = const Value.absent(),
+            Value<String> title = const Value.absent(),
+            Value<bool> video = const Value.absent(),
+            Value<String> voteAverage = const Value.absent(),
+            Value<int> voteCount = const Value.absent(),
+          }) =>
+              MovieFavoriteEntityCompanion(
+            id: id,
+            adult: adult,
+            backdropPath: backdropPath,
+            originalLanguage: originalLanguage,
+            originalTitle: originalTitle,
+            overview: overview,
+            popularity: popularity,
+            posterPath: posterPath,
+            releaseDate: releaseDate,
+            title: title,
+            video: video,
+            voteAverage: voteAverage,
+            voteCount: voteCount,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required bool adult,
+            required String backdropPath,
+            required String originalLanguage,
+            required String originalTitle,
+            required String overview,
+            required double popularity,
+            required String posterPath,
+            required String releaseDate,
+            required String title,
+            required bool video,
+            required String voteAverage,
+            required int voteCount,
+          }) =>
+              MovieFavoriteEntityCompanion.insert(
+            id: id,
+            adult: adult,
+            backdropPath: backdropPath,
+            originalLanguage: originalLanguage,
+            originalTitle: originalTitle,
+            overview: overview,
+            popularity: popularity,
+            posterPath: posterPath,
+            releaseDate: releaseDate,
+            title: title,
+            video: video,
+            voteAverage: voteAverage,
+            voteCount: voteCount,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$MovieFavoriteEntityTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $MovieFavoriteEntityTable,
+    MovieFavoriteEntityData,
+    $$MovieFavoriteEntityTableFilterComposer,
+    $$MovieFavoriteEntityTableOrderingComposer,
+    $$MovieFavoriteEntityTableAnnotationComposer,
+    $$MovieFavoriteEntityTableCreateCompanionBuilder,
+    $$MovieFavoriteEntityTableUpdateCompanionBuilder,
+    (
+      MovieFavoriteEntityData,
+      BaseReferences<_$AppDatabase, $MovieFavoriteEntityTable,
+          MovieFavoriteEntityData>
+    ),
+    MovieFavoriteEntityData,
+    PrefetchHooks Function()>;
+typedef $$TvShowFavoriteEntityTableCreateCompanionBuilder
+    = TvShowFavoriteEntityCompanion Function({
+  Value<int> id,
+  required String backdropPath,
+  required String firstAirDate,
+  required String name,
+  required String originalLanguage,
+  required String originalName,
+  required String overview,
+  required String posterPath,
+  required String voteAverage,
+  required int voteCount,
+});
+typedef $$TvShowFavoriteEntityTableUpdateCompanionBuilder
+    = TvShowFavoriteEntityCompanion Function({
+  Value<int> id,
+  Value<String> backdropPath,
+  Value<String> firstAirDate,
+  Value<String> name,
+  Value<String> originalLanguage,
+  Value<String> originalName,
+  Value<String> overview,
+  Value<String> posterPath,
+  Value<String> voteAverage,
+  Value<int> voteCount,
+});
+
+class $$TvShowFavoriteEntityTableFilterComposer
+    extends Composer<_$AppDatabase, $TvShowFavoriteEntityTable> {
+  $$TvShowFavoriteEntityTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get backdropPath => $composableBuilder(
+      column: $table.backdropPath, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get firstAirDate => $composableBuilder(
+      column: $table.firstAirDate, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get originalLanguage => $composableBuilder(
+      column: $table.originalLanguage,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get originalName => $composableBuilder(
+      column: $table.originalName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get overview => $composableBuilder(
+      column: $table.overview, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get posterPath => $composableBuilder(
+      column: $table.posterPath, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get voteAverage => $composableBuilder(
+      column: $table.voteAverage, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get voteCount => $composableBuilder(
+      column: $table.voteCount, builder: (column) => ColumnFilters(column));
+}
+
+class $$TvShowFavoriteEntityTableOrderingComposer
+    extends Composer<_$AppDatabase, $TvShowFavoriteEntityTable> {
+  $$TvShowFavoriteEntityTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get backdropPath => $composableBuilder(
+      column: $table.backdropPath,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get firstAirDate => $composableBuilder(
+      column: $table.firstAirDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get originalLanguage => $composableBuilder(
+      column: $table.originalLanguage,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get originalName => $composableBuilder(
+      column: $table.originalName,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get overview => $composableBuilder(
+      column: $table.overview, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get posterPath => $composableBuilder(
+      column: $table.posterPath, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get voteAverage => $composableBuilder(
+      column: $table.voteAverage, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get voteCount => $composableBuilder(
+      column: $table.voteCount, builder: (column) => ColumnOrderings(column));
+}
+
+class $$TvShowFavoriteEntityTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TvShowFavoriteEntityTable> {
+  $$TvShowFavoriteEntityTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get backdropPath => $composableBuilder(
+      column: $table.backdropPath, builder: (column) => column);
+
+  GeneratedColumn<String> get firstAirDate => $composableBuilder(
+      column: $table.firstAirDate, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get originalLanguage => $composableBuilder(
+      column: $table.originalLanguage, builder: (column) => column);
+
+  GeneratedColumn<String> get originalName => $composableBuilder(
+      column: $table.originalName, builder: (column) => column);
+
+  GeneratedColumn<String> get overview =>
+      $composableBuilder(column: $table.overview, builder: (column) => column);
+
+  GeneratedColumn<String> get posterPath => $composableBuilder(
+      column: $table.posterPath, builder: (column) => column);
+
+  GeneratedColumn<String> get voteAverage => $composableBuilder(
+      column: $table.voteAverage, builder: (column) => column);
+
+  GeneratedColumn<int> get voteCount =>
+      $composableBuilder(column: $table.voteCount, builder: (column) => column);
+}
+
+class $$TvShowFavoriteEntityTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $TvShowFavoriteEntityTable,
+    TvShowFavoriteEntityData,
+    $$TvShowFavoriteEntityTableFilterComposer,
+    $$TvShowFavoriteEntityTableOrderingComposer,
+    $$TvShowFavoriteEntityTableAnnotationComposer,
+    $$TvShowFavoriteEntityTableCreateCompanionBuilder,
+    $$TvShowFavoriteEntityTableUpdateCompanionBuilder,
+    (
+      TvShowFavoriteEntityData,
+      BaseReferences<_$AppDatabase, $TvShowFavoriteEntityTable,
+          TvShowFavoriteEntityData>
+    ),
+    TvShowFavoriteEntityData,
+    PrefetchHooks Function()> {
+  $$TvShowFavoriteEntityTableTableManager(
+      _$AppDatabase db, $TvShowFavoriteEntityTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TvShowFavoriteEntityTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TvShowFavoriteEntityTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TvShowFavoriteEntityTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> backdropPath = const Value.absent(),
+            Value<String> firstAirDate = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> originalLanguage = const Value.absent(),
+            Value<String> originalName = const Value.absent(),
+            Value<String> overview = const Value.absent(),
+            Value<String> posterPath = const Value.absent(),
+            Value<String> voteAverage = const Value.absent(),
+            Value<int> voteCount = const Value.absent(),
+          }) =>
+              TvShowFavoriteEntityCompanion(
+            id: id,
+            backdropPath: backdropPath,
+            firstAirDate: firstAirDate,
+            name: name,
+            originalLanguage: originalLanguage,
+            originalName: originalName,
+            overview: overview,
+            posterPath: posterPath,
+            voteAverage: voteAverage,
+            voteCount: voteCount,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String backdropPath,
+            required String firstAirDate,
+            required String name,
+            required String originalLanguage,
+            required String originalName,
+            required String overview,
+            required String posterPath,
+            required String voteAverage,
+            required int voteCount,
+          }) =>
+              TvShowFavoriteEntityCompanion.insert(
+            id: id,
+            backdropPath: backdropPath,
+            firstAirDate: firstAirDate,
+            name: name,
+            originalLanguage: originalLanguage,
+            originalName: originalName,
+            overview: overview,
+            posterPath: posterPath,
+            voteAverage: voteAverage,
+            voteCount: voteCount,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$TvShowFavoriteEntityTableProcessedTableManager
+    = ProcessedTableManager<
+        _$AppDatabase,
+        $TvShowFavoriteEntityTable,
+        TvShowFavoriteEntityData,
+        $$TvShowFavoriteEntityTableFilterComposer,
+        $$TvShowFavoriteEntityTableOrderingComposer,
+        $$TvShowFavoriteEntityTableAnnotationComposer,
+        $$TvShowFavoriteEntityTableCreateCompanionBuilder,
+        $$TvShowFavoriteEntityTableUpdateCompanionBuilder,
+        (
+          TvShowFavoriteEntityData,
+          BaseReferences<_$AppDatabase, $TvShowFavoriteEntityTable,
+              TvShowFavoriteEntityData>
+        ),
+        TvShowFavoriteEntityData,
+        PrefetchHooks Function()>;
+
+class $AppDatabaseManager {
+  final _$AppDatabase _db;
+  $AppDatabaseManager(this._db);
+  $$MovieFavoriteEntityTableTableManager get movieFavoriteEntity =>
+      $$MovieFavoriteEntityTableTableManager(_db, _db.movieFavoriteEntity);
+  $$TvShowFavoriteEntityTableTableManager get tvShowFavoriteEntity =>
+      $$TvShowFavoriteEntityTableTableManager(_db, _db.tvShowFavoriteEntity);
 }

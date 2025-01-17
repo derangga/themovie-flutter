@@ -2,10 +2,7 @@
 
 part of 'tv_show_favorite_dao.dart';
 
-// **************************************************************************
-// DaoGenerator
-// **************************************************************************
-
+// ignore_for_file: type=lint
 mixin _$TvShowFavoriteDaoMixin on DatabaseAccessor<AppDatabase> {
   $TvShowFavoriteEntityTable get tvShowFavoriteEntity =>
       attachedDatabase.tvShowFavoriteEntity;

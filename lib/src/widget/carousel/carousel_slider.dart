@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'carousel_controller.dart';
+import 'carousel_slider_controller.dart';
 import 'carousel_options.dart';
 import 'carousel_util.dart';
 import 'carousel_state.dart';
@@ -27,7 +27,7 @@ class CarouselSlider extends StatefulWidget {
   final ExtendedIndexedWidgetBuilder? itemBuilder;
 
   /// A [MapController], used to control the map.
-  final CarouselControllerImpl _carouselController;
+  final CarouselSliderControllerImpl _carouselController;
 
   final int? itemCount;
 
@@ -39,7 +39,7 @@ class CarouselSlider extends StatefulWidget {
       : itemBuilder = null,
         itemCount = items != null ? items.length : 0,
         _carouselController = carouselController ??
-            CarouselController() as CarouselControllerImpl,
+            CarouselSliderController() as CarouselSliderControllerImpl,
         super(key: key);
 
   /// The on demand item builder constructor
@@ -51,7 +51,7 @@ class CarouselSlider extends StatefulWidget {
       Key? key})
       : items = null,
         _carouselController = carouselController ??
-            CarouselController() as CarouselControllerImpl,
+            CarouselController() as CarouselSliderControllerImpl,
         super(key: key);
 
   @override
@@ -60,7 +60,7 @@ class CarouselSlider extends StatefulWidget {
 
 class CarouselSliderState extends State<CarouselSlider>
     with TickerProviderStateMixin {
-  final CarouselControllerImpl carouselController;
+  final CarouselSliderControllerImpl carouselController;
   Timer? timer;
 
   CarouselOptions get options => widget.options;
@@ -299,7 +299,7 @@ class CarouselSliderState extends State<CarouselSlider>
                 BuildContext storageContext = carouselState!
                     .pageController!.position.context.storageContext;
                 final double? previousSavedPosition =
-                    PageStorage.of(storageContext)?.readState(storageContext)
+                    PageStorage.of(storageContext).readState(storageContext)
                         as double?;
                 if (previousSavedPosition != null) {
                   itemOffset = previousSavedPosition - idx.toDouble();

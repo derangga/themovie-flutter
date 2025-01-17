@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:themovie_flutter/src/widget/carousel/carousel_slider_controller.dart';
 import '../../../core/base/api_state.dart';
 import '../../../core/base/base_multi_cubit_widget.dart';
 import '../../../data/remote/config/url_constant.dart';
@@ -7,7 +8,6 @@ import '../../../data/model/movie.dart';
 import '../../../resources/color_theme.dart';
 import '../../../resources/drawable.dart';
 import '../../../widget/button/button_view.dart';
-import '../../../widget/carousel/carousel_controller.dart';
 import '../../../widget/carousel/carousel_options.dart';
 import '../../../widget/carousel/carousel_slider.dart';
 import '../../../widget/container/rounded_container_view.dart';
@@ -33,7 +33,7 @@ class _HomeTrendingMovieSectionState extends BaseMultiCubitWidget<
     HomeTrendingMovieBloc, HomeTrendingMovieState, HomeTrendingMovieSection> {
   final Color gradientStart = Colors.transparent;
   final Color gradientEnd = Colors.black;
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController _controller = CarouselSliderController();
 
   @override
   Widget mapStateHandler(HomeTrendingMovieState state) {
@@ -174,6 +174,12 @@ class _HomeTrendingMovieSectionState extends BaseMultiCubitWidget<
               Container(
                 width: 92.0,
                 height: 140.0,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color(0x88FFFFFF),
+                    width: 1.0,
+                  ),
+                ),
                 child: CacheImageView(
                   '${UrlConstant.IMAGE_URL}${movie.posterPath}',
                   rounded: BorderRadius.circular(4.0),
